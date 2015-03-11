@@ -16,7 +16,13 @@ namespace ZabbixApi.Test
             using (var context = new Context() as IContext)
             {
                 var target = new HostService(context) as IHostService;
-                var result = target.GetByName("hclemente");
+                var result = target.GetByName("teste2").FirstOrDefault();
+                result.host = "teste2";
+                result.name = "teste2";
+
+                result.interfaces[0].ip = "172.20.12.57";
+
+                var v = target.Update(result);
             }
         }
     }

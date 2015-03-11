@@ -49,6 +49,7 @@
     <Compile Include="Entities\Host.cs" />
     <Compile Include="Entities\HostGroup.cs" />
     <Compile Include="Entities\HostInterface.cs" />
+    <Compile Include="Helper\IncludeHelper.cs" />
     <Compile Include="Helper\Check.cs" />
     <Compile Include="Helper\Converters.cs" />
     <Compile Include="Context.cs" />

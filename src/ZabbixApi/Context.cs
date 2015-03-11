@@ -80,7 +80,9 @@ namespace ZabbixApi
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings );
 
             if (response.error != null)
-                throw new Exception(string.Format("Erro ao fazer request: {0}", response.error));
+            {
+                throw new Exception(response.error.message, new Exception(string.Format("{0} - code:{1}", response.error.data, response.error.code)));
+            }
 
             if (response.id != id)
                 throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.id, id));
@@ -101,8 +103,15 @@ namespace ZabbixApi
         {
             public string jsonrpc;
             public T result;
-            public object error;
+            public Error error;
             public int id;
+        }
+
+        private class Error
+        {
+            public long code { get; set; }
+            public string message { get; set; }
+            public string data { get; set; }
         }
 
         #region IDisposable implementation
