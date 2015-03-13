@@ -147,5 +147,21 @@ namespace SisMon.Zabbix.Entities
             Item = 2
         }
         #endregion
+
+        #region Constructors
+
+        public GraphPrototype()
+        {
+            graphtype = GraphPrototypesLayoutType.Normal;
+            percent_left = 0;
+            percent_right = 0;
+            show_3d = false;
+            show_legend = true;
+            show_work_period = true;
+            ymax_type = ValueCalculationMethod.Calculated;
+            ymin_type = ValueCalculationMethod.Calculated;
+        }
+
+        #endregion
     }
 }

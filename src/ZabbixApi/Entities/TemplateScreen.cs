@@ -8,6 +8,8 @@ namespace SisMon.Zabbix.Entities
 {
     public partial class TemplateScreen
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the template screen.
         /// </summary>
@@ -37,5 +39,16 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public int vsize { get; set; }
 
+        #endregion
+
+        #region Constructors
+
+        public TemplateScreen()
+        {
+            hsize = 1;
+            vsize = 1;
+        }
+
+        #endregion
     }
 }

@@ -98,5 +98,18 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public Script()
+        {
+            execute_on = ExecuteOn.ZabbixServer;
+            groupid = "0";
+            host_access = HostAccess.Read;
+            type = ScriptType.Script;
+            usrgrpid = 0;
+        }
+
+        #endregion
     }
 }

@@ -75,6 +75,15 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public ITService()
+        {
+            goodsla = 99.9f;
+        }
+
+        #endregion
     }
 
     public partial class ServiceTime
@@ -184,6 +193,8 @@ namespace SisMon.Zabbix.Entities
 
     public partial class ServiceAlarm
     {
+        #region Properties
+
         /// <summary>
         /// ID of the service alarm.
         /// </summary>
@@ -206,6 +217,8 @@ namespace SisMon.Zabbix.Entities
         /// Refer the the IT service status property for a list of possible values.
         /// </summary>
         public int value { get; set; }
+
+        #endregion
 
     }
 }

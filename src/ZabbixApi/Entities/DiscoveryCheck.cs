@@ -158,5 +158,18 @@ namespace SisMon.Zabbix.Entities
             Telnet = 15
         }
         #endregion
+
+        #region Constructors
+
+        public DiscoveryCheck()
+        {
+            ports = "0";
+            snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
+            snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
+            type = CheckType.SSH;
+            uniq = false;
+        }
+
+        #endregion
     }
 }

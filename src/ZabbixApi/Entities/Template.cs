@@ -8,6 +8,8 @@ namespace SisMon.Zabbix.Entities
 {
     public partial class Template
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the template.
         /// </summary>
@@ -25,5 +27,6 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public string name { get; set; }
 
+        #endregion
     }
 }

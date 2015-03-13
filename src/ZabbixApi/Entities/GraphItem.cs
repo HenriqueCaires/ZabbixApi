@@ -115,5 +115,18 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public GraphItem()
+        {
+            calc_fnc = CalcFunction.Average;
+            drawtype = DrawStyle.Line;
+            sortorder = 0;
+            type = GraphItemType.Simple;
+            yaxisside = YAxisSide.Left;
+        }
+
+        #endregion
     }
 }

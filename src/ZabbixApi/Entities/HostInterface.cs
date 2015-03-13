@@ -10,6 +10,8 @@ namespace ZabbixApi.Entities
 {
     public partial class HostInterface
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the interface.
         /// </summary>
@@ -70,6 +72,10 @@ namespace ZabbixApi.Entities
         [JsonConverter(typeof(IntToBoolConverter))]
         public bool useip { get; set; }
 
+        #endregion 
+
+        #region ENUMS
+
         public enum InterfaceType
         {
             Agent = 1,
@@ -78,5 +84,6 @@ namespace ZabbixApi.Entities
             JMX = 4
         }
 
+        #endregion
     }
 }

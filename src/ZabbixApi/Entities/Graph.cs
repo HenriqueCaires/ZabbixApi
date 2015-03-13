@@ -140,7 +140,7 @@ namespace SisMon.Zabbix.Entities
         /// Possible values: 
         /// 0 - (default) calculated; 
         /// </summary>
-        public int ymin_type { get; set; }
+        public MinValueCalculationMethod ymin_type { get; set; }
 
         #endregion
 
@@ -165,6 +165,30 @@ namespace SisMon.Zabbix.Entities
             Fixed = 1,
             Item = 2
         }
+
+        public enum MinValueCalculationMethod
+        {
+            Calculated = 0
+        }
+        #endregion
+
+        #region Constructors
+
+        public Graph()
+        {
+            flags = Flags.PlainGraph;
+            graphtype = GraphLayoutType.Normal;
+            percent_left = 0;
+            percent_right = 0;
+            show_3d = false;
+            show_legend = true;
+            show_work_period = true;
+            yaxismax = 100;
+            yaxismin = 0;
+            ymax_type = MaxValueCalculationMethod.Calculated;
+            ymin_type = MinValueCalculationMethod.Calculated; 
+        }
+
         #endregion
     }
 }

@@ -302,5 +302,22 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public Host()
+        {
+            available = Available.Unknown;
+            ipmi_authtype = AuthenticationAlgorithm.Default;
+            ipmi_available = Available.Unknown;
+            ipmi_privilege = PrivilegeLevel.User;
+            jmx_available = Available.Unknown;
+            maintenance_status = MaintenanceStatus.NoMaintenance;
+            maintenance_type = MaintenanceType.MaintenanceWithDataCollection;
+            snmp_available = SNMPAvailability.Unknown;
+            status = Status.Monitored;
+        }
+
+        #endregion
     }
 }

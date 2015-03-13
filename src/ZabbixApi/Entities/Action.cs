@@ -110,6 +110,17 @@ namespace SisMon.Zabbix.Entities
             Disabled = 1
         }
         #endregion
+
+        #region Constructors
+
+        public Action()
+        {
+            recovery_msg = RecoveryMessageStatus.Disabled;
+            status = Status.Enabled;
+        }
+
+        #endregion
+
     }
 
     public partial class ActionCondition
@@ -233,6 +244,15 @@ namespace SisMon.Zabbix.Entities
             LessOrEqual = 6,
             NotIn = 7
         }
+        #endregion
+
+        #region Constructors
+
+        public ActionCondition()
+        {
+            @operator = ConditionOperator.Equal;
+        }
+
         #endregion
     }
 
@@ -418,7 +438,6 @@ namespace SisMon.Zabbix.Entities
 
         #endregion
 
-
         #region Nested classes
 
         public partial class OperationCommandGroup
@@ -507,6 +526,18 @@ namespace SisMon.Zabbix.Entities
             /// ID of the template.
             /// </summary>
             public string templateid { get; set; }
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public ActionOperation()
+        {
+            esc_period = 0;
+            esc_step_from = 1;
+            esc_step_to = 1;
+            evaltype = ConditionOperation.AndOr;
         }
 
         #endregion
@@ -678,6 +709,15 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public ActionOperationCondition()
+        {
+            @operator = ConditionOperator.Equal;
+        }
+
+        #endregion
     }
 
     public partial class ActionOperationMessage
@@ -721,6 +761,15 @@ namespace SisMon.Zabbix.Entities
         {
             UseDataFromOperation = 0,
             UseDataFromAction = 1
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public ActionOperationMessage()
+        {
+            default_msg = DefaultActionMessage.UseDataFromOperation;
         }
 
         #endregion

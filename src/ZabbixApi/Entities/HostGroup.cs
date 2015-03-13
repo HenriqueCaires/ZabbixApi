@@ -50,5 +50,14 @@ namespace ZabbixApi.Entities
         }
         #endregion
 
+        #region Constructors
+
+        public HostGroup()
+        {
+            @internal = false;
+        }
+
+        #endregion
+
     }
 }

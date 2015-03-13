@@ -116,5 +116,14 @@ namespace SisMon.Zabbix.Entities
 
         #endregion
 
+        #region Constructors
+
+        public MediaType()
+        {
+            status = Status.Enabled;
+        }
+
+        #endregion
+
     }
 }

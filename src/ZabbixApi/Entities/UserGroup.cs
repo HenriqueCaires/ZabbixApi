@@ -70,6 +70,16 @@ namespace SisMon.Zabbix.Entities
 
         #endregion
 
+        #region Constructors
+
+        public UserGroup()
+        {
+            debug_mode = false;
+            gui_access = FrontendAuthenticationMethod.SystemDefaultAuthenticationMethod;
+            users_status = Status.Enabled;
+        }
+
+        #endregion
     }
 
     public partial class Permission

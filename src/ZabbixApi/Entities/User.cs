@@ -125,5 +125,20 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public User()
+        {
+            autologin = false;
+            autologout = 900;
+            lang = "en_GB";
+            refresh = 30;
+            rows_per_page = 50;
+            theme = "default";
+            type = UserType.ZabbixUser;
+        }
+
+        #endregion
     }
 }

@@ -63,5 +63,15 @@ namespace SisMon.Zabbix.Entities
             Disabled = 1
         }
         #endregion
+
+        #region Constructors
+
+        public DiscoveryRule()
+        {
+            delay = 3600;
+            status = Status.Enabled;
+        }
+
+        #endregion
     }
 }

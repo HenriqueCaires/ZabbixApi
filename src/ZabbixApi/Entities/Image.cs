@@ -39,5 +39,14 @@ namespace SisMon.Zabbix.Entities
         }
         #endregion
 
+        #region Constructors
+
+        public Image()
+        {
+            imagetype = ImageType.Icon;
+        }
+
+        #endregion
+
     }
 }

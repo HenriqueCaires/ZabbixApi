@@ -438,5 +438,24 @@ namespace SisMon.Zabbix.Entities
             Disabled = 1
         }
         #endregion
+
+        #region Constructors
+
+        public Item()
+        {
+            authtype = SSHAuthenticationMethod.Password;
+            data_type = DataType.Decimal;
+            delta = Delta.AsIs;
+            formula = 1;
+            history = 90;
+            inventory_link = 0;
+            snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
+            snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
+            state = State.Normal;
+            status = Status.Enabled;
+            trends = 365;
+        }
+
+        #endregion
     }
 }

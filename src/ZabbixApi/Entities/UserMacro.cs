@@ -8,6 +8,8 @@ namespace SisMon.Zabbix.Entities
 {
     public partial class GlobalMacro
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the global macro.
         /// </summary>
@@ -22,10 +24,14 @@ namespace SisMon.Zabbix.Entities
         /// Value of the macro.
         /// </summary>
         public string value { get; set; }
+
+        #endregion
     }
 
     public partial class HostMacro
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the host macro.
         /// </summary>
@@ -45,5 +51,7 @@ namespace SisMon.Zabbix.Entities
         /// Value of the macro.
         /// </summary>
         public string value { get; set; }
+
+        #endregion
     }
 }

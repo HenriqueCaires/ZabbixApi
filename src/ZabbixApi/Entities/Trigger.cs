@@ -156,5 +156,19 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public Trigger()
+        {
+            flags = Flags.PlainTrigger;
+            priority = Severity.NotClassified;
+            state = State.UpToDate;
+            status = Status.Enabled;
+            type = MultipleProblemEvents.DoNotGenerateMultipleEvents;
+            value = TriggerState.Ok;
+        }
+
+        #endregion
     }
 }

@@ -62,6 +62,17 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public Maintenance()
+        {
+            active_since = DateTime.Now;
+            active_till = DateTime.Today.AddDays(1);
+            maintenance_type = MaintenanceType.WithDataCollection;
+        }
+
+        #endregion
     }
 
     public partial class TimePeriod
@@ -165,6 +176,17 @@ namespace SisMon.Zabbix.Entities
             ThirdWeek = 3,
             FourthWeek = 4,
             LastEeek = 5
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public TimePeriod()
+        {
+            period = 3600;
+            start_date = DateTime.Today;
+            timeperiod_type = TimePeriodType.OneTimeOnly;
         }
 
         #endregion

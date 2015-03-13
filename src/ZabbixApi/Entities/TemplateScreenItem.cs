@@ -152,5 +152,21 @@ namespace SisMon.Zabbix.Entities
 
 
         #endregion
+
+        #region Constructors
+
+        public TemplateScreenItem()
+        {
+            elements = 25;
+            halign = HAlign.Center;
+            height = 200;
+            style = 0;
+            valign = VAlign.Middle;
+            width = 320;
+            x = 0;
+            y = 0;
+        }
+
+        #endregion
     }
 }

@@ -346,6 +346,30 @@ namespace SisMon.Zabbix.Entities
             CountOfAcknowledgedAndUnacknowledgedProblemsSeparately = 2
         }
         #endregion
+
+        #region Constructors
+
+        public Map()
+        {
+            expand_macros = false;
+            expandproblem = ExpandProblem.DisplayTheProblemTriggerIfThereIsOnlyOneProblem;
+            grid_align = true;
+            grid_show = true;
+            grid_size = GridSize.p50;
+            highlight = true;
+            label_format = LabelFormat.DisableAdvancedLabels;
+            label_location = LabelLocation.Bottom;
+            label_type = LabelType.ElementName;
+            label_type_host = LabelTypeHost.ElementName;
+            label_type_hostgroup = LabelTypeHostGroup.ElementName;
+            label_type_image = LabelTypeImage.ElementName;
+            label_type_map = LabelTypeMap.ElementName;
+            label_type_trigger = LabelTypeTrigger.ElementName;
+            markelements = false;
+            show_unack = DisplayProblems.CountOfAllProblems;
+        }
+
+        #endregion
     }
 
     public partial class MapElement
@@ -528,6 +552,22 @@ namespace SisMon.Zabbix.Entities
             Grid = 0
         }
 
+        #endregion
+
+        #region Constructors
+
+        public MapElement()
+        {
+            areatype = AreaType.TakeUpTheWholeMap;
+            elementsubtype = MapElementSubtype.DisplayHostGroupAsSingleElement;
+            height = 200;
+            label_location = LabelLocation.DefaultLocation;
+            use_iconmap = true;
+            viewtype = ViewType.Grid;
+            width = 200;
+            x = 0;
+            y = 0;
+        }
 
         #endregion
     }
@@ -613,7 +653,6 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public string sysmapid { get; set; }
 
-
         #endregion
 
         #region ENUMS
@@ -624,6 +663,16 @@ namespace SisMon.Zabbix.Entities
             BoldLine = 2,
             DottedLine = 3,
             DashedLine = 4
+        }
+
+        #endregion
+
+        #region Constructors
+
+        public MapLink()
+        {
+            color = "000000";
+            drawtype = DrawStyle.Line;
         }
 
         #endregion
@@ -679,6 +728,16 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public MapLinkTrigger()
+        {
+            color = "DD0000";
+            drawtype = DrawStyle.Line;
+        }
+
+        #endregion
     }
 
     public partial class MapURL
@@ -713,6 +772,15 @@ namespace SisMon.Zabbix.Entities
         /// ID of the map that the URL belongs to.
         /// </summary>
         public string sysmapid { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public MapURL()
+        {
+            elementtype = 0;
+        }
 
         #endregion
     }

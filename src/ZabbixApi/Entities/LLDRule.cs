@@ -292,5 +292,19 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public LLDRule()
+        {
+            authtype = SSHAuthenticationMethod.Password;
+            lifetime = 30;
+            snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
+            snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
+            state = State.Normal;
+            status = Status.Enabled;
+        }
+
+        #endregion
     }
 }

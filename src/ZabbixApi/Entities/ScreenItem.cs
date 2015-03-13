@@ -64,7 +64,8 @@ namespace SisMon.Zabbix.Entities
         /// 1 - dynamic.
         /// </summary>
         [JsonConverter(typeof(IntToBoolConverter))]
-        public bool dynamic { get; set; }
+        [JsonProperty("dynamic")]
+        public bool @dynamic { get; set; }
 
         /// <summary>
         /// Number of lines to display on the screen item. 
@@ -215,6 +216,23 @@ namespace SisMon.Zabbix.Entities
             Top = 1,
             Bottom = 2
         }
+        #endregion
+
+        #region Constructors
+
+        public ScreenItem()
+        {
+            @dynamic = false;
+            elements = 25;
+            halign = HAlign.Center;
+            height = 200;
+            style = 0;
+            valign = VAlign.Middle;
+            width = 320;
+            x = 0;
+            y = 0;
+        }
+
         #endregion
     }
 }

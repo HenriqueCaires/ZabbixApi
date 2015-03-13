@@ -362,5 +362,22 @@ namespace SisMon.Zabbix.Entities
             Unsupported = 2
         }
         #endregion
+
+        #region Constructors
+
+        public ItemPrototype()
+        {
+            authtype = SSHAuthenticationMethod.Password;
+            data_type = DataType.Decimal;
+            delta = Delta.AsIs;
+            formula = 1;
+            history = 90;
+            snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
+            snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
+            status = Status.Enabled;
+            trends = 365;
+        }
+
+        #endregion
     }
 }

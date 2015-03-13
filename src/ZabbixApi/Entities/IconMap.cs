@@ -73,6 +73,15 @@ namespace SisMon.Zabbix.Entities
         public int sortorder { get; set; }
 
         #endregion
+
+        #region Constructors
+
+        public IconMapping()
+        {
+            sortorder = 0;
+        }
+
+        #endregion
     }
 
 }

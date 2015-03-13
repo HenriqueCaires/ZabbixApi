@@ -8,6 +8,8 @@ namespace SisMon.Zabbix.Entities
 {
     public partial class Screen
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the screen.
         /// </summary>
@@ -32,5 +34,16 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public int vsize { get; set; }
 
+        #endregion
+
+        #region Constructors
+
+        public Screen()
+        {
+            hsize = 1;
+            vsize = 1;
+        }
+
+        #endregion
     }
 }

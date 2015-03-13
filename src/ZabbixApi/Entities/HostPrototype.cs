@@ -58,6 +58,15 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public HostPrototype()
+        {
+            status = Status.Monitored;
+        }
+
+        #endregion
     }
 
     public partial class GroupLink

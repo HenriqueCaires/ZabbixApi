@@ -123,6 +123,18 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+
+        #region Constructors
+
+        public WebScenario()
+        {
+            authentication = AuthenticationMethod.None;
+            delay = 60;
+            retries = 1;
+            status = Status.Enabled;
+        }
+
+        #endregion
     }
 
     public partial class ScenarioStep
@@ -180,6 +192,15 @@ namespace SisMon.Zabbix.Entities
         /// Scenario step variables.
         /// </summary>
         public string variables { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public ScenarioStep()
+        {
+            timeout = 15;
+        }
 
         #endregion
     }
