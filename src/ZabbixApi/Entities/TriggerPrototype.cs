@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class TriggerPrototype
+    public partial class TriggerPrototype
     {
         #region Properties
         

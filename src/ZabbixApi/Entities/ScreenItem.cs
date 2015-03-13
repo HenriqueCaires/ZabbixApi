@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class ScreenItem
+    public partial class ScreenItem
     {
         #region Properties
 

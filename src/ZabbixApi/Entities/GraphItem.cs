@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class GraphItem
+    public partial class GraphItem
     {
         #region Properties
 

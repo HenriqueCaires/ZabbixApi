@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class TemplateScreenItem
+    public partial class TemplateScreenItem
     {
         #region Properties
 

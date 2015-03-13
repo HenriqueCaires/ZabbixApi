@@ -8,9 +8,10 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Proxy
+    public partial class Proxy
     {
         #region Properties
+
         /// <summary>
         /// (readonly) ID of the proxy.
         /// </summary>
@@ -46,6 +47,52 @@ namespace SisMon.Zabbix.Entities
             Passive = 6
         }
 
+        #endregion
+    }
+
+    public partial class ProxyInterface
+    {
+        #region Properties
+        
+        /// <summary>
+        /// (readonly) ID of the interface.
+        /// </summary>
+        public string interfaceid { get; set; }
+
+        /// <summary>
+        /// DNS name to connect to. 
+        /// 
+        /// Can be empty if connections are made via IP address.
+        /// </summary>
+        public string dns { get; set; }
+
+        /// <summary>
+        /// IP address to connect to. 
+        /// 
+        /// Can be empty if connections are made via DNS names.
+        /// </summary>
+        public string ip { get; set; }
+
+        /// <summary>
+        /// Port number to connect to.
+        /// </summary>
+        public string port { get; set; }
+
+        /// <summary>
+        /// Whether the connection should be made via IP address. 
+        /// 
+        /// Possible values are: 
+        /// 0 - connect using DNS name; 
+        /// 1 - connect using IP address.
+        /// </summary>
+        [JsonConverter(typeof(IntToBoolConverter))]
+        public bool useip { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the proxy the interface belongs to.
+        /// </summary>
+        public string hostid { get; set; }
+        
         #endregion
     }
 }

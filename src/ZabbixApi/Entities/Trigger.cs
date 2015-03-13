@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Trigger
+    public partial class Trigger
     {
         #region Properties
 

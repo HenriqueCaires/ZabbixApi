@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Entities
 {
-    public class HostGroup
+    public partial class HostGroup
     {
         #region Properties
         /// <summary>

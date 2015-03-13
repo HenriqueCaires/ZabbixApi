@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class DiscoveryRule
+    public partial class DiscoveryRule
     {
         #region Properties
         /// <summary>

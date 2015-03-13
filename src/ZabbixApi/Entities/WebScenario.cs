@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class WebScenario
+    public partial class WebScenario
     {
         #region Properties
 
@@ -125,7 +125,7 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public class ScenarioStep
+    public partial class ScenarioStep
     {
         #region Properties
 

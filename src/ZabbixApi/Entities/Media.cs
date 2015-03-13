@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Media
+    public partial class Media
     {
         #region Properties
         /// <summary>

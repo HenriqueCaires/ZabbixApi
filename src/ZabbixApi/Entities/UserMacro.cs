@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class GlobalMacro
+    public partial class GlobalMacro
     {
         /// <summary>
         /// (readonly) ID of the global macro.
@@ -24,7 +24,7 @@ namespace SisMon.Zabbix.Entities
         public string value { get; set; }
     }
 
-    public class HostMacro
+    public partial class HostMacro
     {
         /// <summary>
         /// (readonly) ID of the host macro.

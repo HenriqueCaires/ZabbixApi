@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Template
+    public partial class Template
     {
         /// <summary>
         /// (readonly) ID of the template.

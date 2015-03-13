@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class ItemPrototype
+    public partial class ItemPrototype
     {
         #region Properties
 

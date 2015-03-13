@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class History
+    public partial class History
     {
         #region Properties
         /// <summary>

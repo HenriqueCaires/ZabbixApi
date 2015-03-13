@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Screen
+    public partial class Screen
     {
         /// <summary>
         /// (readonly) ID of the screen.

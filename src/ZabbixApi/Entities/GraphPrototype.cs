@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class GraphPrototype
+    public partial class GraphPrototype
     {
         #region Properties
         /// <summary>

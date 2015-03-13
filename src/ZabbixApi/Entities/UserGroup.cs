@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class UserGroup
+    public partial class UserGroup
     {
         #region Properties
 
@@ -70,5 +70,37 @@ namespace SisMon.Zabbix.Entities
 
         #endregion
 
+    }
+
+    public partial class Permission
+    {
+        #region Properties
+
+        /// <summary>
+        /// ID of the host group to add permission to.
+        /// </summary>
+        public string id { get; set; }
+
+        /// <summary>
+        /// Access level to the host group. 
+        /// 
+        /// Possible values: 
+        /// 0 - access denied; 
+        /// 2 - read-only access; 
+        /// 3 - read-write access.
+        /// </summary>
+        public AccessLevel permission { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum AccessLevel
+        {
+            AccessDenied = 0,
+            ReadOnly = 2,
+            ReadWrite = 3
+        }
+        #endregion
     }
 }

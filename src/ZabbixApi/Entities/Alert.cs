@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Alert
+    public partial class Alert
     {
         #region Properties
         /// <summary>

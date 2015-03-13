@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class TemplateScreen
+    public partial class TemplateScreen
     {
         /// <summary>
         /// (readonly) ID of the template screen.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class LLDRule
+    public partial class LLDRule
     {
         #region Properties
 

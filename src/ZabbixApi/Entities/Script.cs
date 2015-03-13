@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Script
+    public partial class Script
     {
         #region Properties
         /// <summary>

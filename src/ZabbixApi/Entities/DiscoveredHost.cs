@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class DiscoveredHost
+    public partial class DiscoveredHost
     {
         #region Properties
         /// <summary>

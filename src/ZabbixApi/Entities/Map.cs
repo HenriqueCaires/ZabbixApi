@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class Map
+    public partial class Map
     {
         #region Properties
 
@@ -264,7 +264,7 @@ namespace SisMon.Zabbix.Entities
 
         public enum GridSize
         {
-            p20 = 20, 
+            p20 = 20,
             p40 = 40,
             p50 = 50,
             p75 = 75,
@@ -345,6 +345,375 @@ namespace SisMon.Zabbix.Entities
             OnlyCountOfUnacknowledgedProblems = 1,
             CountOfAcknowledgedAndUnacknowledgedProblemsSeparately = 2
         }
+        #endregion
+    }
+
+    public partial class MapElement
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the map element.
+        /// </summary>
+        public string selementid { get; set; }
+
+        /// <summary>
+        /// ID of the object that the map element represents. 
+        /// 
+        /// Required for host, host group, trigger and map type elements.
+        /// </summary>
+        public string elementid { get; set; }
+
+        /// <summary>
+        /// Type of map element. 
+        /// 
+        /// Possible values: 
+        /// 0 - host; 
+        /// 1 - map; 
+        /// 2 - trigger; 
+        /// 3 - host group; 
+        /// 4 - image.
+        /// </summary>
+        public MapElementType elementtype { get; set; }
+
+        /// <summary>
+        /// ID of the image used to display the element in default state.
+        /// </summary>
+        public string iconid_off { get; set; }
+
+        /// <summary>
+        /// How separate host group hosts should be displayed. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) the host group element will take up the whole map; 
+        /// 1 - the host group element will have a fixed size.
+        /// </summary>
+        public AreaType areatype { get; set; }
+
+        /// <summary>
+        /// How a host group element should be displayed on a map. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) display the host group as a single element; 
+        /// 1 - display each host in the group separately.
+        /// </summary>
+        public MapElementSubtype elementsubtype { get; set; }
+
+        /// <summary>
+        /// Height of the fixed size host group element in pixels. 
+        /// 
+        /// Default: 200.
+        /// </summary>
+        public int height { get; set; }
+
+        /// <summary>
+        /// ID of the image used to display disabled map elements. Unused for image elements.
+        /// </summary>
+        public string iconid_disabled { get; set; }
+
+        /// <summary>
+        /// ID of the image used to display map elements in maintenance. Unused for image elements.
+        /// </summary>
+        public string iconid_maintenance { get; set; }
+
+        /// <summary>
+        /// ID of the image used to display map elements with problems. Unused for image elements.
+        /// </summary>
+        public string iconid_on { get; set; }
+
+        /// <summary>
+        /// Label of the element.
+        /// </summary>
+        public string label { get; set; }
+
+        /// <summary>
+        /// Location of the map element label. 
+        /// 
+        /// Possible values: 
+        /// -1 - (default) default location; 
+        /// 0 - bottom; 
+        /// 1 - left; 
+        /// 2 - right; 
+        /// 3 - top.
+        /// </summary>
+        public LabelLocation label_location { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the map that the element belongs to.
+        /// </summary>
+        public string sysmapid { get; set; }
+
+        /// <summary>
+        /// Map element URLs. 
+        /// 
+        /// The map element URL object is described in detail below.
+        /// </summary>
+        public IList<MapElementURL> urls { get; set; }
+
+        /// <summary>
+        /// Whether icon mapping must be used for host elements. 
+        /// 
+        /// Possible values: 
+        /// 0 - do not use icon mapping; 
+        /// 1 - (default) use icon mapping.
+        /// </summary>
+        [JsonConverter(typeof(IntToBoolConverter))]
+        public bool use_iconmap { get; set; }
+
+        /// <summary>
+        /// Host group element placing algorithm. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) grid.
+        /// </summary>
+        public ViewType viewtype { get; set; }
+
+        /// <summary>
+        /// Width of the fixed size host group element in pixels. 
+        /// 
+        /// Default: 200.
+        /// </summary>
+        public int width { get; set; }
+
+        /// <summary>
+        /// X-coordinates of the element in pixels. 
+        /// 
+        /// Default: 0.
+        /// </summary>
+        public int x { get; set; }
+
+        /// <summary>
+        /// Y-coordinates of the element in pixels. 
+        /// 
+        /// Default: 0.
+        /// </summary>
+        public int y { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum MapElementType
+        {
+            Host = 0,
+            Map = 1,
+            Trigger = 2,
+            HostGroup = 3,
+            Image = 4
+        }
+
+        public enum AreaType
+        {
+            TakeUpTheWholeMap = 0,
+            HaveAFixedSize = 1
+        }
+
+        public enum MapElementSubtype
+        {
+            DisplayHostGroupAsSingleElement = 0,
+            DisplayEachHostInGroupSeparately = 1
+        }
+
+        public enum LabelLocation
+        {
+            DefaultLocation = -1,
+            Bottom = 0,
+            Left = 1,
+            Right = 2,
+            Top = 3
+        }
+
+        public enum ViewType
+        {
+            Grid = 0
+        }
+
+
+        #endregion
+    }
+
+    public partial class MapElementURL
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the map element URL.
+        /// </summary>
+        public string sysmapelementurlid { get; set; }
+
+        /// <summary>
+        /// Link caption.
+        /// </summary>
+        public string name { get; set; }
+
+        /// <summary>
+        /// Link URL.
+        /// </summary>
+        public string url { get; set; }
+
+        /// <summary>
+        /// ID of the map element that the URL belongs to.
+        /// </summary>
+        public string selementid { get; set; }
+
+        #endregion
+    }
+
+    public partial class MapLink
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the map link.
+        /// </summary>
+        public string linkid { get; set; }
+
+        /// <summary>
+        /// ID of the first map element linked on one end.
+        /// </summary>
+        public string selementid1 { get; set; }
+
+        /// <summary>
+        /// ID of the first map element linked on the other end.
+        /// </summary>
+        public string selementid2 { get; set; }
+
+        /// <summary>
+        /// Line color as a hexadecimal color code. 
+        /// 
+        /// Default: 000000.
+        /// </summary>
+        public string color { get; set; }
+
+        /// <summary>
+        /// Link line draw style. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) line; 
+        /// 2 - bold line; 
+        /// 3 - dotted line; 
+        /// 4 - dashed line.
+        /// </summary>
+        public DrawStyle drawtype { get; set; }
+
+        /// <summary>
+        /// Link label.
+        /// </summary>
+        public string label { get; set; }
+
+        /// <summary>
+        /// Map link triggers to use as link status indicators. 
+        /// 
+        /// The map link trigger object is described in detail below.
+        /// </summary>
+        public IList<MapLinkTrigger> linktriggers { get; set; }
+
+        /// <summary>
+        /// ID of the map the link belongs to.
+        /// </summary>
+        public string sysmapid { get; set; }
+
+
+        #endregion
+
+        #region ENUMS
+
+        public enum DrawStyle
+        {
+            Line = 0,
+            BoldLine = 2,
+            DottedLine = 3,
+            DashedLine = 4
+        }
+
+        #endregion
+    }
+
+    public partial class MapLinkTrigger
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the map link trigger.
+        /// </summary>
+        public string linktriggerid { get; set; }
+
+        /// <summary>
+        /// ID of the trigger used as a link indicator.
+        /// </summary>
+        public string triggerid { get; set; }
+
+        /// <summary>
+        /// Indicator color as a hexadecimal color code. 
+        /// 
+        /// Default: DD0000.
+        /// </summary>
+        public string color { get; set; }
+
+        /// <summary>
+        /// Indicator draw style. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) line; 
+        /// 2 - bold line; 
+        /// 3 - dotted line; 
+        /// 4 - dashed line.
+        /// </summary>
+        public DrawStyle drawtype { get; set; }
+
+        /// <summary>
+        /// ID of the map link that the link trigger belongs to.
+        /// </summary>
+        public string linkid { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum DrawStyle
+        {
+            Line = 0,
+            BoldLine = 2,
+            DottedLine = 3,
+            DashedLine = 4
+        }
+
+        #endregion
+    }
+
+    public partial class MapURL
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the map URL.
+        /// </summary>
+        public string sysmapurlid { get; set; }
+
+        /// <summary>
+        /// Link caption.
+        /// </summary>
+        public string name { get; set; }
+
+        /// <summary>
+        /// Link URL.
+        /// </summary>
+        public string url { get; set; }
+
+        /// <summary>
+        /// Type of map element for which the URL will be available. 
+        /// 
+        /// Refer to the map element "type" property for a list of supported types. 
+        /// 
+        /// Default: 0.
+        /// </summary>
+        public int elementtype { get; set; }
+
+        /// <summary>
+        /// ID of the map that the URL belongs to.
+        /// </summary>
+        public string sysmapid { get; set; }
+
         #endregion
     }
 }

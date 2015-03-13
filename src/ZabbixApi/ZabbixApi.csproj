@@ -54,6 +54,7 @@
     <Compile Include="Entities\DiscoveryCheck.cs" />
     <Compile Include="Entities\DiscoveryRule.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\UserMacro.cs" />
     <Compile Include="Entities\Graph.cs" />
     <Compile Include="Entities\GraphItem.cs" />
     <Compile Include="Entities\GraphPrototype.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Entities\TriggerPrototype.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserGroup.cs" />
+    <Compile Include="Entities\WebScenario.cs" />
     <Compile Include="Helper\IncludeHelper.cs" />
     <Compile Include="Helper\Check.cs" />
     <Compile Include="Helper\Converters.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class HostPrototype
+    public partial class HostPrototype
     {
         #region Properties
         /// <summary>
@@ -41,6 +41,14 @@ namespace SisMon.Zabbix.Entities
         public string templateid { get; set; }
         #endregion
 
+        #region Associations
+
+        public IList<GroupLink> groupLinks { get; set; }
+
+        public IList<GroupPrototype> groupPrototypes { get; set; }
+
+        #endregion
+
         #region ENUMS
 
         public enum Status
@@ -50,5 +58,53 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+    }
+
+    public partial class GroupLink
+    {
+        /// <summary>
+        /// (readonly) ID of the group link.
+        /// </summary>
+        public string group_prototypeid { get; set; }
+
+        /// <summary>
+        /// ID of the host group.
+        /// </summary>
+        public string groupid { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the host prototype
+        /// </summary>
+        public string hostid { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the parent template group link.
+        /// </summary>
+        public string templateid { get; set; }
+
+    }
+
+    public partial class GroupPrototype
+    {
+        /// <summary>
+        /// (readonly) ID of the group prototype.
+        /// </summary>
+        public string group_prototypeid { get; set; }
+
+        /// <summary>
+        /// Name of the group prototype.
+        /// </summary>
+        public string name { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the host prototype
+        /// </summary>
+        public string hostid { get; set; }
+
+        /// <summary>
+        /// (readonly) ID of the parent template group prototype
+        /// </summary>
+        public string templateid { get; set; }
+
     }
 }

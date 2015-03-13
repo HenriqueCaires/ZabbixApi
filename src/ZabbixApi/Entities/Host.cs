@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Entities
 {
-    public class Host
+    public partial class Host
     {
 
         #region Properties

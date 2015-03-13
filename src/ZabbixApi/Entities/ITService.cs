@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace SisMon.Zabbix.Entities
 {
-    public class ITService
+    public partial class ITService
     {
         #region Properties
         /// <summary>
@@ -75,5 +75,137 @@ namespace SisMon.Zabbix.Entities
         }
 
         #endregion
+    }
+
+    public partial class ServiceTime
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the service time.
+        /// </summary>
+        public string timeid { get; set; }
+
+        /// <summary>
+        /// ID of the IT service. 
+        /// 
+        /// Cannot be updated.
+        /// </summary>
+        public string serviceid { get; set; }
+
+        /// <summary>
+        /// Time when the service time comes into effect. 
+        /// 
+        /// For onetime downtimes ts_from must be set as a Unix timestamp, for other types - as a specific time in a week, in seconds, for example, 90000 for Tue, 2:00 AM.
+        /// </summary>
+        public int ts_from { get; set; }
+
+        /// <summary>
+        /// Time when the service time ends. 
+        /// 
+        /// For onetime uptimes ts_to must be set as a Unix timestamp, for other types - as a specific time in a week, in seconds, for example, 90000 for Tue, 2:00 AM.
+        /// </summary>
+        public int ts_to { get; set; }
+
+        /// <summary>
+        /// Service time type. 
+        /// 
+        /// Possible values: 
+        /// 0 - planned uptime, repeated every week; 
+        /// 1 - planned downtime, repeated every week; 
+        /// 2 - one-time downtime.
+        /// </summary>
+        public ServiceTimeType type { get; set; }
+
+        /// <summary>
+        /// Additional information about the service time.
+        /// </summary>
+        public string note { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum ServiceTimeType
+        {
+            PlannedUptime = 0,
+            OlannedDowntime = 1,
+            OneTime = 2
+        }
+
+        #endregion
+    }
+
+    public partial class ServiceDependency
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the service dependency.
+        /// </summary>
+        public string linkid { get; set; }
+
+        /// <summary>
+        /// ID of the IT service, that a service depends on, that is, the child service. An IT service can have multiple children.
+        /// </summary>
+        public string servicedownid { get; set; }
+
+        /// <summary>
+        /// ID of the IT service, that is dependent on a service, that is, the parent service. An IT service can have multiple parents forming a directed graph.
+        /// </summary>
+        public string serviceupid { get; set; }
+
+        /// <summary>
+        /// Type of dependency between IT services. 
+        /// 
+        /// Possible values: 
+        /// 0 - hard dependency; 
+        /// 1 - soft dependency. 
+        /// 
+        /// An IT service can have only one hard-dependent parent. This attribute has no effect on status or SLA calculation and is only used to create a core IT service tree. Additional parents can be added as soft dependencies forming a graph. 
+        /// 
+        /// An IT service can not be deleted if it has hard-dependent children.
+        /// </summary>
+        public DependencyType soft { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum DependencyType
+        {
+            Hard = 0,
+            Soft = 1
+        }
+
+        #endregion
+
+    }
+
+    public partial class ServiceAlarm
+    {
+        /// <summary>
+        /// ID of the service alarm.
+        /// </summary>
+        public string servicealarmid { get; set; }
+
+        /// <summary>
+        /// ID of the IT service.
+        /// </summary>
+        public string serviceid { get; set; }
+
+        /// <summary>
+        /// Time when the IT service state change has happened.
+        /// </summary>
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime clock { get; set; }
+
+        /// <summary>
+        /// Status of the IT service. 
+        /// 
+        /// Refer the the IT service status property for a list of possible values.
+        /// </summary>
+        public int value { get; set; }
+
     }
 }

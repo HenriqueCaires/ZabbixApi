@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Entities
 {
-    public class HostInterface
+    public partial class HostInterface
     {
         /// <summary>
         /// (readonly) ID of the interface.
