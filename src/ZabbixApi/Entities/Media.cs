@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Media
+    public partial class Media : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the media.
         /// </summary>
-        public string mediaid { get; set; }
+        [JsonProperty("mediaid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Whether the media is enabled. 

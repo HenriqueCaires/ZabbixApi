@@ -5,18 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zabbix.Entities;
+using Zabbix.Services;
 
 namespace ZabbixApi.Entities
 {
-    public partial class Host
+    public partial class Host : EntityBase
     {
-
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the host.
         /// </summary>
-        public string hostid { get; set; }
+        [JsonProperty("hostid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Technical name of the host.
@@ -240,6 +242,47 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<HostGroup> groups { get; set; }
 
+        /// <summary>
+        /// Templates
+        /// </summary>
+        public IList<Template> templates { get; set; }
+
+        /// <summary>
+        /// Triggers
+        /// </summary>
+        public IList<Trigger> triggers { get; set; }
+
+        /// <summary>
+        /// Items
+        /// </summary>
+        public IList<Item> items { get; set; }
+
+        /// <summary>
+        /// Graphs
+        /// </summary>
+        public IList<Graph> graphs { get; set; }
+
+        /// <summary>
+        /// Applications
+        /// </summary>
+        public IList<Application> applications { get; set; }
+
+        /// <summary>
+        /// HttpTests
+        /// </summary>
+        public IList<WebScenario> httptests { get; set; }
+
+        /// <summary>
+        /// Discovered Services
+        /// </summary>
+        public IList<DiscoveredService> dservices { get; set; }
+
+        /// <summary>
+        /// Maintenances
+        /// </summary>
+        public IList<Maintenance> maintenances { get; set; }
+        
+
         #endregion
 
         #region ENUMS
@@ -293,7 +336,7 @@ namespace ZabbixApi.Entities
         public enum AuthenticationAlgorithm
         {
             Default = -1,
-            None = 0, 
+            None = 0,
             MD2 = 1,
             MD5 = 2,
             Straight = 4,

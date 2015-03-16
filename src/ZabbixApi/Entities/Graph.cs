@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Graph
+    public partial class Graph : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the graph.
         /// </summary>
         public string graphid { get; set; }
+
 
         /// <summary>
         /// Height of the graph in pixels.

@@ -6,11 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class ITService
+    public partial class ITService : EntityBase
     {
         #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the IT service.
+        /// </summary>
+        [JsonProperty("serviceid")]
+        public override string Id { get; set; }
+
         /// <summary>
         /// Algorithm used to calculate the state of the IT service. 
         /// 
@@ -86,14 +93,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class ServiceTime
+    public partial class ServiceTime : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the service time.
         /// </summary>
-        public string timeid { get; set; }
+        [JsonProperty("timeid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the IT service. 
@@ -145,14 +153,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class ServiceDependency
+    public partial class ServiceDependency : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the service dependency.
         /// </summary>
-        public string linkid { get; set; }
+        [JsonProperty("linkid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the IT service, that a service depends on, that is, the child service. An IT service can have multiple children.
@@ -191,14 +200,15 @@ namespace SisMon.Zabbix.Entities
 
     }
 
-    public partial class ServiceAlarm
+    public partial class ServiceAlarm : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// ID of the service alarm.
         /// </summary>
-        public string servicealarmid { get; set; }
+        [JsonProperty("servicealarmid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the IT service.

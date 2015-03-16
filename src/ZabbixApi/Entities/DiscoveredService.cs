@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class DiscoveredService
+    public partial class DiscoveredService : EntityBase
     {
         #region Properties
         /// <summary>
         /// ID of the discovered service.
         /// </summary>
-        public string dserviceid { get; set; }
+        [JsonProperty("dserviceid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the discovery check used to detect the service.

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Map
+    public partial class Map : EntityBase
     {
         #region Properties
 
@@ -16,6 +16,8 @@ namespace SisMon.Zabbix.Entities
         /// (readonly) ID of the map.
         /// </summary>
         public string sysmapid { get; set; }
+        [JsonProperty("sysmapid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Height of the map in pixels.
@@ -372,14 +374,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class MapElement
+    public partial class MapElement : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the map element.
         /// </summary>
-        public string selementid { get; set; }
+        [JsonProperty("selementid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the object that the map element represents. 
@@ -572,14 +575,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class MapElementURL
+    public partial class MapElementURL : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the map element URL.
         /// </summary>
-        public string sysmapelementurlid { get; set; }
+        [JsonProperty("sysmapelementurlid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Link caption.
@@ -599,14 +603,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class MapLink
+    public partial class MapLink : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the map link.
         /// </summary>
-        public string linkid { get; set; }
+        [JsonProperty("linkid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the first map element linked on one end.
@@ -678,14 +683,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class MapLinkTrigger
+    public partial class MapLinkTrigger : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the map link trigger.
         /// </summary>
-        public string linktriggerid { get; set; }
+        [JsonProperty("linktriggerid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the trigger used as a link indicator.
@@ -740,14 +746,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class MapURL
+    public partial class MapURL : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the map URL.
         /// </summary>
-        public string sysmapurlid { get; set; }
+        [JsonProperty("sysmapurlid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Link caption.

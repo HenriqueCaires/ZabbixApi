@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class GlobalMacro
+    public partial class GlobalMacro : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the global macro.
         /// </summary>
-        public string globalmacroid { get; set; }
+        [JsonProperty("globalmacroid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Macro string.
@@ -28,14 +30,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class HostMacro
+    public partial class HostMacro : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the host macro.
         /// </summary>
-        public string hostmacroid { get; set; }
+        [JsonProperty("hostmacroid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the host that the macro belongs to.

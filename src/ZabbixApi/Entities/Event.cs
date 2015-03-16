@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Event
+    public partial class Event : EntityBase
     {
         #region Properties
         /// <summary>
         /// ID of the event.
         /// </summary>
-        public string eventid { get; set; }
+        [JsonProperty("eventid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Whether the event has been acknowledged.

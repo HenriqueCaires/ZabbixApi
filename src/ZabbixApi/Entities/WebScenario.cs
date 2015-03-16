@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class WebScenario
+    public partial class WebScenario : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the web scenario.
         /// </summary>
-        public string httptestid { get; set; }
+        [JsonProperty("httptestid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the host that the web scenario belongs to.
@@ -137,14 +138,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class ScenarioStep
+    public partial class ScenarioStep : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the scenario step.
         /// </summary>
-        public string httpstepid { get; set; }
+        [JsonProperty("httpstepid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the scenario step.

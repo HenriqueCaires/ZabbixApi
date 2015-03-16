@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Trigger
+    public partial class Trigger : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the trigger.
         /// </summary>
-        public string triggerid { get; set; }
+        [JsonProperty("triggerid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the trigger.

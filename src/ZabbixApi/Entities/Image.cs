@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Image
+    public partial class Image : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the image.
         /// </summary>
-        public string imageid { get; set; }
+        [JsonProperty("imageid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the image.

@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class GraphItem
+    public partial class GraphItem : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the graph item.
         /// </summary>
-        public string gitemid { get; set; }
+        [JsonProperty("gitemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Graph item's draw color as a hexadecimal color code.

@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class History
+    public partial class History : EntityBase
     {
         #region Properties
         /// <summary>
@@ -20,7 +20,8 @@ namespace SisMon.Zabbix.Entities
         /// <summary>
         /// ID of the related item.
         /// </summary>
-        public string itemid { get; set; }
+        [JsonProperty("itemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Nanoseconds when the value was received.

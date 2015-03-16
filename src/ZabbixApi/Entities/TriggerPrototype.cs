@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class TriggerPrototype
+    public partial class TriggerPrototype : EntityBase
     {
         #region Properties
         
         /// <summary>
         /// (readonly) ID of the trigger prototype.
         /// </summary>
-        public string triggerid { get; set; }
+        [JsonProperty("triggerid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the trigger prototype.

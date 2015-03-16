@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class DiscoveryRule
+    public partial class DiscoveryRule : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the discovery rule.
         /// </summary>
-        public string druleid { get; set; }
+        [JsonProperty("druleid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// One or several IP ranges to check separated by commas. 

@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Item
+    public partial class Item : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the item.
         /// </summary>
-        public string itemid { get; set; }
+        [JsonProperty("itemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Update interval of the item in seconds.

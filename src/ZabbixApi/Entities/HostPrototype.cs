@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class HostPrototype
+    public partial class HostPrototype : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the host prototype.
         /// </summary>
-        public string hostid { get; set; }
+        [JsonProperty("hostid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Technical name of the host prototype.
@@ -69,12 +71,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class GroupLink
+    public partial class GroupLink : EntityBase
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the group link.
         /// </summary>
-        public string group_prototypeid { get; set; }
+        [JsonProperty("group_prototypeid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the host group.
@@ -91,14 +96,18 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public string templateid { get; set; }
 
+        #endregion
     }
 
-    public partial class GroupPrototype
+    public partial class GroupPrototype : EntityBase
     {
+        #region Properties
+
         /// <summary>
         /// (readonly) ID of the group prototype.
         /// </summary>
-        public string group_prototypeid { get; set; }
+        [JsonProperty("group_prototypeid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the group prototype.
@@ -115,5 +124,6 @@ namespace SisMon.Zabbix.Entities
         /// </summary>
         public string templateid { get; set; }
 
+        #endregion
     }
 }

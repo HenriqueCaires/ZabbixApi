@@ -5,17 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zabbix.Entities;
 
 namespace ZabbixApi.Entities
 {
-    public partial class HostInterface
+    public partial class HostInterface : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the interface.
         /// </summary>
-        public string interfaceid { get; set; }
+        [JsonProperty("interfaceid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// DNS name used by the interface. 

@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class LLDRule
+    public partial class LLDRule : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the LLD rule.
         /// </summary>
-        public string itemid { get; set; }
+        [JsonProperty("itemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Update interval of the LLD rule in seconds.

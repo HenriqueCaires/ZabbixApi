@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class IconMap
+    public partial class IconMap : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the icon map.
         /// </summary>
-        public string iconmapid { get; set; }
+        [JsonProperty("iconmapid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the default icon.
@@ -34,14 +36,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class IconMapping
+    public partial class IconMapping : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the icon map.
         /// </summary>
-        public string iconmappingid { get; set; }
+        [JsonProperty("iconmappingid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the icon used by the icon mapping.

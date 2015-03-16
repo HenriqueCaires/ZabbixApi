@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class DiscoveredHost
+    public partial class DiscoveredHost : EntityBase
     {
         #region Properties
         /// <summary>
         /// ID of the discovered host.
         /// </summary>
-        public string dhostid { get; set; }
+        [JsonProperty("dhostid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the discovery rule that detected the host.

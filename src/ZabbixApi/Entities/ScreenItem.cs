@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class ScreenItem
+    public partial class ScreenItem : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the screen item.
         /// </summary>
-        public string screenitemid { get; set; }
+        [JsonProperty("screenitemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Number of columns the screen item will span across.

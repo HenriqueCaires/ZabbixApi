@@ -3,27 +3,52 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ZabbixApi.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using SisMon.Zabbix.Services;
+using Zabbix.Services;
+using Newtonsoft.Json;
+using Rhino.Mocks;
+using System.IO;
 
 namespace ZabbixApi.Test
 {
     [TestClass]
+    [DeploymentItem(@"Samples\Host\host.get.json", @"Samples\Host\")]
     public class HostServiceUnitTest
     {
-        [TestMethod]
-        public void TryGetSomeHost()
+        string _hostGet = @"Samples\Host\host.get.json";
+        JsonSerializerSettings _settings;
+        IContext _context;
+
+        public HostServiceUnitTest()
         {
-            using (var context = new Context() as IContext)
-            {
-                var target = new HostService(context) as IHostService;
-                var result = target.GetByName("teste2").FirstOrDefault();
-                result.host = "teste2";
-                result.name = "teste2";
+            _settings = new JsonSerializerSettings();
+            _settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }; ;
+            _settings.NullValueHandling = NullValueHandling.Ignore;
+        }
 
-                result.interfaces[0].ip = "172.20.12.57";
 
-                var v = target.Update(result);
-            }
+        [TestInitialize]
+        public void Initialize()
+        {
+            _context = MockRepository.GenerateStub<IContext>();
+        }
+
+        [TestMethod]
+        public void GetHost_SomeName_SomeHost()
+        {
+            var data = JsonConvert.DeserializeObject<Host[]>(File.ReadAllText(_hostGet), _settings);
+
+            _context.Stub(x => x.SendRequest<Host[]>(Arg<object>.Is.Anything, Arg<string>.Is.Anything)).Return(data);
+
+            var target = new HostService(_context) as IHostService;
+            
+            var result = target.GetByName("teste");
+
+            Assert.AreEqual(1, result.Count);
+
+            var r = result.First();
+
+            Assert.AreEqual("teste", r.host);
+            Assert.AreEqual("127.0.0.1", r.interfaces.First().ip);
         }
     }
 }

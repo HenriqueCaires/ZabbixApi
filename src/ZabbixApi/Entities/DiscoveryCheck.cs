@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class DiscoveryCheck
+    public partial class DiscoveryCheck : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the discovery check.
         /// </summary>
-        public string dcheckid { get; set; }
+        [JsonProperty("dcheckid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the discovery rule that the check belongs to.

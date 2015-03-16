@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Maintenance
+    public partial class Maintenance : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the maintenance.
         /// </summary>
-        public string maintenanceid { get; set; }
+        [JsonProperty("maintenanceid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the maintenance.
@@ -75,14 +76,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class TimePeriod
+    public partial class TimePeriod : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the maintenance.
         /// </summary>
-        public string timeperiodid { get; set; }
+        [JsonProperty("timeperiodid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Day of the month when the maintenance must come into effect. 

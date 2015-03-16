@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Action
+    public partial class Action : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the action.
         /// </summary>
-        public string actionid { get; set; }
+        [JsonProperty("actionid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Default operation step duration. Must be greater than 60 seconds.

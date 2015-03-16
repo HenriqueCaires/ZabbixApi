@@ -7,8 +7,8 @@
     <ProjectGuid>{F18F60A6-731B-4929-9876-A1F6D75CF2FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SisMon.Zabbix</RootNamespace>
-    <AssemblyName>SisMon.Zabbix</AssemblyName>
+    <RootNamespace>Zabbix</RootNamespace>
+    <AssemblyName>Zabbix</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -54,6 +54,7 @@
     <Compile Include="Entities\DiscoveryCheck.cs" />
     <Compile Include="Entities\DiscoveryRule.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Entities\UserMacro.cs" />
     <Compile Include="Entities\Graph.cs" />
     <Compile Include="Entities\GraphItem.cs" />
@@ -90,7 +91,12 @@
     <Compile Include="Helper\Converters.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ActionService.cs" />
+    <Compile Include="Services\AlertService.cs" />
+    <Compile Include="Services\CRUDService.cs" />
+    <Compile Include="Services\EntityResultBase.cs" />
     <Compile Include="Services\HostService.cs" />
+    <Compile Include="Services\ServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

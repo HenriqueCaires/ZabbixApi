@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class User
+    public partial class User : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the user.
         /// </summary>
-        public string userid { get; set; }
+        [JsonProperty("userid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// User alias.

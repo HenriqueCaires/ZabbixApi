@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zabbix.Entities;
 
 namespace ZabbixApi.Entities
 {
-    public partial class HostGroup
+    public partial class HostGroup : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the host group.
         /// </summary>
-        public string groupid { get; set; }
+        [JsonProperty("groupid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the host group.

@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Proxy
+    public partial class Proxy : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the proxy.
         /// </summary>
-        public string proxyid { get; set; }
+        [JsonProperty("proxyid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// (readonly) ID of the proxy.
@@ -50,14 +51,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class ProxyInterface
+    public partial class ProxyInterface : EntityBase
     {
         #region Properties
         
         /// <summary>
         /// (readonly) ID of the interface.
         /// </summary>
-        public string interfaceid { get; set; }
+        [JsonProperty("interfaceid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// DNS name to connect to. 

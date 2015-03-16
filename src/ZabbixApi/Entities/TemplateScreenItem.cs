@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class TemplateScreenItem
+    public partial class TemplateScreenItem : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the template screen item.
         /// </summary>
-        public string screenitemid { get; set; }
+        [JsonProperty("screenitemid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Number of columns the template screen item will span across.

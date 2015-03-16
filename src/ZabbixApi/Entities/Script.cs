@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Script
+    public partial class Script : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the script.
         /// </summary>
-        public string scriptid { get; set; }
+        [JsonProperty("scriptid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Command to run.
@@ -107,7 +109,7 @@ namespace SisMon.Zabbix.Entities
             groupid = "0";
             host_access = HostAccess.Read;
             type = ScriptType.Script;
-            usrgrpid = 0;
+            usrgrpid = "0";
         }
 
         #endregion

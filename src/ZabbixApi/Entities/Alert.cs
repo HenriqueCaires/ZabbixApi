@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class Alert
+    public partial class Alert : EntityBase
     {
         #region Properties
         /// <summary>
         /// ID of the alert.
         /// </summary>
-        public string alertid { get; set; }
+        [JsonProperty("alertid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the action that generated the alert.
@@ -94,6 +96,25 @@ namespace SisMon.Zabbix.Entities
         /// ID of the user that the message was sent to.
         /// </summary>
         public string userid { get; set; }
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Hosts
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Media Types
+        /// </summary>
+        public IList<MediaType> mediatypes  { get; set; }
+
+        /// <summary>
+        /// Users
+        /// </summary>
+        public IList<User> users { get; set; }
+
         #endregion
 
         #region ENUMS

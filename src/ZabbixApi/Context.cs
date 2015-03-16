@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using SisMon.Zabbix.Helper;
+using Zabbix.Helper;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -74,10 +74,10 @@ namespace ZabbixApi
             var responseString = Encoding.UTF8.GetString(responseData);
 
             var settings = new JsonSerializerSettings();
-            settings.Converters = new JsonConverter[]{ new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter()};;
+            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }; ;
             settings.NullValueHandling = NullValueHandling.Ignore;
 
-            var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings );
+            var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings);
 
             if (response.error != null)
             {
@@ -120,12 +120,12 @@ namespace ZabbixApi
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         ~Context()
         {
             Dispose(false);
         }
-        
+
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

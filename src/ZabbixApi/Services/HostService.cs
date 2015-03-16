@@ -1,4 +1,5 @@
-﻿using SisMon.Zabbix.Helper;
+﻿using Newtonsoft.Json;
+using Zabbix.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,61 +8,50 @@ using System.Threading.Tasks;
 using ZabbixApi;
 using ZabbixApi.Entities;
 
-namespace SisMon.Zabbix.Services
+namespace Zabbix.Services
 {
-    public interface IHostService
+    public interface IHostService : ICRUDService<Host, HostInclude>
     {
-        IList<Host> Get(object filter = null, IList<HostService.Include> include = null);
-        IList<Host> GetByName(string name, IList<HostService.Include> include = null);
-        IList<Host> GetByName(List<string> names, IList<HostService.Include> include = null);
-        IList<Host> GetById(string id, IList<HostService.Include> include = null);
-        IList<Host> GetById(List<string> ids, IList<HostService.Include> include = null);
-        IList<string> Create(Host host);
-        IList<string> Update(Host host);
-        IList<string> Delete(IList<string> ids);
-        IList<string> Delete(string id);
-        IList<string> Delete(IList<Host> hosts);
-        IList<string> Delete(Host host);
+        IList<Host> GetByName(string name, IList<HostInclude> include = null);
+        IList<Host> GetByName(List<string> names, IList<HostInclude> include = null);
+        IList<Host> GetById(string id, IList<HostInclude> include = null);
+        IList<Host> GetById(List<string> ids, IList<HostInclude> include = null);
     }
 
-    public class HostService : IHostService
+    public class HostService : CRUDService<Host, HostService.HostidsResult, HostInclude>, IHostService
     {
-        private IContext _context;
-        private const string className = "host";
+        public HostService(IContext context) : base(context, "host") { }
 
-        public HostService(IContext context)
-        {
-            _context = context;
-        }
 
-        public IList<Host> Get(object filter = null, IList<Include> include = null)
+        public override IList<Host> Get(object filter = null, IList<HostInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            return _context.SendRequest<Host[]>(
-                    new
+
+            var @params = new
                     {
                         output = "extend",
-                        selectGroups = includeHelper.WhatShouldInclude((int)Include.Groups),
-                        selectApplications = includeHelper.WhatShouldInclude((int)Include.Applications),
-                        selectDiscoveries = includeHelper.WhatShouldInclude((int)Include.Discoveries),
-                        selectDiscoveryRule = includeHelper.WhatShouldInclude((int)Include.DiscoveryRule),
-                        selectGraphs = includeHelper.WhatShouldInclude((int)Include.Graphs),
-                        selectHostDiscovery = includeHelper.WhatShouldInclude((int)Include.HostDiscovery),
-                        selectHttpTests = includeHelper.WhatShouldInclude((int)Include.HttpTests),
-                        selectInterfaces = includeHelper.WhatShouldInclude((int)Include.Interfaces),
-                        selectInventory = includeHelper.WhatShouldInclude((int)Include.Inventory),
-                        selectItems = includeHelper.WhatShouldInclude((int)Include.Items),
-                        selectMacros = includeHelper.WhatShouldInclude((int)Include.Macros),
-                        selectParentTemplates = includeHelper.WhatShouldInclude((int)Include.ParentTemplates),
-                        selectScreens = includeHelper.WhatShouldInclude((int)Include.Screens),
-                        selectTriggers = includeHelper.WhatShouldInclude((int)Include.Triggers),
+                        selectGroups = includeHelper.WhatShouldInclude((int)HostInclude.Groups),
+                        selectApplications = includeHelper.WhatShouldInclude((int)HostInclude.Applications),
+                        selectDiscoveries = includeHelper.WhatShouldInclude((int)HostInclude.Discoveries),
+                        selectDiscoveryRule = includeHelper.WhatShouldInclude((int)HostInclude.DiscoveryRule),
+                        selectGraphs = includeHelper.WhatShouldInclude((int)HostInclude.Graphs),
+                        selectHostDiscovery = includeHelper.WhatShouldInclude((int)HostInclude.HostDiscovery),
+                        selectHttpTests = includeHelper.WhatShouldInclude((int)HostInclude.HttpTests),
+                        selectInterfaces = includeHelper.WhatShouldInclude((int)HostInclude.Interfaces),
+                        selectInventory = includeHelper.WhatShouldInclude((int)HostInclude.Inventory),
+                        selectItems = includeHelper.WhatShouldInclude((int)HostInclude.Items),
+                        selectMacros = includeHelper.WhatShouldInclude((int)HostInclude.Macros),
+                        selectParentTemplates = includeHelper.WhatShouldInclude((int)HostInclude.ParentTemplates),
+                        selectScreens = includeHelper.WhatShouldInclude((int)HostInclude.Screens),
+                        selectTriggers = includeHelper.WhatShouldInclude((int)HostInclude.Triggers),
+
                         filter = filter
-                    },
-                    className + ".get"
-                    );
+                    };
+
+            return BaseGet(@params);
         }
 
-        public IList<Host> GetByName(string name, IList<Include> include = null)
+        public IList<Host> GetByName(string name, IList<HostInclude> include = null)
         {
             return GetByName(
                 names: new List<string>() { name },
@@ -69,7 +59,7 @@ namespace SisMon.Zabbix.Services
             );
         }
 
-        public IList<Host> GetByName(List<string> names, IList<Include> include = null)
+        public IList<Host> GetByName(List<string> names, IList<HostInclude> include = null)
         {
             return Get(
                 filter: new
@@ -80,7 +70,7 @@ namespace SisMon.Zabbix.Services
             );
         }
 
-        public IList<Host> GetById(string id, IList<Include> include = null)
+        public IList<Host> GetById(string id, IList<HostInclude> include = null)
         {
             return GetById(
                 ids: new List<string>() { id },
@@ -88,7 +78,7 @@ namespace SisMon.Zabbix.Services
             );
         }
 
-        public IList<Host> GetById(List<string> ids, IList<Include> include = null)
+        public IList<Host> GetById(List<string> ids, IList<HostInclude> include = null)
         {
             return Get(
                 filter: new
@@ -99,67 +89,32 @@ namespace SisMon.Zabbix.Services
             );
         }
 
-        public IList<string> Create(Host host)
+        public class HostidsResult : EntityResultBase
         {
-            return _context.SendRequest<HostidsResult>(
-                    host,
-                    className + ".create"
-                    ).hostids;
+            [JsonProperty("hostids")]
+            public override string[] ids { get; set; }
         }
 
-        public IList<string> Update(Host host)
-        {
-            return _context.SendRequest<HostidsResult>(
-                    host,
-                    className + ".update"
-                    ).hostids;
-        }
+        
+    }
 
-        public IList<string> Delete(IList<string> ids)
-        {
-            return _context.SendRequest<HostidsResult>(
-                    ids,
-                    className + ".update"
-                    ).hostids;
-        }
-
-        public IList<string> Delete(string id)
-        {
-            return Delete(new List<string>() { id });
-        }
-
-        public IList<string> Delete(IList<Host> hosts)
-        {
-            return Delete(hosts.Select(x => x.hostid).ToList());
-        }
-
-        public IList<string> Delete(Host host)
-        {
-            return Delete(host.hostid);
-        }
-
-        internal class HostidsResult
-        {
-            public IList<string> hostids { get; set; }
-        }
-
-        public enum Include
-        {
-            All = 1,
-            Groups = 2,
-            Applications = 4,
-            Discoveries = 8,
-            DiscoveryRule = 16,
-            Graphs = 32,
-            HostDiscovery = 64,
-            HttpTests = 128,
-            Interfaces = 256,
-            Inventory = 512,
-            Items = 1024,
-            Macros = 2048,
-            ParentTemplates = 4096,
-            Screens = 8192,
-            Triggers = 16384
-        }
+    public enum HostInclude
+    {
+        All = 1,
+        None = 2,
+        Groups = 4,
+        Applications = 8,
+        Discoveries = 16,
+        DiscoveryRule = 32,
+        Graphs = 64,
+        HostDiscovery = 128,
+        HttpTests = 256,
+        Interfaces = 512,
+        Inventory = 1024,
+        Items = 2048,
+        Macros = 4096,
+        ParentTemplates = 8192,
+        Screens = 16384,
+        Triggers = 32768
     }
 }

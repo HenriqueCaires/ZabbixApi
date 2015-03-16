@@ -6,16 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class UserGroup
+    public partial class UserGroup : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// (readonly) ID of the user group.
         /// </summary>
-        public string usrgrpid { get; set; }
+        [JsonProperty("usrgrpid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Name of the user group.
@@ -82,14 +83,15 @@ namespace SisMon.Zabbix.Entities
         #endregion
     }
 
-    public partial class Permission
+    public partial class Permission : EntityBase
     {
         #region Properties
 
         /// <summary>
         /// ID of the host group to add permission to.
         /// </summary>
-        public string id { get; set; }
+        [JsonProperty("id")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Access level to the host group. 

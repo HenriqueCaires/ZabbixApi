@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace SisMon.Zabbix.Entities
+namespace Zabbix.Entities
 {
-    public partial class GraphPrototype
+    public partial class GraphPrototype : EntityBase
     {
         #region Properties
         /// <summary>
         /// (readonly) ID of the graph prototype.
         /// </summary>
-        public string graphid { get; set; }
+        [JsonProperty("graphid")]
+        public override string Id { get; set; }
 
         /// <summary>
         /// Height of the graph prototype in pixels.
