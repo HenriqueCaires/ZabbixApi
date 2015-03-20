@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
   <appSettings>
-    <add key="ZabbixApi.url" value="http://myZabbixServer/zabbix/api_jsonrpc.php" />
+    <add key="ZabbixApi.url" value="http://172.20.8.70/zabbix/api_jsonrpc.php" />
     <add key="ZabbixApi.user" value="Admin" />
     <add key="ZabbixApi.password" value="zabbix" />
   </appSettings>

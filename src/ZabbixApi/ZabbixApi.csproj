@@ -134,7 +134,11 @@
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config.uninstall.xdt" />
+    <None Include="app.config.install.xdt" />
     <None Include="packages.config" />
+    <None Include="web.config.uninstall.xdt" />
+    <None Include="web.config.install.xdt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

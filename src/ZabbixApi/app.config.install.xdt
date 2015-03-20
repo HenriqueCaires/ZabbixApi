@@ -1,0 +1,8 @@
+﻿<?xml version="1.0"?>
+<configuration  xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <appSettings>
+    <add key="ZabbixApi.url" value="http://myZabbixServer/zabbix/api_jsonrpc.php" xdt:Transform="Insert" />
+    <add key="ZabbixApi.user" value="Admin" xdt:Transform="Insert" />
+    <add key="ZabbixApi.password" value="zabbix" xdt:Transform="Insert" />
+  </appSettings>
+</configuration>
