@@ -1,8 +1,0 @@
-﻿<?xml version="1.0"?>
-<configuration  xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
-  <appSettings>
-    <add key="ZabbixApi.url" xdt:Transform="Remove" xdt:Locator="Match(name)" />
-    <add key="ZabbixApi.user" xdt:Transform="Remove" xdt:Locator="Match(name)" />
-    <add key="ZabbixApi.password" xdt:Transform="Remove" xdt:Locator="Match(name)" />
-  </appSettings>
-</configuration>
