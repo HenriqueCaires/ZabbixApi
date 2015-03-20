@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class MediaType : EntityBase
     {
@@ -96,6 +96,15 @@ namespace Zabbix.Entities
         /// Required for Jabber and Ez Texting media types.
         /// </summary>
         public string username { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// The users that use the media type
+        /// </summary>
+        public IList<User> users { get; set; }
 
         #endregion
 

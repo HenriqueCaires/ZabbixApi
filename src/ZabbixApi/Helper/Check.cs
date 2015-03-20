@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Helper
+namespace ZabbixApi.Helper
 {
     public class Check
     {

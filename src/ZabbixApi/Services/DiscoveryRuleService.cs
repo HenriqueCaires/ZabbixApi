@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zabbix.Entities;
-using Zabbix.Helper;
+using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 using ZabbixApi;
 
-namespace Zabbix.Services
+namespace ZabbixApi.Services
 {
     public interface IDiscoveryRuleService : ICRUDService<DiscoveryRule, DiscoveryRuleInclude>
     {

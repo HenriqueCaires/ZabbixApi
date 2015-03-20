@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class TemplateScreen : EntityBase
     {
@@ -40,6 +40,15 @@ namespace Zabbix.Entities
         /// Default: 1
         /// </summary>
         public int vsize { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// The screen items that are used in the template screen
+        /// </summary>
+        public IList<ScreenItem> screenitems { get; set; }
 
         #endregion
 

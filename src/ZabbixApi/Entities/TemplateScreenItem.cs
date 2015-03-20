@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class TemplateScreenItem : EntityBase
     {

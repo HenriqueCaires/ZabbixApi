@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Proxy : EntityBase
     {
@@ -37,6 +38,21 @@ namespace Zabbix.Entities
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
         public DateTime lastaccess { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Hosts monitored by the proxy
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// The proxy interface used by a passive proxy
+        /// </summary>
+        [JsonProperty("interface")]
+        public ProxyInterface @interface { get; set; }
 
         #endregion
 

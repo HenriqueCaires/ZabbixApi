@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class UserGroup : EntityBase
     {
@@ -51,6 +51,15 @@ namespace Zabbix.Entities
         /// 1 - disabled.
         /// </summary>
         public Status users_status { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// The users from the user group
+        /// </summary>
+        public IList<User> users { get; set; }
 
         #endregion
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Item : EntityBase
     {
@@ -21,29 +21,29 @@ namespace Zabbix.Entities
         /// <summary>
         /// Update interval of the item in seconds.
         /// </summary>
-        public int delay  { get; set; }
+        public int delay { get; set; }
 
         /// <summary>
         /// ID of the host that the item belongs to.
         /// </summary>
-        public string hostid  { get; set; }
+        public string hostid { get; set; }
 
         /// <summary>
         /// ID of the item's host interface. Used only for host items. 
         /// 
         /// Optional for Zabbix agent (active), Zabbix internal, Zabbix trapper, Zabbix aggregate, database monitor and calculated items.
         /// </summary>
-        public string interfaceid  { get; set; }
+        public string interfaceid { get; set; }
 
         /// <summary>
         /// Item key.
         /// </summary>
-        public string key_  { get; set; }
+        public string key_ { get; set; }
 
         /// <summary>
         /// Name of the item.
         /// </summary>
-        public string name  { get; set; }
+        public string name { get; set; }
 
         /// <summary>
         /// Type of the item. 
@@ -68,7 +68,7 @@ namespace Zabbix.Entities
         /// 16 - JMX agent; 
         /// 17 - SNMP trap.
         /// </summary>
-        public ItemType type  { get; set; }
+        public ItemType type { get; set; }
 
         /// <summary>
         /// Type of information of the item. 
@@ -80,7 +80,7 @@ namespace Zabbix.Entities
         /// 3 - numeric unsigned; 
         /// 4 - text.
         /// </summary>
-        public ValueType value_type  { get; set; }
+        public ValueType value_type { get; set; }
 
         /// <summary>
         /// SSH authentication method. Used only by SSH agent items. 
@@ -203,7 +203,7 @@ namespace Zabbix.Entities
         /// Whether to use a custom multiplier.
         /// </summary>
         public int multiplier { get; set; }
-        
+
         /// <summary>
         /// Additional parameters depending on the type of the item: 
         /// - executed script for SSH and Telnet items; 
@@ -391,7 +391,8 @@ namespace Zabbix.Entities
         #endregion
 
         #region ENUMS
-        public enum ItemType{
+        public enum ItemType
+        {
             ZabbixAgent = 0,
             SNMPv1Agent = 1,
             ZabbixTrapper = 2,
@@ -409,7 +410,7 @@ namespace Zabbix.Entities
             TELNETAgent = 14,
             Calculated = 15,
             JMXAgent = 16,
-            SNMPTrap
+            SNMPTrap = 17
         }
 
         public enum ValueType
@@ -427,7 +428,7 @@ namespace Zabbix.Entities
             PublicKey = 1
         }
 
-        public enum  DataType
+        public enum DataType
         {
             Decimal = 0,
             Octal = 1,
@@ -450,7 +451,7 @@ namespace Zabbix.Entities
 
         public enum SNMPv3AuthenticationProtocol
         {
-            MD5 = 0, 
+            MD5 = 0,
             SHA = 1
         }
 

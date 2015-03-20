@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class GraphPrototype : EntityBase
     {

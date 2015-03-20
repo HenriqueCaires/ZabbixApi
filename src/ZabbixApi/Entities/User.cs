@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class User : EntityBase
     {
@@ -113,6 +113,46 @@ namespace Zabbix.Entities
         /// URL of the page to redirect the user to after logging in.
         /// </summary>
         public string url { get; set; }
+
+        #region Access
+
+        /// <summary>
+        /// User's frontend authentication method. Refer to the gui_access property of the user group object for a list of possible values
+        /// </summary>
+        public Permission.AccessLevel gui_access { get; set; }
+
+        /// <summary>
+        /// Indicates whether debug is enabled for the user. Possible values: 0 - debug disabled, 1 - debug enabled
+        /// </summary>
+        [JsonConverter(typeof(IntToBoolConverter))]
+        public bool debug_mode { get; set; }
+
+        /// <summary>
+        /// Indicates whether the user is disabled. Possible values: 0 - user enabled, 1 - user disabled
+        /// </summary>
+        [JsonConverter(typeof(IntToBoolConverter))]
+        public bool users_status { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Media used by the user
+        /// </summary>
+        public IList<Media> medias { get; set; }
+
+        /// <summary>
+        /// Media types used by the user
+        /// </summary>
+        public IList<MediaType> mediatypes { get; set; }
+
+        /// <summary>
+        /// User groups that the user belongs to
+        /// </summary>
+        public IList<UserGroup> usrgrps { get; set; }
 
         #endregion
 

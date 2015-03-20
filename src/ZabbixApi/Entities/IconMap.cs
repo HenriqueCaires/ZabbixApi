@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class IconMap : EntityBase
     {
@@ -34,12 +34,6 @@ namespace Zabbix.Entities
         /// <summary>
         ///  Used icon mappings
         /// </summary>
-        public IList<IconMapping> mappings { get; set; }
-
-        #endregion
-
-        #region Associations
-
         public IList<IconMapping> mappings { get; set; }
 
         #endregion

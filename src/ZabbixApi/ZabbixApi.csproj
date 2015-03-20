@@ -7,8 +7,8 @@
     <ProjectGuid>{F18F60A6-731B-4929-9876-A1F6D75CF2FA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zabbix</RootNamespace>
-    <AssemblyName>Zabbix</AssemblyName>
+    <RootNamespace>ZabbixApi</RootNamespace>
+    <AssemblyName>ZabbixApi</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -101,6 +101,7 @@
     <Compile Include="Services\DiscoveryRuleService.cs" />
     <Compile Include="Services\EntityResultBase.cs" />
     <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\UserlMacroService.cs" />
     <Compile Include="Services\GraphItemService.cs" />
     <Compile Include="Services\GraphPrototypeService.cs" />
     <Compile Include="Services\GraphService.cs" />
@@ -117,7 +118,20 @@
     <Compile Include="Services\LLDRuleService.cs" />
     <Compile Include="Services\MaintenanceService.cs" />
     <Compile Include="Services\MapService.cs" />
+    <Compile Include="Services\MediaService.cs" />
+    <Compile Include="Services\MediaTypeService.cs" />
+    <Compile Include="Services\ProxyService.cs" />
+    <Compile Include="Services\ScreenItemService.cs" />
+    <Compile Include="Services\ScreenService.cs" />
+    <Compile Include="Services\ScriptService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
+    <Compile Include="Services\TemplateScreenItemService.cs" />
+    <Compile Include="Services\TemplateScreenService.cs" />
+    <Compile Include="Services\TemplateService.cs" />
+    <Compile Include="Services\TriggerPrototypeService.cs" />
+    <Compile Include="Services\TriggerService.cs" />
+    <Compile Include="Services\UserGroupService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zabbix.Entities;
-using Zabbix.Services;
+using ZabbixApi.Entities;
+using ZabbixApi.Services;
 using ZabbixApi;
 
-namespace Zabbix.Test
+namespace ZabbixApi.Test
 {
     [TestClass]
     public class EventServiceUnitTest

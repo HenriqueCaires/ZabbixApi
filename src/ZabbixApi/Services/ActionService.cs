@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Zabbix.Helper;
+using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi;
 
-namespace Zabbix.Services
+namespace ZabbixApi.Services
 {
     public interface IActionService : ICRUDService<Entities.Action, ActionInclude>
     {

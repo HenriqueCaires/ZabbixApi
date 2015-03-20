@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Trigger : EntityBase
     {
@@ -112,6 +113,65 @@ namespace Zabbix.Entities
         /// </summary>
         public TriggerState value { get; set; }
 
+        #region Properties of Expanded Data
+
+        /// <summary>
+        /// Visible name of the host
+        /// </summary>
+        public string hostname { get; set; }
+
+        /// <summary>
+        /// Technical name of the host
+        /// </summary>
+        public string host { get; set; }
+
+        /// <summary>
+        /// ID of the host
+        /// </summary>
+        public string hostid { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// The host groups that the trigger belongs to
+        /// </summary>
+        public IList<HostGroup> groups { get; set; }
+
+        /// <summary>
+        /// The hosts that the trigger belongs to
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Items contained by the trigger
+        /// </summary>
+        public IList<Item> items { get; set; }
+
+        /// <summary>
+        /// Functions used in the trigger
+        /// </summary>
+        public IList<Function> functions { get; set; }
+
+        /// <summary>
+        /// Triggers that the trigger depends
+        /// </summary>
+        public IList<Trigger> dependencies { get; set; }
+
+        //TODO: verify this name
+        /// <summary>
+        /// The low-level discovery rule that created the trigger
+        /// </summary>
+        public DiscoveryRule discoveryrule { get; set; }
+
+        /// <summary>
+        /// The last significant trigger event
+        /// </summary>
+        public Event lastEvent { get; set; }
+
         #endregion
 
         #region ENUMS
@@ -169,6 +229,34 @@ namespace Zabbix.Entities
             type = MultipleProblemEvents.DoNotGenerateMultipleEvents;
             value = TriggerState.Ok;
         }
+
+        #endregion
+    }
+
+    public class Function : EntityBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// ID of the function
+        /// </summary>
+        [JsonProperty("functionid")]
+        public override string Id { get; set; }
+
+        /// <summary>
+        /// ID of the item used in the function
+        /// </summary>
+        public string itemid { get; set; }
+
+        /// <summary>
+        /// Name of the function
+        /// </summary>
+        public string function { get; set; }
+
+        /// <summary>
+        /// Parameter passed to the function
+        /// </summary>
+        public string parameter { get; set; }
 
         #endregion
     }

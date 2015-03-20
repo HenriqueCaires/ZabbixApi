@@ -1,5 +1,5 @@
-﻿using Zabbix.Entities;
-using Zabbix.Helper;
+﻿using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi;
 
-namespace Zabbix.Services
+namespace ZabbixApi.Services
 {
     public interface ICRUDService<T, Y>
         where T : EntityBase

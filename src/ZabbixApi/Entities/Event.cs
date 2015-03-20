@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Event : EntityBase
     {
@@ -141,7 +141,7 @@ namespace Zabbix.Entities
         /// acknowledgement's ID
         /// </summary>
         [JsonProperty("acknowledgeid")]
-        public string Id { get; set; }
+        public override string Id { get; set; }
 
         /// <summary>
         /// ID of the user that acknowledged the event

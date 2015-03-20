@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Entities;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class ItemPrototype : EntityBase
     {
@@ -390,7 +390,7 @@ namespace Zabbix.Entities
         {
             Enabled = 0,
             Disabled = 1,
-            Unsupported = 2
+            Unsupported = 3
         }
         #endregion
 

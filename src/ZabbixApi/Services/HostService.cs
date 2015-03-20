@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Zabbix.Helper;
+using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ZabbixApi;
 using ZabbixApi.Entities;
 
-namespace Zabbix.Services
+namespace ZabbixApi.Services
 {
     public interface IHostService : ICRUDService<Host, HostInclude>
     {

@@ -6,8 +6,8 @@
     <ProjectGuid>{436FEC9F-35BD-4E7F-A39B-DDBBD33C3271}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Zabbix.Test</RootNamespace>
-    <AssemblyName>Zabbix.Test</AssemblyName>
+    <RootNamespace>ZabbixApi.Test</RootNamespace>
+    <AssemblyName>ZabbixApi.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

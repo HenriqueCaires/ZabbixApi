@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Zabbix.Helper;
+using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -92,19 +92,24 @@ namespace ZabbixApi
 
         private class Request
         {
-            public string jsonrpc = "2.0";
-            public string method;
-            public object @params;
-            public int id;
-            public string auth;
+            public string jsonrpc  { get; set; }
+            public string method { get; set; }
+            public object @params { get; set; }
+            public int id { get; set; }
+            public string auth { get; set; }
+
+            public Request()
+            {
+                jsonrpc = "2.0";
+            }
         }
 
         private class Response<T>
         {
-            public string jsonrpc;
-            public T result;
-            public Error error;
-            public int id;
+            public string jsonrpc { get; set; }
+            public T result { get; set; }
+            public Error error { get; set; }
+            public int id { get; set; }
         }
 
         private class Error

@@ -7,10 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zabbix.Services;
+using ZabbixApi.Services;
 using ZabbixApi;
 
-namespace Zabbix.Test
+namespace ZabbixApi.Test
 {
     [TestClass]
     [DeploymentItem(@"Samples\Action\action.get.json", @"Samples\Action\")]

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Script : EntityBase
     {
@@ -76,6 +77,20 @@ namespace Zabbix.Entities
         /// Default: 0.
         /// </summary>
         public string usrgrpid { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Host groups that the script can be run on
+        /// </summary>
+        public IList<HostGroup> groups { get; set; }
+
+        /// <summary>
+        /// Hosts that the script can be run on
+        /// </summary>
+        public IList<Host> hosts { get; set; }
 
         #endregion
 

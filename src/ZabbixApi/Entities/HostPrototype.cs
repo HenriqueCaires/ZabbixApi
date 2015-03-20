@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Entities;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class HostPrototype : EntityBase
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class TriggerPrototype : EntityBase
     {
@@ -72,6 +72,56 @@ namespace Zabbix.Entities
         /// URL associated with the trigger prototype.
         /// </summary>
         public string url { get; set; }
+
+        #region Properties of Expanded Data
+
+        /// <summary>
+        /// Visible name of the host
+        /// </summary>
+        public string hostname { get; set; }
+
+        /// <summary>
+        /// Technical name of the host
+        /// </summary>
+        public string host { get; set; }
+
+        /// <summary>
+        /// ID of the host
+        /// </summary>
+        public string hostid { get; set; }
+
+        #endregion
+
+        #endregion
+
+        #region Associations
+
+        //TODO: verify this name
+        /// <summary>
+        /// The low-level discovery rule that created the trigger
+        /// </summary>
+        public DiscoveryRule discoveryrule { get; set; }
+
+        /// <summary>
+        /// Functions used in the trigger prototype
+        /// </summary>
+        public IList<Function> functions { get; set; }
+
+        /// <summary>
+        /// The host groups that the trigger prototype belongs to
+        /// </summary>
+        public IList<HostGroup> groups { get; set; }
+
+        /// <summary>
+        /// The hosts that the trigger prototype belongs to
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        //TODO: We need an Inheritance here
+        /// <summary>
+        /// Items and item prototypes used the trigger prototype
+        /// </summary>
+        public IList<object> items { get; set; }
 
         #endregion
 

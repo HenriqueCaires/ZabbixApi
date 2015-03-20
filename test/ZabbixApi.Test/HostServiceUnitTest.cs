@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ZabbixApi.Entities;
 using System.Collections.Generic;
 using System.Linq;
-using Zabbix.Services;
+using ZabbixApi.Services;
 using Newtonsoft.Json;
 using Rhino.Mocks;
 using System.IO;

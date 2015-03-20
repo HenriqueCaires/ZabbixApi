@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
-namespace Zabbix.Entities
+namespace ZabbixApi.Entities
 {
     public partial class Maintenance : EntityBase
     {
@@ -60,7 +60,7 @@ namespace Zabbix.Entities
         /// <summary>
         /// Host groups assigned to the maintenance
         /// </summary>
-        public IList<HostGroups> groups { get; set; }
+        public IList<HostGroup> groups { get; set; }
 
         /// <summary>
         /// Hosts assigned to the maintenance

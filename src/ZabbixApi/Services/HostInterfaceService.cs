@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zabbix.Helper;
+using ZabbixApi.Helper;
 using ZabbixApi;
 using ZabbixApi.Entities;
 
-namespace Zabbix.Services
+namespace ZabbixApi.Services
 {
     public interface IHostInterfaceService : ICRUDService<HostInterface, HostInterfaceInclude>
     {
