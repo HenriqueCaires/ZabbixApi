@@ -6,12 +6,19 @@ using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 using ZabbixApi;
+using Newtonsoft.Json;
 
 namespace ZabbixApi.Services
 {
     public interface IEventService
     {
         IList<Event> Get(object filter = null, IList<EventInclude> include = null);
+
+        IList<string> Acknowledge(IList<Event> events, string message = null);
+
+        IList<string> Acknowledge(IList<string> eventIds, string message = null);
+
+
     }
 
     public class EventService : ServiceBase<Event>, IEventService
@@ -34,6 +41,30 @@ namespace ZabbixApi.Services
             };
             return BaseGet(@params);
         }
+        
+        public IList<string> Acknowledge(IList<string> eventIds, string message = null)
+        {
+            return _context.SendRequest<EventidsResult>(
+                    new 
+                    {
+                        eventids = eventIds,
+                        message = message,
+                    },
+                    _className + ".acknowledge"
+                    ).ids;
+        }
+        
+        public IList<string> Acknowledge(IList<Event> events, string message = null)
+        {
+            return Acknowledge(events.Select(x => x.Id).ToList(), message);
+        }
+
+        public class EventidsResult : EntityResultBase
+        {
+            [JsonProperty("eventids")]
+            public override string[] ids { get; set; }
+        }
+        
     }
 
     public enum EventInclude
