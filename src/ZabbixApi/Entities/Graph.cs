@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace Zabbix.Entities
@@ -145,6 +146,40 @@ namespace Zabbix.Entities
 
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// Host Groups
+        /// </summary>
+        public IList<HostGroup> groups { get; set; }
+
+        /// <summary>
+        /// Templates
+        /// </summary>
+        public IList<Template> templates { get; set; }
+
+        /// <summary>
+        /// Hosts
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Items
+        /// </summary>
+        public IList<Item> items { get; set; }
+
+        /// <summary>
+        /// Graph Items
+        /// </summary>
+        public IList<GraphItem> gitems { get; set; }
+
+        /// <summary>
+        /// Low-level discovery rule that created the graph
+        /// </summary>
+        public DiscoveryRule discoveryRule { get; set; }
+
+        #endregion
+
         #region ENUMS
         public enum Flags
         {
@@ -187,7 +222,7 @@ namespace Zabbix.Entities
             yaxismax = 100;
             yaxismin = 0;
             ymax_type = MaxValueCalculationMethod.Calculated;
-            ymin_type = MinValueCalculationMethod.Calculated; 
+            ymin_type = MinValueCalculationMethod.Calculated;
         }
 
         #endregion

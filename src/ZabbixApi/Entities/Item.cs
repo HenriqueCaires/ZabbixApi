@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace Zabbix.Entities
@@ -350,6 +351,45 @@ namespace Zabbix.Entities
         public string valuemapid { get; set; }
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// Host that the item belongs to as an array
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Host interface used by the item as an array
+        /// </summary>
+        public IList<HostInterface> interfaces { get; set; }
+
+        /// <summary>
+        /// Triggers that the item is used
+        /// </summary>
+        public IList<Trigger> triggers { get; set; }
+
+        /// <summary>
+        /// Graphs that contain the item
+        /// </summary>
+        public IList<Graph> graphs { get; set; }
+
+        /// <summary>
+        /// Applications that the item belongs to
+        /// </summary>
+        public IList<Application> applications { get; set; }
+
+        /// <summary>
+        ///  LLD rule that created the item
+        /// </summary>
+        public DiscoveryRule discoveryRule { get; set; }
+
+        /// <summary>
+        /// Item discovery object
+        /// </summary>
+        public ItemDiscovery itemDiscovery { get; set; }
+
+        #endregion
+
         #region ENUMS
         public enum ItemType{
             ZabbixAgent = 0,
@@ -456,6 +496,46 @@ namespace Zabbix.Entities
             status = Status.Enabled;
             trends = 365;
         }
+
+        #endregion
+    }
+
+    public partial class ItemDiscovery : EntityBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// ID of the item discovery
+        /// </summary>
+        [JsonProperty("itemdiscoveryid")]
+        public override string Id { get; set; }
+
+        /// <summary>
+        /// ID of the discovered item
+        /// </summary>
+        public string itemid { get; set; }
+
+        /// <summary>
+        /// ID of the item prototype from which the item has been created
+        /// </summary>
+        public string parent_itemid { get; set; }
+
+        /// <summary>
+        /// key of the item prototype
+        /// </summary>
+        public string key_ { get; set; }
+
+        /// <summary>
+        /// Time when the item was last discovered
+        /// </summary>
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime lastcheck { get; set; }
+
+        /// <summary>
+        /// Time when an item that is no longer discovered will be deleted
+        /// </summary>
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime ts_delete { get; set; }
 
         #endregion
     }

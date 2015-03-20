@@ -17,7 +17,20 @@ namespace Zabbix.Helper
 
         public string WhatShouldInclude(int policy)
         {
-            return ((policy & _permission) != 0) || ((1 & _permission) != 0) ? "extend" : null;
+            //Permission to All
+            if (((1 & _permission) != 0))
+                return "extend";
+
+            //Permission to None
+            if (((2 & _permission) != 0))
+                return null;
+
+            return ((policy & _permission) != 0) ? "extend" : null;
+        }
+
+        public string WhatShouldInclude(IConvertible policy)
+        {
+            return WhatShouldInclude((int) policy);
         }
     }
 }

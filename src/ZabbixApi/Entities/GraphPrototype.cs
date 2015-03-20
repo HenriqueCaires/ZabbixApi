@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace Zabbix.Entities
@@ -131,6 +132,40 @@ namespace Zabbix.Entities
         /// 2 - item.
         /// </summary>
         public ValueCalculationMethod ymin_type { get; set; }
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// LLD rule that the graph prototype belongs to
+        /// </summary>
+        public DiscoveryRule discoveryRule { get; set; }
+
+        /// <summary>
+        /// Gitems
+        /// </summary>
+        public IList<GraphItem> gitems { get; set; }
+
+        /// <summary>
+        /// Host groups
+        /// </summary>
+        public IList<HostGroup> groups { get; set; }
+
+        /// <summary>
+        /// Hosts
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Items
+        /// </summary>
+        public IList<Item> items { get; set; }
+
+        /// <summary>
+        /// Templates
+        /// </summary>
+        public IList<Template> templates { get; set; }
+
         #endregion
 
         #region ENUMS

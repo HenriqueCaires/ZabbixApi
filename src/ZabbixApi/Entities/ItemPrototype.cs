@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 
 namespace Zabbix.Entities
 {
@@ -283,6 +284,35 @@ namespace Zabbix.Entities
         /// ID of the associated value map.
         /// </summary>
         public string valuemapid { get; set; }
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Applications that the item prototype belongs to
+        /// </summary>
+        public IList<Application> applications { get; set; }
+
+        /// <summary>
+        /// Low-level discovery rule that the graph prototype belongs to
+        /// </summary>
+        public DiscoveryRule discoveryRule { get; set; }
+
+        /// <summary>
+        /// Graph prototypes that the item prototype is used
+        /// </summary>
+        public IList<Graph> graphs { get; set; }
+
+        /// <summary>
+        /// Host that the item prototype belongs to as an array
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Trigger prototypes that the item prototype is used
+        /// </summary>
+        public IList<Trigger> triggers { get; set; }
+
         #endregion
 
         #region ENUMS

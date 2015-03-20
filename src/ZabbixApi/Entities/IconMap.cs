@@ -31,6 +31,15 @@ namespace Zabbix.Entities
 
         #region Associations
 
+        /// <summary>
+        ///  Used icon mappings
+        /// </summary>
+        public IList<IconMapping> mappings { get; set; }
+
+        #endregion
+
+        #region Associations
+
         public IList<IconMapping> mappings { get; set; }
 
         #endregion

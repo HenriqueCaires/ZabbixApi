@@ -57,6 +57,20 @@ namespace Zabbix.Entities
         public Status status { get; set; }
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// Discovery Checks
+        /// </summary>
+        public IList<DiscoveryCheck> selectDChecks { get; set; }
+
+        /// <summary>
+        /// Discovered Rules
+        /// </summary>
+        public IList<DiscoveredHost> selectDHosts { get; set; }
+
+        #endregion
+
         #region ENUMS
         public enum Status
         {

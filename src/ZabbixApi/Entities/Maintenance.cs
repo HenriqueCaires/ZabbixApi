@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace Zabbix.Entities
@@ -51,6 +52,25 @@ namespace Zabbix.Entities
         /// 1 - without data collection.
         /// </summary>
         public MaintenanceType maintenance_type { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Host groups assigned to the maintenance
+        /// </summary>
+        public IList<HostGroups> groups { get; set; }
+
+        /// <summary>
+        /// Hosts assigned to the maintenance
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// The maintenance's time periods
+        /// </summary>
+        public IList<TimePeriod> timeperiods { get; set; }
 
         #endregion
 

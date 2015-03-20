@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 
 namespace Zabbix.Entities
 {
@@ -45,9 +46,30 @@ namespace Zabbix.Entities
 
         #region Associations
 
+        /// <summary>
+        /// LLD rule that the host prototype belongs to
+        /// </summary>
+        public DiscoveryRule discoveryRule { get; set; }
+
+        /// <summary>
+        /// Group links of the host prototype
+        /// </summary>
         public IList<GroupLink> groupLinks { get; set; }
 
+        /// <summary>
+        /// Group prototypes of the host prototype
+        /// </summary>
         public IList<GroupPrototype> groupPrototypes { get; set; }
+
+        /// <summary>
+        /// Host that the host prototype belongs
+        /// </summary>
+        public Host parentHost { get; set; }
+
+        /// <summary>
+        /// Templates linked to the host prototype
+        /// </summary>
+        public IList<Template> templates { get; set; }
 
         #endregion
 

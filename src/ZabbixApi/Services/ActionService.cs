@@ -23,8 +23,8 @@ namespace Zabbix.Services
             var @params = new
                     {
                         output = "extend",
-                        selectConditions = includeHelper.WhatShouldInclude((int)ActionInclude.Conditions),
-                        selectOperations = includeHelper.WhatShouldInclude((int)ActionInclude.Operations),
+                        selectConditions = includeHelper.WhatShouldInclude(ActionInclude.Conditions),
+                        selectOperations = includeHelper.WhatShouldInclude(ActionInclude.Operations),
 
                         filter = filter
                     };

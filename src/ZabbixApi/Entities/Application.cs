@@ -40,13 +40,12 @@ namespace Zabbix.Entities
         /// <summary>
         /// Hosts
         /// </summary>
-        public IList<Host> hosts  { get; set; }
+        public IList<Host> hosts { get; set; }
 
         /// <summary>
         /// Items
         /// </summary>
         public IList<Item> items { get; set; }
-
 
         #endregion
     }

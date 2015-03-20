@@ -24,9 +24,9 @@ namespace Zabbix.Services
             var @params = new
             {
                 output = "extend",
-                selectHosts = includeHelper.WhatShouldInclude((int)AlertInclude.Hosts),
-                selectMediatypes = includeHelper.WhatShouldInclude((int)AlertInclude.MediaTypes),
-                selectUsers = includeHelper.WhatShouldInclude((int)AlertInclude.Users),
+                selectHosts = includeHelper.WhatShouldInclude(AlertInclude.Hosts),
+                selectMediatypes = includeHelper.WhatShouldInclude(AlertInclude.MediaTypes),
+                selectUsers = includeHelper.WhatShouldInclude(AlertInclude.Users),
 
                 filter = filter
             };

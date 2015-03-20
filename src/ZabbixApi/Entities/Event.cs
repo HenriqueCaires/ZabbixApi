@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace Zabbix.Entities
@@ -96,7 +97,31 @@ namespace Zabbix.Entities
         /// </summary>
         public int value_changed { get; set; }
         #endregion
-        
+
+        #region Associations
+
+        /// <summary>
+        /// Hosts
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Return the object that created the event in the relatedObject property. The type of object returned depends on the event type.
+        /// </summary>
+        public object relatedObject { get; set; }
+
+        /// <summary>
+        /// Alerts
+        /// </summary>
+        public IList<Alert> alerts { get; set; }
+
+        /// <summary>
+        /// Acknowledges
+        /// </summary>
+        public IList<Acknowledge> acknowledges { get; set; }
+
+        #endregion
+
         #region ENUMS
         public enum Source
         {
@@ -105,6 +130,57 @@ namespace Zabbix.Entities
             ActiveAgentAutoRegistration = 2,
             InternalEvent = 3
         }
+        #endregion
+    }
+
+    public partial class Acknowledge : EntityBase
+    {
+        #region Properties
+
+        /// <summary>
+        /// acknowledgement's ID
+        /// </summary>
+        [JsonProperty("acknowledgeid")]
+        public string Id { get; set; }
+
+        /// <summary>
+        /// ID of the user that acknowledged the event
+        /// </summary>
+        public string userid { get; set; }
+
+        /// <summary>
+        ///  ID of the acknowledged event
+        /// </summary>
+        public string eventid { get; set; }
+
+        /// <summary>
+        /// time when the event was acknowledged
+        /// </summary>
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime clock { get; set; }
+
+        /// <summary>
+        /// Text of the acknowledgement message
+        /// </summary>
+        public string message { get; set; }
+
+        /// <summary>
+        /// alias of the user that acknowledged the event
+        /// </summary>
+        public string alias { get; set; }
+
+        /// <summary>
+        /// name of the user that acknowledged the event
+        /// </summary>
+        public string name { get; set; }
+
+        /// <summary>
+        /// surname of the user that acknowledged the event
+        /// </summary>
+        public string surname { get; set; }
+
+
+
         #endregion
     }
 }

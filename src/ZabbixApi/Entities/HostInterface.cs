@@ -76,6 +76,20 @@ namespace ZabbixApi.Entities
 
         #endregion 
 
+        #region Associations
+
+        /// <summary>
+        /// Items that use the interface
+        /// </summary>
+        public IList<Item> items { get; set; }
+
+        /// <summary>
+        /// Host that uses the interface as an array
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        #endregion
+
         #region ENUMS
 
         public enum InterfaceType

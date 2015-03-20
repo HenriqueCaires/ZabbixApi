@@ -118,6 +118,15 @@ namespace Zabbix.Entities
 
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// Graphs
+        /// </summary>
+        public IList<Graph> graphs { get; set; }
+
+        #endregion
+
         #region Constructors
 
         public GraphItem()

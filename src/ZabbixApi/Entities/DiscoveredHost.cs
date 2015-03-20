@@ -44,6 +44,20 @@ namespace Zabbix.Entities
         public Status status { get; set; }
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// Discovery rules
+        /// </summary>
+        public IList<DiscoveryRule> drules { get; set; }
+
+        /// <summary>
+        /// Discovered Services
+        /// </summary>
+        public IList<DiscoveredService> dservices { get; set; }
+
+        #endregion
+
         #region ENUMS
         public enum Status
         {

@@ -256,6 +256,30 @@ namespace Zabbix.Entities
 
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// The icon map used on the map
+        /// </summary>
+        public IconMap iconmap { get; set; }
+
+        /// <summary>
+        /// Map links between elements
+        /// </summary>
+        public IList<MapLink> links { get; set; }
+
+        /// <summary>
+        /// The map elements from the map
+        /// </summary>
+        public IList<MapElement> selements { get; set; }
+
+        /// <summary>
+        /// The map URLs
+        /// </summary>
+        public IList<MapURL> urls { get; set; }
+
+        #endregion
+
         #region ENUMS
 
         public enum ExpandProblem

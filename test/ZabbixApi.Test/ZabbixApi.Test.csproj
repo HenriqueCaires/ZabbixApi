@@ -60,6 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ActionServiceUnitTest.cs" />
+    <Compile Include="EventServiceUnitTest.cs" />
     <Compile Include="HostServiceUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

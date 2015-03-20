@@ -72,8 +72,43 @@ namespace Zabbix.Entities
         public string triggerid { get; set; }
         #endregion
 
-        #region ENUMS
+        #region Associations
+
+        /// <summary>
+        /// Hard-dependent parent IT service
+        /// </summary>
+        public ITService parent { get; set; }
+
+        /// <summary>
+        /// Child service dependencies
+        /// </summary>
+        public IList<ServiceDependency> dependencies { get; set; }
+
+        /// <summary>
+        /// Parent service dependencies
+        /// </summary>
+        public IList<ServiceDependency> parentDependencies { get; set; }
+
+        /// <summary>
+        /// Service times
+        /// </summary>
+        public IList<ServiceTime> times { get; set; }
+
+        /// <summary>
+        /// Service alarms
+        /// </summary>
+        public IList<ServiceAlarm> alarms { get; set; }
+
+        /// <summary>
+        /// The associated trigger
+        /// </summary>
+        public Trigger trigger { get; set; }
         
+
+        #endregion
+
+        #region ENUMS
+
         public enum Algorithm
         {
             DoNotCalculate = 0,

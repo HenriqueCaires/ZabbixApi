@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 
 namespace Zabbix.Entities
 {
@@ -235,8 +236,37 @@ namespace Zabbix.Entities
 
         #endregion
 
+        #region Associations
+
+        /// <summary>
+        /// The host that the LLD rule belongs to as an array
+        /// </summary>
+        public IList<Host> hosts { get; set; }
+
+        /// <summary>
+        /// Graph prototypes that belong to the LLD rule
+        /// </summary>
+        public IList<GraphPrototype> graphs { get; set; }
+
+        /// <summary>
+        /// Host prototypes that belong to the LLD rule
+        /// </summary>
+        public IList<HostPrototype> hostPrototypes { get; set; }
+
+        /// <summary>
+        /// Item prototypes that belong to the LLD rule
+        /// </summary>
+        public IList<ItemPrototype> items { get; set; }
+
+        /// <summary>
+        /// Trigger prototypes that belong to the LLD rule
+        /// </summary>
+        public IList<TriggerPrototype> triggers { get; set; }
+
+        #endregion
+
         #region ENUMS
-        
+
         public enum LLDRuleType
         {
             ZabbixAgent = 0,
