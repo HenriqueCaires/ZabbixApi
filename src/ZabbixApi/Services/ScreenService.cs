@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ScreenService(IContext context) : base(context, "screen") { }
 
-        public override IList<Screen> Get(object filter = null, IList<ScreenInclude> include = null)
+        public override IEnumerable<Screen> Get(object filter = null, IEnumerable<ScreenInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

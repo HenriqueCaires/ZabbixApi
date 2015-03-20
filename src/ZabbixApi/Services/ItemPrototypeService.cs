@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ItemPrototypeService(IContext context) : base(context, "itemprototype") { }
 
-        public override IList<ItemPrototype> Get(object filter = null, IList<ItemPrototypeInclude> include = null)
+        public override IEnumerable<ItemPrototype> Get(object filter = null, IEnumerable<ItemPrototypeInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

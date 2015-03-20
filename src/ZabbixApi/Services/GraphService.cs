@@ -18,7 +18,7 @@ namespace ZabbixApi.Services
     {
         public GraphService(IContext context) : base(context, "graph") { }
 
-        public override IList<Graph> Get(object filter = null, IList<GraphInclude> include = null)
+        public override IEnumerable<Graph> Get(object filter = null, IEnumerable<GraphInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

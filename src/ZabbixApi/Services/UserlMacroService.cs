@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface IGlobalMacroService
     {
-        IList<GlobalMacro> Get(object filter = null, IList<GlobalMacroInclude> include = null);
+        IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null);
     }
 
     public class GlobalMacroService : ServiceBase<GlobalMacro>, IGlobalMacroService
     {
         public GlobalMacroService(IContext context) : base(context, "usermacro") { }
 
-        public IList<GlobalMacro> Get(object filter = null, IList<GlobalMacroInclude> include = null)
+        public IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new
@@ -47,7 +47,7 @@ namespace ZabbixApi.Services
     {
         public HostMacroService(IContext context) : base(context, "usermacro") { }
 
-        public override IList<HostMacro> Get(object filter = null, IList<HostMacroInclude> include = null)
+        public override IEnumerable<HostMacro> Get(object filter = null, IEnumerable<HostMacroInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

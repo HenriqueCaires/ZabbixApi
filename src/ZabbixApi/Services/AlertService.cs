@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface IAlertService
     {
-        IList<Alert> Get(object filter = null, IList<AlertInclude> include = null);
+        IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null);
     }
 
     public class AlertService : ServiceBase<Alert>, IAlertService
     {
         public AlertService(IContext context) : base(context, "alert") { }
 
-        public IList<Alert> Get(object filter = null, IList<AlertInclude> include = null)
+        public IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

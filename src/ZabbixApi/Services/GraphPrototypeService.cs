@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public GraphPrototypeService(IContext context) : base(context, "graphprototype") { }
 
-        public override IList<GraphPrototype> Get(object filter = null, IList<GraphPrototypeInclude> include = null)
+        public override IEnumerable<GraphPrototype> Get(object filter = null, IEnumerable<GraphPrototypeInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

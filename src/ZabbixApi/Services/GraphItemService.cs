@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface IGraphItemService
     {
-        IList<GraphItem> Get(object filter = null, IList<GraphItemInclude> include = null);
+        IEnumerable<GraphItem> Get(object filter = null, IEnumerable<GraphItemInclude> include = null);
     }
 
     public class GraphItemService : ServiceBase<GraphItem>, IGraphItemService
     {
         public GraphItemService(IContext context) : base(context, "graphitem") { }
 
-        public IList<GraphItem> Get(object filter = null, IList<GraphItemInclude> include = null)
+        public IEnumerable<GraphItem> Get(object filter = null, IEnumerable<GraphItemInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

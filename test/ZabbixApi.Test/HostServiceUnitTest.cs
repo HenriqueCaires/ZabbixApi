@@ -43,7 +43,7 @@ namespace ZabbixApi.Test
             
             var result = target.GetByName("teste");
 
-            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(1, result.Count());
 
             var r = result.First();
 

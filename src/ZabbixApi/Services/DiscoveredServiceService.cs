@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface IDiscoveredServiceService
     {
-        IList<DiscoveredService> Get(object filter = null, IList<DiscoveredServiceInclude> include = null);
+        IEnumerable<DiscoveredService> Get(object filter = null, IEnumerable<DiscoveredServiceInclude> include = null);
     }
 
     public class DiscoveredServiceService : ServiceBase<DiscoveredService>, IDiscoveredServiceService
     {
         public DiscoveredServiceService(IContext context) : base(context, "dservice") { }
 
-        public IList<DiscoveredService> Get(object filter = null, IList<DiscoveredServiceInclude> include = null)
+        public IEnumerable<DiscoveredService> Get(object filter = null, IEnumerable<DiscoveredServiceInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

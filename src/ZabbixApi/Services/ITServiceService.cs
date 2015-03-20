@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ITServiceService(IContext context) : base(context, "ITService") { }
 
-        public override IList<ITService> Get(object filter = null, IList<ITServiceInclude> include = null)
+        public override IEnumerable<ITService> Get(object filter = null, IEnumerable<ITServiceInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

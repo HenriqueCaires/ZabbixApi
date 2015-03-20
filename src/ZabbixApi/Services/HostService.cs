@@ -12,10 +12,10 @@ namespace ZabbixApi.Services
 {
     public interface IHostService : ICRUDService<Host, HostInclude>
     {
-        IList<Host> GetByName(string name, IList<HostInclude> include = null);
-        IList<Host> GetByName(List<string> names, IList<HostInclude> include = null);
-        IList<Host> GetById(string id, IList<HostInclude> include = null);
-        IList<Host> GetById(List<string> ids, IList<HostInclude> include = null);
+        IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null);
+        IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null);
+        IEnumerable<Host> GetById(string id, IList<HostInclude> include = null);
+        IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null);
     }
 
     public class HostService : CRUDService<Host, HostService.HostidsResult, HostInclude>, IHostService
@@ -23,7 +23,7 @@ namespace ZabbixApi.Services
         public HostService(IContext context) : base(context, "host") { }
 
 
-        public override IList<Host> Get(object filter = null, IList<HostInclude> include = null)
+        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
 
@@ -51,7 +51,7 @@ namespace ZabbixApi.Services
             return BaseGet(@params);
         }
 
-        public IList<Host> GetByName(string name, IList<HostInclude> include = null)
+        public IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null)
         {
             return GetByName(
                 names: new List<string>() { name },
@@ -59,7 +59,7 @@ namespace ZabbixApi.Services
             );
         }
 
-        public IList<Host> GetByName(List<string> names, IList<HostInclude> include = null)
+        public IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null)
         {
             return Get(
                 filter: new
@@ -70,7 +70,7 @@ namespace ZabbixApi.Services
             );
         }
 
-        public IList<Host> GetById(string id, IList<HostInclude> include = null)
+        public IEnumerable<Host> GetById(string id, IList<HostInclude> include = null)
         {
             return GetById(
                 ids: new List<string>() { id },
@@ -78,7 +78,7 @@ namespace ZabbixApi.Services
             );
         }
 
-        public IList<Host> GetById(List<string> ids, IList<HostInclude> include = null)
+        public IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null)
         {
             return Get(
                 filter: new

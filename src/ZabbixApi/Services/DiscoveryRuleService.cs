@@ -18,7 +18,7 @@ namespace ZabbixApi.Services
     {
         public DiscoveryRuleService(IContext context) : base(context, "drule") { }
 
-        public override IList<DiscoveryRule> Get(object filter = null, IList<DiscoveryRuleInclude> include = null)
+        public override IEnumerable<DiscoveryRule> Get(object filter = null, IEnumerable<DiscoveryRuleInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

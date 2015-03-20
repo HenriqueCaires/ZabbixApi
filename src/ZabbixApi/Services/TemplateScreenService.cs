@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public TemplateScreenService(IContext context) : base(context, "templatescreen") { }
 
-        public override IList<TemplateScreen> Get(object filter = null, IList<TemplateScreenInclude> include = null)
+        public override IEnumerable<TemplateScreen> Get(object filter = null, IEnumerable<TemplateScreenInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

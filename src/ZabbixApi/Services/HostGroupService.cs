@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public HostGroupService(IContext context) : base(context, "hostgroup") { }
 
-        public override IList<HostGroup> Get(object filter = null, IList<HostGroupInclude> include = null)
+        public override IEnumerable<HostGroup> Get(object filter = null, IEnumerable<HostGroupInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

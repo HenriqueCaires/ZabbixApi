@@ -18,7 +18,7 @@ namespace ZabbixApi.Services
     {
         public UserService(IContext context) : base(context, "user") { }
 
-        public override IList<User> Get(object filter = null, IList<UserInclude> include = null)
+        public override IEnumerable<User> Get(object filter = null, IEnumerable<UserInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

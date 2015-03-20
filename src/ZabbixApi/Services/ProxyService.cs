@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ProxyService(IContext context) : base(context, "proxy") { }
 
-        public override IList<Proxy> Get(object filter = null, IList<ProxyInclude> include = null)
+        public override IEnumerable<Proxy> Get(object filter = null, IEnumerable<ProxyInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

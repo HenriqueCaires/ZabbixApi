@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public IconMapService(IContext context) : base(context, "iconmap") { }
 
-        public override IList<IconMap> Get(object filter = null, IList<IconMapInclude> include = null)
+        public override IEnumerable<IconMap> Get(object filter = null, IEnumerable<IconMapInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

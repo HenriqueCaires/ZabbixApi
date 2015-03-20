@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public MapService(IContext context) : base(context, "map") { }
 
-        public override IList<Map> Get(object filter = null, IList<MapInclude> include = null)
+        public override IEnumerable<Map> Get(object filter = null, IEnumerable<MapInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

@@ -12,14 +12,14 @@ namespace ZabbixApi.Services
 {
     public interface IMediaService
     {
-        IList<Media> Get(object filter = null, IList<MediaInclude> include = null);
+        IEnumerable<Media> Get(object filter = null, IEnumerable<MediaInclude> include = null);
     }
 
     public class MediaService : ServiceBase<Media>, IMediaService
     {
         public MediaService(IContext context) : base(context, "usermedia") { }
 
-        public IList<Media> Get(object filter = null, IList<MediaInclude> include = null)
+        public IEnumerable<Media> Get(object filter = null, IEnumerable<MediaInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

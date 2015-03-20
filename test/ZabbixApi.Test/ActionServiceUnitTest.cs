@@ -44,7 +44,7 @@ namespace ZabbixApi.Test
             
             var result = target.Get();
 
-            Assert.AreEqual(5, result.Count);
+            Assert.AreEqual(5, result.Count());
         }
     }
 }

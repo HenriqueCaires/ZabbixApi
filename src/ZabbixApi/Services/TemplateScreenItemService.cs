@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface ITemplateScreenItemService
     {
-        IList<TemplateScreenItem> Get(object filter = null, IList<TemplateScreenItemInclude> include = null);
+        IEnumerable<TemplateScreenItem> Get(object filter = null, IEnumerable<TemplateScreenItemInclude> include = null);
     }
 
     public class TemplateScreenItemService : ServiceBase<TemplateScreenItem>, ITemplateScreenItemService
     {
         public TemplateScreenItemService(IContext context) : base(context, "templatescreenitem") { }
 
-        public IList<TemplateScreenItem> Get(object filter = null, IList<TemplateScreenItemInclude> include = null)
+        public IEnumerable<TemplateScreenItem> Get(object filter = null, IEnumerable<TemplateScreenItemInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

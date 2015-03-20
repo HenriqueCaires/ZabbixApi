@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ImageService(IContext context) : base(context, "image") { }
 
-        public override IList<Image> Get(object filter = null, IList<ImageInclude> include = null)
+        public override IEnumerable<Image> Get(object filter = null, IEnumerable<ImageInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

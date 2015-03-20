@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public TriggerPrototypeService(IContext context) : base(context, "triggerprototype") { }
 
-        public override IList<TriggerPrototype> Get(object filter = null, IList<TriggerPrototypeInclude> include = null)
+        public override IEnumerable<TriggerPrototype> Get(object filter = null, IEnumerable<TriggerPrototypeInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

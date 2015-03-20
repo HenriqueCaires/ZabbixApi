@@ -12,11 +12,11 @@ namespace ZabbixApi.Services
 {
     public interface IEventService
     {
-        IList<Event> Get(object filter = null, IList<EventInclude> include = null);
+        IEnumerable<Event> Get(object filter = null, IEnumerable<EventInclude> include = null);
 
-        IList<string> Acknowledge(IList<Event> events, string message = null);
+        IEnumerable<string> Acknowledge(IList<Event> events, string message = null);
 
-        IList<string> Acknowledge(IList<string> eventIds, string message = null);
+        IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null);
 
 
     }
@@ -25,7 +25,7 @@ namespace ZabbixApi.Services
     {
         public EventService(IContext context) : base(context, "event") { }
 
-        public IList<Event> Get(object filter = null, IList<EventInclude> include = null)
+        public IEnumerable<Event> Get(object filter = null, IEnumerable<EventInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new
@@ -41,8 +41,8 @@ namespace ZabbixApi.Services
             };
             return BaseGet(@params);
         }
-        
-        public IList<string> Acknowledge(IList<string> eventIds, string message = null)
+
+        public IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null)
         {
             return _context.SendRequest<EventidsResult>(
                     new 
@@ -53,8 +53,8 @@ namespace ZabbixApi.Services
                     _className + ".acknowledge"
                     ).ids;
         }
-        
-        public IList<string> Acknowledge(IList<Event> events, string message = null)
+
+        public IEnumerable<string> Acknowledge(IList<Event> events, string message = null)
         {
             return Acknowledge(events.Select(x => x.Id).ToList(), message);
         }

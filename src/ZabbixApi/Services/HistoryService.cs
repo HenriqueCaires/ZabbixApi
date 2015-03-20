@@ -11,14 +11,14 @@ namespace ZabbixApi.Services
 {
     public interface IHistoryService
     {
-        IList<History> Get(object filter = null, IList<HistoryInclude> include = null);
+        IEnumerable<History> Get(object filter = null, IEnumerable<HistoryInclude> include = null);
     }
 
     public class HistoryService : ServiceBase<History>, IHistoryService
     {
         public HistoryService(IContext context) : base(context, "history") { }
 
-        public IList<History> Get(object filter = null, IList<HistoryInclude> include = null)
+        public IEnumerable<History> Get(object filter = null, IEnumerable<HistoryInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

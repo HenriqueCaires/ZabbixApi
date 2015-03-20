@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public ScriptService(IContext context) : base(context, "script") { }
 
-        public override IList<Script> Get(object filter = null, IList<ScriptInclude> include = null)
+        public override IEnumerable<Script> Get(object filter = null, IEnumerable<ScriptInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

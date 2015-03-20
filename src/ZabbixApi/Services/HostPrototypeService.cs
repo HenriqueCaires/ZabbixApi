@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public HostPrototypeService(IContext context) : base(context, "hostprototype") { }
 
-        public override IList<HostPrototype> Get(object filter = null, IList<HostPrototypeInclude> include = null)
+        public override IEnumerable<HostPrototype> Get(object filter = null, IEnumerable<HostPrototypeInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

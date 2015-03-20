@@ -13,13 +13,13 @@ namespace ZabbixApi.Services
         where T : EntityBase
         where Y : struct, IConvertible
     {
-        IList<T> Get(object filter = null, IList<Y> include = null);
-        IList<string> Create(T entity);
-        IList<string> Update(T entity);
-        IList<string> Delete(IList<string> ids);
-        IList<string> Delete(string id);
-        IList<string> Delete(IList<T> entities);
-        IList<string> Delete(T entity);
+        IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null);
+        IEnumerable<string> Create(T entity);
+        IEnumerable<string> Update(T entity);
+        IEnumerable<string> Delete(IEnumerable<string> ids);
+        IEnumerable<string> Delete(string id);
+        IEnumerable<string> Delete(IEnumerable<T> entities);
+        IEnumerable<string> Delete(T entity);
     }
 
     public abstract class CRUDService<T, X, Y> : ServiceBase<T>, ICRUDService<T, Y>
@@ -29,9 +29,9 @@ namespace ZabbixApi.Services
     {
         public CRUDService(IContext context, string className) : base(context, className) { }
 
-        public abstract IList<T> Get(object filter = null, IList<Y> include = null);
+        public abstract IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null);
 
-        public IList<string> Create(T entity)
+        public IEnumerable<string> Create(T entity)
         {
             return _context.SendRequest<X>(
                     entity,
@@ -39,7 +39,7 @@ namespace ZabbixApi.Services
                     ).ids;
         }
 
-        public IList<string> Update(T entity)
+        public IEnumerable<string> Update(T entity)
         {
             return _context.SendRequest<X>(
                     entity,
@@ -47,7 +47,7 @@ namespace ZabbixApi.Services
                     ).ids;
         }
 
-        public IList<string> Delete(IList<string> ids)
+        public IEnumerable<string> Delete(IEnumerable<string> ids)
         {
             return _context.SendRequest<X>(
                     ids,
@@ -55,17 +55,17 @@ namespace ZabbixApi.Services
                     ).ids;
         }
 
-        public IList<string> Delete(string id)
+        public IEnumerable<string> Delete(string id)
         {
             return Delete(new List<string>() { id });
         }
 
-        public IList<string> Delete(IList<T> entities)
+        public IEnumerable<string> Delete(IEnumerable<T> entities)
         {
-            return Delete(entities.Select(x => x.Id).ToList());
+            return Delete(entities.Select(x => x.Id));
         }
 
-        public IList<string> Delete(T entity)
+        public IEnumerable<string> Delete(T entity)
         {
             return Delete(entity.Id);
         }

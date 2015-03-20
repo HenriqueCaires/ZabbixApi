@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public LLDRuleService(IContext context) : base(context, "discoveryrule") { }
 
-        public override IList<LLDRule> Get(object filter = null, IList<LLDRuleInclude> include = null)
+        public override IEnumerable<LLDRule> Get(object filter = null, IEnumerable<LLDRuleInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

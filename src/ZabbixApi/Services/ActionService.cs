@@ -17,7 +17,7 @@ namespace ZabbixApi.Services
     {
         public ActionService(IContext context) : base(context, "action") { }
 
-        public override IList<Entities.Action> Get(object filter = null, IList<ActionInclude> include = null)
+        public override IEnumerable<Entities.Action> Get(object filter = null, IEnumerable<ActionInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

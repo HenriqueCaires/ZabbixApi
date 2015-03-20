@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public MediaTypeService(IContext context) : base(context, "mediatype") { }
 
-        public override IList<MediaType> Get(object filter = null, IList<MediaTypeInclude> include = null)
+        public override IEnumerable<MediaType> Get(object filter = null, IEnumerable<MediaTypeInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new

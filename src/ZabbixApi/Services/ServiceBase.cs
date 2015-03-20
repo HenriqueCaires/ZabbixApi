@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
             _className = className;
         }
 
-        public IList<T> BaseGet(object @params)
+        public IEnumerable<T> BaseGet(object @params)
         {
             return _context.SendRequest<T[]>(
                     @params,

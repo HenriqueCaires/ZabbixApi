@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public MaintenanceService(IContext context) : base(context, "discoveryrule") { }
 
-        public override IList<Maintenance> Get(object filter = null, IList<MaintenanceInclude> include = null)
+        public override IEnumerable<Maintenance> Get(object filter = null, IEnumerable<MaintenanceInclude> include = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             var @params = new
