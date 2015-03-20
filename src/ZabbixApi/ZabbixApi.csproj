@@ -101,7 +101,22 @@
     <Compile Include="Services\DiscoveryRuleService.cs" />
     <Compile Include="Services\EntityResultBase.cs" />
     <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\GraphItemService.cs" />
+    <Compile Include="Services\GraphPrototypeService.cs" />
+    <Compile Include="Services\GraphService.cs" />
+    <Compile Include="Services\HistoryService.cs" />
+    <Compile Include="Services\HostGroupService.cs" />
+    <Compile Include="Services\HostInterfaceService.cs" />
+    <Compile Include="Services\HostPrototypeService.cs" />
     <Compile Include="Services\HostService.cs" />
+    <Compile Include="Services\IconMapService.cs" />
+    <Compile Include="Services\ImageService.cs" />
+    <Compile Include="Services\ItemPrototypeService.cs" />
+    <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Services\ITServiceService.cs" />
+    <Compile Include="Services\LLDRuleService.cs" />
+    <Compile Include="Services\MaintenanceService.cs" />
+    <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>
