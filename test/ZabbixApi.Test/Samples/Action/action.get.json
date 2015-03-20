@@ -1,0 +1,271 @@
+[
+    {
+        "actionid": "2",
+        "name": "Auto discovery. Linux servers.",
+        "eventsource": "1",
+        "evaltype": "0",
+        "status": "1",
+        "esc_period": "0",
+        "def_shortdata": "",
+        "def_longdata": "",
+        "recovery_msg": "0",
+        "r_shortdata": "",
+        "r_longdata": "",
+        "conditions": [
+            {
+                "conditionid": "4",
+                "actionid": "2",
+                "conditiontype": "12",
+                "operator": "2",
+                "value": "Linux"
+            },
+            {
+                "conditionid": "3",
+                "actionid": "2",
+                "conditiontype": "8",
+                "operator": "0",
+                "value": "9"
+            },
+            {
+                "conditionid": "2",
+                "actionid": "2",
+                "conditiontype": "10",
+                "operator": "0",
+                "value": "0"
+            }
+        ],
+        "operations": [
+            {
+                "operationid": "1",
+                "actionid": "2",
+                "operationtype": "6",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "optemplate": [
+                    {
+                        "operationid": "1",
+                        "templateid": "10001"
+                    }
+                ]
+            },
+            {
+                "operationid": "2",
+                "actionid": "2",
+                "operationtype": "4",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "opgroup": [
+                    {
+                        "operationid": "2",
+                        "groupid": "2"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "actionid": "3",
+        "name": "Report problems to Zabbix administrators",
+        "eventsource": "0",
+        "evaltype": "0",
+        "status": "1",
+        "esc_period": "3600",
+        "def_shortdata": "{TRIGGER.STATUS}: {TRIGGER.NAME}",
+        "def_longdata": "Trigger: {TRIGGER.NAME}\r\nTrigger status: {TRIGGER.STATUS}\r\nTrigger severity: {TRIGGER.SEVERITY}\r\nTrigger URL: {TRIGGER.URL}\r\n\r\nItem values:\r\n\r\n1. {ITEM.NAME1} ({HOST.NAME1}:{ITEM.KEY1}): {ITEM.VALUE1}\r\n2. {ITEM.NAME2} ({HOST.NAME2}:{ITEM.KEY2}): {ITEM.VALUE2}\r\n3. {ITEM.NAME3} ({HOST.NAME3}:{ITEM.KEY3}): {ITEM.VALUE3}\r\n\r\nOriginal event ID: {EVENT.ID}",
+        "recovery_msg": "1",
+        "r_shortdata": "{TRIGGER.STATUS}: {TRIGGER.NAME}",
+        "r_longdata": "Trigger: {TRIGGER.NAME}\r\nTrigger status: {TRIGGER.STATUS}\r\nTrigger severity: {TRIGGER.SEVERITY}\r\nTrigger URL: {TRIGGER.URL}\r\n\r\nItem values:\r\n\r\n1. {ITEM.NAME1} ({HOST.NAME1}:{ITEM.KEY1}): {ITEM.VALUE1}\r\n2. {ITEM.NAME2} ({HOST.NAME2}:{ITEM.KEY2}): {ITEM.VALUE2}\r\n3. {ITEM.NAME3} ({HOST.NAME3}:{ITEM.KEY3}): {ITEM.VALUE3}\r\n\r\nOriginal event ID: {EVENT.ID}",
+        "conditions": [
+            {
+                "conditionid": "6",
+                "actionid": "3",
+                "conditiontype": "5",
+                "operator": "0",
+                "value": "1"
+            },
+            {
+                "conditionid": "5",
+                "actionid": "3",
+                "conditiontype": "16",
+                "operator": "7",
+                "value": ""
+            }
+        ],
+        "operations": [
+            {
+                "operationid": "3",
+                "actionid": "3",
+                "operationtype": "0",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "opmessage": {
+                    "operationid": "3",
+                    "default_msg": "1",
+                    "subject": "{TRIGGER.STATUS}: {TRIGGER.NAME}",
+                    "message": "Trigger: {TRIGGER.NAME}\r\nTrigger status: {TRIGGER.STATUS}\r\nTrigger severity: {TRIGGER.SEVERITY}\r\nTrigger URL: {TRIGGER.URL}\r\n\r\nItem values:\r\n\r\n1. {ITEM.NAME1} ({HOST.NAME1}:{ITEM.KEY1}): {ITEM.VALUE1}\r\n2. {ITEM.NAME2} ({HOST.NAME2}:{ITEM.KEY2}): {ITEM.VALUE2}\r\n3. {ITEM.NAME3} ({HOST.NAME3}:{ITEM.KEY3}): {ITEM.VALUE3}",
+                    "mediatypeid": "0"
+                },
+                "opmessage_grp": [
+                    {
+                        "operationid": "3",
+                        "usrgrpid": "7"
+                    }
+                ],
+                "opmessage_usr": [ ]
+            }
+        ]
+    },
+    {
+        "actionid": "4",
+        "name": "Report not supported items",
+        "eventsource": "3",
+        "evaltype": "0",
+        "status": "1",
+        "esc_period": "3600",
+        "def_shortdata": "{ITEM.STATE}: {HOST.NAME}:{ITEM.NAME}",
+        "def_longdata": "Host: {HOST.NAME}\r\nItem: {ITEM.NAME}\r\nKey: {ITEM.KEY}\r\nState: {ITEM.STATE}",
+        "recovery_msg": "1",
+        "r_shortdata": "{ITEM.STATE}: {HOST.NAME}:{ITEM.NAME}",
+        "r_longdata": "Host: {HOST.NAME}\r\nItem: {ITEM.NAME}\r\nKey: {ITEM.KEY}\r\nState: {ITEM.STATE}",
+        "conditions": [
+            {
+                "conditionid": "7",
+                "actionid": "4",
+                "conditiontype": "23",
+                "operator": "0",
+                "value": "0"
+            }
+        ],
+        "operations": [
+            {
+                "operationid": "4",
+                "actionid": "4",
+                "operationtype": "0",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "opmessage": {
+                    "operationid": "4",
+                    "default_msg": "1",
+                    "subject": "",
+                    "message": "",
+                    "mediatypeid": "0"
+                },
+                "opmessage_grp": [
+                    {
+                        "operationid": "4",
+                        "usrgrpid": "7"
+                    }
+                ],
+                "opmessage_usr": [ ]
+            }
+        ]
+    },
+    {
+        "actionid": "5",
+        "name": "Report not supported low level discovery rules",
+        "eventsource": "3",
+        "evaltype": "0",
+        "status": "1",
+        "esc_period": "3600",
+        "def_shortdata": "{LLDRULE.STATE}: {HOST.NAME}:{LLDRULE.NAME}",
+        "def_longdata": "Host: {HOST.NAME}\r\nLow level discovery rule: {LLDRULE.NAME}\r\nKey: {LLDRULE.KEY}\r\nState: {LLDRULE.STATE}",
+        "recovery_msg": "1",
+        "r_shortdata": "{LLDRULE.STATE}: {HOST.NAME}:{LLDRULE.NAME}",
+        "r_longdata": "Host: {HOST.NAME}\r\nLow level discovery rule: {LLDRULE.NAME}\r\nKey: {LLDRULE.KEY}\r\nState: {LLDRULE.STATE}",
+        "conditions": [
+            {
+                "conditionid": "8",
+                "actionid": "5",
+                "conditiontype": "23",
+                "operator": "0",
+                "value": "2"
+            }
+        ],
+        "operations": [
+            {
+                "operationid": "5",
+                "actionid": "5",
+                "operationtype": "0",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "opmessage": {
+                    "operationid": "5",
+                    "default_msg": "1",
+                    "subject": "",
+                    "message": "",
+                    "mediatypeid": "0"
+                },
+                "opmessage_grp": [
+                    {
+                        "operationid": "5",
+                        "usrgrpid": "7"
+                    }
+                ],
+                "opmessage_usr": [ ]
+            }
+        ]
+    },
+    {
+        "actionid": "6",
+        "name": "Report unknown triggers",
+        "eventsource": "3",
+        "evaltype": "0",
+        "status": "1",
+        "esc_period": "3600",
+        "def_shortdata": "{TRIGGER.STATE}: {TRIGGER.NAME}",
+        "def_longdata": "Trigger name: {TRIGGER.NAME}\r\nExpression: {TRIGGER.EXPRESSION}\r\nState: {TRIGGER.STATE}",
+        "recovery_msg": "1",
+        "r_shortdata": "{TRIGGER.STATE}: {TRIGGER.NAME}",
+        "r_longdata": "Trigger name: {TRIGGER.NAME}\r\nExpression: {TRIGGER.EXPRESSION}\r\nState: {TRIGGER.STATE}",
+        "conditions": [
+            {
+                "conditionid": "9",
+                "actionid": "6",
+                "conditiontype": "23",
+                "operator": "0",
+                "value": "4"
+            }
+        ],
+        "operations": [
+            {
+                "operationid": "6",
+                "actionid": "6",
+                "operationtype": "0",
+                "esc_period": "0",
+                "esc_step_from": "1",
+                "esc_step_to": "1",
+                "evaltype": "0",
+                "opconditions": [ ],
+                "opmessage": {
+                    "operationid": "6",
+                    "default_msg": "1",
+                    "subject": "",
+                    "message": "",
+                    "mediatypeid": "0"
+                },
+                "opmessage_grp": [
+                    {
+                        "operationid": "6",
+                        "usrgrpid": "7"
+                    }
+                ],
+                "opmessage_usr": [ ]
+            }
+        ]
+    }
+]
