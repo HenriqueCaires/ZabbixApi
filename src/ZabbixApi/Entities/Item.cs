@@ -143,7 +143,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 1.
         /// </summary>
-        public float formula { get; set; }
+        public float? formula { get; set; }
 
         /// <summary>
         /// Number of days to keep item's history data. 
