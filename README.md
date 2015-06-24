@@ -5,6 +5,14 @@ C# Zabbix Api to retrieve and modify the configuration of Zabbix
 This library allows you to make CRUD operations using Zabbix API.
 You just need to instantiate the context and the service that you want and call the operation.Like that:
 
+# Installing package
+On the Package Manager Cosole type this to install:
+```
+Install-Package Zabbix
+```
+
+# Configuring
+
 Ajust the parameters on the config file:
 
 ```xml
@@ -17,7 +25,9 @@ Ajust the parameters on the config file:
 </configuration>
 ```
 
-Then instantiate the context and the service that you want and call the operation:
+# Using
+
+Instantiate the context and the service that you want and call the operation:
 
 ```csharp
 using(var context = new Context())
