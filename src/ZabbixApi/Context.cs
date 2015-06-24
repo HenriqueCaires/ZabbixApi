@@ -44,7 +44,7 @@ namespace ZabbixApi
         private void Authenticate()
         {
             var request = new Request();
-            request.method = "user.authenticate";
+            request.method = "user.login";
             request.@params = new Dictionary<string, string>() { { "user", _user }, { "password", _password } };
 
             var values = new NameValueCollection();
