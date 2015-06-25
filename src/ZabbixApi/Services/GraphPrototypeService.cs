@@ -19,22 +19,22 @@ namespace ZabbixApi.Services
     {
         public GraphPrototypeService(IContext context) : base(context, "graphprototype") { }
 
-        public override IEnumerable<GraphPrototype> Get(object filter = null, IEnumerable<GraphPrototypeInclude> include = null)
+        public override IEnumerable<GraphPrototype> Get(object filter = null, IEnumerable<GraphPrototypeInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(GraphPrototypeInclude.DiscoveryRule),
-                selectGraphItems = includeHelper.WhatShouldInclude(GraphPrototypeInclude.GraphItems),
-                selectGroups = includeHelper.WhatShouldInclude(GraphPrototypeInclude.Groups),
-                selectHosts = includeHelper.WhatShouldInclude(GraphPrototypeInclude.Hosts),
-                selectItems = includeHelper.WhatShouldInclude(GraphPrototypeInclude.Items),
-                selectTemplates = includeHelper.WhatShouldInclude(GraphPrototypeInclude.Templates),
-                
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(GraphPrototypeInclude.DiscoveryRule));
+            @params.AddOrReplace("selectGraphItems", includeHelper.WhatShouldInclude(GraphPrototypeInclude.GraphItems));
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(GraphPrototypeInclude.Groups));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(GraphPrototypeInclude.Hosts));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(GraphPrototypeInclude.Items));
+            @params.AddOrReplace("selectTemplates", includeHelper.WhatShouldInclude(GraphPrototypeInclude.Templates));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

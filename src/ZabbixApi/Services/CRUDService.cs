@@ -13,7 +13,7 @@ namespace ZabbixApi.Services
         where T : EntityBase
         where Y : struct, IConvertible
     {
-        IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null);
+        IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null, Dictionary<string, object> @params = null);
         IEnumerable<string> Create(T entity);
         IEnumerable<string> Update(T entity);
         IEnumerable<string> Delete(IEnumerable<string> ids);
@@ -29,7 +29,7 @@ namespace ZabbixApi.Services
     {
         public CRUDService(IContext context, string className) : base(context, className) { }
 
-        public abstract IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null);
+        public abstract IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null, Dictionary<string, object> @params = null);
 
         public IEnumerable<string> Create(T entity)
         {

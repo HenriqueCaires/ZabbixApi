@@ -19,22 +19,23 @@ namespace ZabbixApi.Services
     {
         public TriggerPrototypeService(IContext context) : base(context, "triggerprototype") { }
 
-        public override IEnumerable<TriggerPrototype> Get(object filter = null, IEnumerable<TriggerPrototypeInclude> include = null)
+        public override IEnumerable<TriggerPrototype> Get(object filter = null, IEnumerable<TriggerPrototypeInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                expandData = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.expandData) != null,
-                expandExpression = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.expandExpression) != null,
-                selectGroups = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Groups),
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.DiscoveryRule),
-                selectFunctions = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Functions),
-                selectHosts = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Hosts),
-                selectItems = includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Items),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("expandData", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.expandData) != null);
+            @params.AddOrReplace("expandExpression", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.expandExpression) != null);
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Groups));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.DiscoveryRule));
+            @params.AddOrReplace("selectFunctions", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Functions));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Hosts));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(TriggerPrototypeInclude.Items));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

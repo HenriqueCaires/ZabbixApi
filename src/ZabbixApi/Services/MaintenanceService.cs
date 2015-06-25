@@ -19,18 +19,19 @@ namespace ZabbixApi.Services
     {
         public MaintenanceService(IContext context) : base(context, "discoveryrule") { }
 
-        public override IEnumerable<Maintenance> Get(object filter = null, IEnumerable<MaintenanceInclude> include = null)
+        public override IEnumerable<Maintenance> Get(object filter = null, IEnumerable<MaintenanceInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectGroups = includeHelper.WhatShouldInclude(MaintenanceInclude.Groups),
-                selectHosts = includeHelper.WhatShouldInclude(MaintenanceInclude.Hosts),
-                selectTimeperiods = includeHelper.WhatShouldInclude(MaintenanceInclude.TimePeriods),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(MaintenanceInclude.Groups));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(MaintenanceInclude.Hosts));
+            @params.AddOrReplace("selectTimeperiods", includeHelper.WhatShouldInclude(MaintenanceInclude.TimePeriods));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

@@ -19,22 +19,23 @@ namespace ZabbixApi.Services
     {
         public ItemService(IContext context) : base(context, "item") { }
 
-        public override IEnumerable<Item> Get(object filter = null, IEnumerable<ItemInclude> include = null)
+        public override IEnumerable<Item> Get(object filter = null, IEnumerable<ItemInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectHosts = includeHelper.WhatShouldInclude(ItemInclude.Hosts),
-                selectInterfaces = includeHelper.WhatShouldInclude(ItemInclude.Interfaces),
-                selectTriggers = includeHelper.WhatShouldInclude(ItemInclude.Triggers),
-                selectGraphs = includeHelper.WhatShouldInclude(ItemInclude.Graphs),
-                selectApplications = includeHelper.WhatShouldInclude(ItemInclude.Applications),
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(ItemInclude.DiscoveryRule),
-                selectItemDiscovery = includeHelper.WhatShouldInclude(ItemInclude.ItemDiscovery),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(ItemInclude.Hosts));
+            @params.AddOrReplace("selectInterfaces", includeHelper.WhatShouldInclude(ItemInclude.Interfaces));
+            @params.AddOrReplace("selectTriggers", includeHelper.WhatShouldInclude(ItemInclude.Triggers));
+            @params.AddOrReplace("selectGraphs", includeHelper.WhatShouldInclude(ItemInclude.Graphs));
+            @params.AddOrReplace("selectApplications", includeHelper.WhatShouldInclude(ItemInclude.Applications));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(ItemInclude.DiscoveryRule));
+            @params.AddOrReplace("selectItemDiscovery", includeHelper.WhatShouldInclude(ItemInclude.ItemDiscovery));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

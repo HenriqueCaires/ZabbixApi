@@ -19,21 +19,22 @@ namespace ZabbixApi.Services
     {
         public HostPrototypeService(IContext context) : base(context, "hostprototype") { }
 
-        public override IEnumerable<HostPrototype> Get(object filter = null, IEnumerable<HostPrototypeInclude> include = null)
+        public override IEnumerable<HostPrototype> Get(object filter = null, IEnumerable<HostPrototypeInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(HostPrototypeInclude.DiscoveryRule),
-                selectGroupLinks = includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupLinks),
-                selectGroupPrototypes = includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupPrototypes),
-                selectInventory = includeHelper.WhatShouldInclude(HostPrototypeInclude.Inventory) != null,
-                selectParentHost = includeHelper.WhatShouldInclude(HostPrototypeInclude.ParentHost),
-                selectTemplates = includeHelper.WhatShouldInclude(HostPrototypeInclude.Templates),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(HostPrototypeInclude.DiscoveryRule));
+            @params.AddOrReplace("selectGroupLinks", includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupLinks));
+            @params.AddOrReplace("selectGroupPrototypes", includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupPrototypes));
+            @params.AddOrReplace("selectInventory", includeHelper.WhatShouldInclude(HostPrototypeInclude.Inventory) != null);
+            @params.AddOrReplace("selectParentHost", includeHelper.WhatShouldInclude(HostPrototypeInclude.ParentHost));
+            @params.AddOrReplace("selectTemplates", includeHelper.WhatShouldInclude(HostPrototypeInclude.Templates));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

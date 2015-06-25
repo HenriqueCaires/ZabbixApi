@@ -18,19 +18,20 @@ namespace ZabbixApi.Services
     {
         public UserService(IContext context) : base(context, "user") { }
 
-        public override IEnumerable<User> Get(object filter = null, IEnumerable<UserInclude> include = null)
+        public override IEnumerable<User> Get(object filter = null, IEnumerable<UserInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                getAccess = includeHelper.WhatShouldInclude(UserInclude.Access) != null,
-                selectMedias = includeHelper.WhatShouldInclude(UserInclude.Medias),
-                selectMediatypes = includeHelper.WhatShouldInclude(UserInclude.MediaTypes),
-                selectUsrgrps = includeHelper.WhatShouldInclude(UserInclude.UserGroups),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("getAccess", includeHelper.WhatShouldInclude(UserInclude.Access) != null);
+            @params.AddOrReplace("selectMedias", includeHelper.WhatShouldInclude(UserInclude.Medias));
+            @params.AddOrReplace("selectMediatypes", includeHelper.WhatShouldInclude(UserInclude.MediaTypes));
+            @params.AddOrReplace("selectUsrgrps", includeHelper.WhatShouldInclude(UserInclude.UserGroups));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

@@ -19,20 +19,21 @@ namespace ZabbixApi.Services
     {
         public MapService(IContext context) : base(context, "map") { }
 
-        public override IEnumerable<Map> Get(object filter = null, IEnumerable<MapInclude> include = null)
+        public override IEnumerable<Map> Get(object filter = null, IEnumerable<MapInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                expandUrls = includeHelper.WhatShouldInclude(MapInclude.ExpandUrls) != null,
-                selectIconMap = includeHelper.WhatShouldInclude(MapInclude.IconMap),
-                selectLinks = includeHelper.WhatShouldInclude(MapInclude.Links),
-                selectSelements = includeHelper.WhatShouldInclude(MapInclude.Selements),
-                selectUrls = includeHelper.WhatShouldInclude(MapInclude.Urls),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("expandUrls", includeHelper.WhatShouldInclude(MapInclude.ExpandUrls) != null);
+            @params.AddOrReplace("selectIconMap", includeHelper.WhatShouldInclude(MapInclude.IconMap));
+            @params.AddOrReplace("selectLinks", includeHelper.WhatShouldInclude(MapInclude.Links));
+            @params.AddOrReplace("selectSelements", includeHelper.WhatShouldInclude(MapInclude.Selements));
+            @params.AddOrReplace("selectUrls", includeHelper.WhatShouldInclude(MapInclude.Urls));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

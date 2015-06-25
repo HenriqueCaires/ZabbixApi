@@ -19,20 +19,21 @@ namespace ZabbixApi.Services
     {
         public ItemPrototypeService(IContext context) : base(context, "itemprototype") { }
 
-        public override IEnumerable<ItemPrototype> Get(object filter = null, IEnumerable<ItemPrototypeInclude> include = null)
+        public override IEnumerable<ItemPrototype> Get(object filter = null, IEnumerable<ItemPrototypeInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectApplications = includeHelper.WhatShouldInclude(ItemPrototypeInclude.Applications),
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(ItemPrototypeInclude.DiscoveryRule),
-                selectGraphs = includeHelper.WhatShouldInclude(ItemPrototypeInclude.Graphs),
-                selectHosts = includeHelper.WhatShouldInclude(ItemPrototypeInclude.Hosts),
-                selectTriggers = includeHelper.WhatShouldInclude(ItemPrototypeInclude.Triggers),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectApplications", includeHelper.WhatShouldInclude(ItemPrototypeInclude.Applications));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(ItemPrototypeInclude.DiscoveryRule));
+            @params.AddOrReplace("selectGraphs", includeHelper.WhatShouldInclude(ItemPrototypeInclude.Graphs));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(ItemPrototypeInclude.Hosts));
+            @params.AddOrReplace("selectTriggers", includeHelper.WhatShouldInclude(ItemPrototypeInclude.Triggers));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

@@ -23,30 +23,31 @@ namespace ZabbixApi.Services
         public HostService(IContext context) : base(context, "host") { }
 
 
-        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null)
+        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
 
-            var @params = new
-                    {
-                        output = "extend",
-                        selectGroups = includeHelper.WhatShouldInclude(HostInclude.Groups),
-                        selectApplications = includeHelper.WhatShouldInclude(HostInclude.Applications),
-                        selectDiscoveries = includeHelper.WhatShouldInclude(HostInclude.Discoveries),
-                        selectDiscoveryRule = includeHelper.WhatShouldInclude(HostInclude.DiscoveryRule),
-                        selectGraphs = includeHelper.WhatShouldInclude(HostInclude.Graphs),
-                        selectHostDiscovery = includeHelper.WhatShouldInclude(HostInclude.HostDiscovery),
-                        selectHttpTests = includeHelper.WhatShouldInclude(HostInclude.HttpTests),
-                        selectInterfaces = includeHelper.WhatShouldInclude(HostInclude.Interfaces),
-                        selectInventory = includeHelper.WhatShouldInclude(HostInclude.Inventory),
-                        selectItems = includeHelper.WhatShouldInclude(HostInclude.Items),
-                        selectMacros = includeHelper.WhatShouldInclude(HostInclude.Macros),
-                        selectParentTemplates = includeHelper.WhatShouldInclude(HostInclude.ParentTemplates),
-                        selectScreens = includeHelper.WhatShouldInclude(HostInclude.Screens),
-                        selectTriggers = includeHelper.WhatShouldInclude(HostInclude.Triggers),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                        filter = filter
-                    };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(HostInclude.Groups));
+            @params.AddOrReplace("selectApplications", includeHelper.WhatShouldInclude(HostInclude.Applications));
+            @params.AddOrReplace("selectDiscoveries", includeHelper.WhatShouldInclude(HostInclude.Discoveries));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(HostInclude.DiscoveryRule));
+            @params.AddOrReplace("selectGraphs", includeHelper.WhatShouldInclude(HostInclude.Graphs));
+            @params.AddOrReplace("selectHostDiscovery", includeHelper.WhatShouldInclude(HostInclude.HostDiscovery));
+            @params.AddOrReplace("selectHttpTests", includeHelper.WhatShouldInclude(HostInclude.HttpTests));
+            @params.AddOrReplace("selectInterfaces", includeHelper.WhatShouldInclude(HostInclude.Interfaces));
+            @params.AddOrReplace("selectInventory", includeHelper.WhatShouldInclude(HostInclude.Inventory));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(HostInclude.Items));
+            @params.AddOrReplace("selectMacros", includeHelper.WhatShouldInclude(HostInclude.Macros));
+            @params.AddOrReplace("selectParentTemplates", includeHelper.WhatShouldInclude(HostInclude.ParentTemplates));
+            @params.AddOrReplace("selectScreens", includeHelper.WhatShouldInclude(HostInclude.Screens));
+            @params.AddOrReplace("selectTriggers", includeHelper.WhatShouldInclude(HostInclude.Triggers));
+
+            @params.AddOrReplace("filter", filter);
+                    
 
             return BaseGet(@params);
         }

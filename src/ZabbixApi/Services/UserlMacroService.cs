@@ -11,23 +11,24 @@ namespace ZabbixApi.Services
 {
     public interface IGlobalMacroService
     {
-        IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null);
+        IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null, Dictionary<string, object> @params = null);
     }
 
     public class GlobalMacroService : ServiceBase<GlobalMacro>, IGlobalMacroService
     {
         public GlobalMacroService(IContext context) : base(context, "usermacro") { }
 
-        public IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null)
+        public IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                globalmacro = true,
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("globalmacro", true);
+            
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
     }
@@ -47,18 +48,19 @@ namespace ZabbixApi.Services
     {
         public HostMacroService(IContext context) : base(context, "usermacro") { }
 
-        public override IEnumerable<HostMacro> Get(object filter = null, IEnumerable<HostMacroInclude> include = null)
+        public override IEnumerable<HostMacro> Get(object filter = null, IEnumerable<HostMacroInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectGroups = includeHelper.WhatShouldInclude(HostMacroInclude.Groups),
-                selectHosts = includeHelper.WhatShouldInclude(HostMacroInclude.Hosts),
-                selectTemplates = includeHelper.WhatShouldInclude(HostMacroInclude.Templates),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(HostMacroInclude.Groups));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(HostMacroInclude.Hosts));
+            @params.AddOrReplace("selectTemplates", includeHelper.WhatShouldInclude(HostMacroInclude.Templates));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 
