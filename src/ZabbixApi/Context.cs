@@ -40,7 +40,22 @@ namespace ZabbixApi
 
             Authenticate();
         }
+        
+        public Context(string url, string user, string password)
+        {
+            _url = url;
+            _user = user;
+            _password = password;
 
+            Check.NotEmpty(_url, "ZabbixApi.url");
+            Check.NotEmpty(_user, "ZabbixApi.user");
+            Check.NotEmpty(_password, "ZabbixApi.password");
+
+            _webClient = new WebClient();
+
+            Authenticate();
+        }
+        
         private void Authenticate()
         {
             var request = new Request();
