@@ -176,6 +176,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Low-level discovery rule that created the graph
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryRule { get; set; }
 
         #endregion

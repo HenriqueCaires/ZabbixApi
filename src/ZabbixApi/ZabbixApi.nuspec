@@ -8,6 +8,9 @@
     <title>Zabbix</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
+    <copyright>MIT</copyright>
+    <projectUrl>https://github.com/HenriqueCaires/ZabbixApi</projectUrl>
+    <tags>Zabbix,ZabbixApi</tags>
   </metadata>
   <files />
-</package>
+</package> 

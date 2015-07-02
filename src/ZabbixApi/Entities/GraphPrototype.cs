@@ -139,6 +139,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// LLD rule that the graph prototype belongs to
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryRule { get; set; }
 
         /// <summary>

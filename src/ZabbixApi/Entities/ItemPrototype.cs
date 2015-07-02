@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
 {
@@ -296,6 +297,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Low-level discovery rule that the graph prototype belongs to
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryRule { get; set; }
 
         /// <summary>

@@ -261,6 +261,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// The icon map used on the map
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<IconMap>))]
         public IconMap iconmap { get; set; }
 
         /// <summary>

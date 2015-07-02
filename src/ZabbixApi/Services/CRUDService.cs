@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi;
+using Newtonsoft.Json;
 
 namespace ZabbixApi.Services
 {
@@ -14,12 +15,20 @@ namespace ZabbixApi.Services
         where Y : struct, IConvertible
     {
         IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null, Dictionary<string, object> @params = null);
-        IEnumerable<string> Create(T entity);
-        IEnumerable<string> Update(T entity);
+        IEnumerable<string> Create(IEnumerable<T> entity);
+        string Create(T entity);
+        IEnumerable<string> Update(IEnumerable<T> entity);
+        string Update(T entity);
         IEnumerable<string> Delete(IEnumerable<string> ids);
-        IEnumerable<string> Delete(string id);
+        string Delete(string id);
         IEnumerable<string> Delete(IEnumerable<T> entities);
-        IEnumerable<string> Delete(T entity);
+        string Delete(T entity);
+        IEnumerable<T> GetById(IEnumerable<string> ids, IEnumerable<Y> include = null);
+        T GetById(string id, IEnumerable<Y> include = null);
+        IEnumerable<T> GetById(IEnumerable<long> ids, IEnumerable<Y> include = null);
+        T GetById(long id, IEnumerable<Y> include = null);
+        IEnumerable<string> CreateOrUpdate(IEnumerable<T> entities);
+        string CreateOrUpdate(T entity);
     }
 
     public abstract class CRUDService<T, X, Y> : ServiceBase<T>, ICRUDService<T, Y>
@@ -27,24 +36,125 @@ namespace ZabbixApi.Services
         where X : EntityResultBase
         where Y : struct, IConvertible
     {
+        private string IdsAttribute
+        {
+            get
+            {
+                return ((JsonPropertyAttribute)typeof(T).GetProperty("Id").GetCustomAttributes(typeof(JsonPropertyAttribute), true).FirstOrDefault()).PropertyName;
+            }
+        }
+
         public CRUDService(IContext context, string className) : base(context, className) { }
 
         public abstract IEnumerable<T> Get(object filter = null, IEnumerable<Y> include = null, Dictionary<string, object> @params = null);
 
-        public IEnumerable<string> Create(T entity)
+        public IEnumerable<T> Get(Y include, object filter = null, Dictionary<string, object> @params = null)
+        {
+            return Get(filter: filter, include: new List<Y>() { include }, @params: @params);
+        }
+
+        public IEnumerable<T> GetById(IEnumerable<string> ids, IEnumerable<Y> include = null)
+        {
+            var filter = new Dictionary<string, object>();
+            filter.Add(IdsAttribute, ids);
+            return Get(
+                filter: filter,
+                include: include
+            );
+        }
+
+        public T GetById(string id, IEnumerable<Y> include = null)
+        {
+            return GetById(
+                ids: new List<string>() { id },
+                include: include
+            ).FirstOrDefault();
+        }
+
+        public IEnumerable<T> GetById(IEnumerable<long> ids, IEnumerable<Y> include = null)
+        {
+            return GetById(
+                ids: ids.Select(x => x.ToString()),
+                include: include
+            );
+        }
+
+        public T GetById(long id, IEnumerable<Y> include = null)
+        {
+            return GetById(
+                ids: new List<long>() { id },
+                include: include
+            ).FirstOrDefault();
+        }
+
+        public IEnumerable<T> GetByPropety(string name, IEnumerable<object> values, IEnumerable<Y> include = null)
+        {
+            var filter = new Dictionary<string, object>();
+            filter.Add(name, values.Select(x => x.ToString()));
+            return Get(
+                filter: filter,
+                include: include
+            );
+        }
+
+        public T GetByPropety(string name, object value, IEnumerable<Y> include = null)
+        {
+            return GetByPropety(
+                name: name,
+                values: new List<string>() { value.ToString() },
+                include: include
+            ).FirstOrDefault();
+        }
+
+        public IEnumerable<string> Create(IEnumerable<T> entities)
         {
             return _context.SendRequest<X>(
-                    entity,
+                    entities,
                     _className + ".create"
                     ).ids;
         }
 
-        public IEnumerable<string> Update(T entity)
+        public string Create(T entity)
+        {
+            return Create(new List<T>() { entity }).FirstOrDefault();
+        }
+
+        public IEnumerable<string> Update(IEnumerable<T> entity)
         {
             return _context.SendRequest<X>(
                     entity,
                     _className + ".update"
                     ).ids;
+        }
+
+        public string Update(T entity)
+        {
+            return Update(new List<T>() { entity }).FirstOrDefault();
+        }
+
+        public IEnumerable<string> CreateOrUpdate(IEnumerable<T> entities)
+        {
+            var objectsToCreate = entities.Where(x => x.Id == null);
+            var objectsToUpdate = entities.Where(x => x.Id != null);
+
+            var result = new List<string>();
+
+            if (objectsToCreate.Any())
+                result.AddRange(Create(objectsToCreate));
+
+            if (objectsToUpdate.Any())
+                result.AddRange(Update(objectsToUpdate));
+
+            return result;
+
+        }
+
+        public string CreateOrUpdate(T entity)
+        {
+            if (entity.Id == null)
+                return Create(new List<T>() { entity }).FirstOrDefault();
+            else
+                return Update(new List<T>() { entity }).FirstOrDefault();
         }
 
         public IEnumerable<string> Delete(IEnumerable<string> ids)
@@ -55,9 +165,9 @@ namespace ZabbixApi.Services
                     ).ids;
         }
 
-        public IEnumerable<string> Delete(string id)
+        public string Delete(string id)
         {
-            return Delete(new List<string>() { id });
+            return Delete(new List<string>() { id }).FirstOrDefault();
         }
 
         public IEnumerable<string> Delete(IEnumerable<T> entities)
@@ -65,7 +175,7 @@ namespace ZabbixApi.Services
             return Delete(entities.Select(x => x.Id));
         }
 
-        public IEnumerable<string> Delete(T entity)
+        public string Delete(T entity)
         {
             return Delete(entity.Id);
         }

@@ -165,11 +165,13 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// The low-level discovery rule that created the trigger
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryrule { get; set; }
 
         /// <summary>
         /// The last significant trigger event
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<Event>))]
         public Event lastEvent { get; set; }
 
         #endregion

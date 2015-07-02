@@ -12,7 +12,10 @@ namespace ZabbixApi.Services
 {
     public interface IHostGroupService : ICRUDService<HostGroup, HostGroupInclude>
     {
-
+        HostGroup GetByName(string name, IList<HostGroupInclude> include = null);
+        IEnumerable<HostGroup> GetByName(List<string> names, IList<HostGroupInclude> include = null);
+        HostGroup GetByName(string name, HostGroupInclude include);
+        IEnumerable<HostGroup> GetByName(List<string> names, HostGroupInclude include);
     }
 
     public class HostGroupService : CRUDService<HostGroup, HostGroupService.HostGroupsidsResult, HostGroupInclude>, IHostGroupService
@@ -40,6 +43,44 @@ namespace ZabbixApi.Services
         {
             [JsonProperty("groupids")]
             public override string[] ids { get; set; }
+        }
+
+        public HostGroup GetByName(string name, IList<HostGroupInclude> include = null)
+        {
+            return GetByName(
+                names: new List<string>() { name },
+                include: include
+            ).FirstOrDefault();
+        }
+
+        public IEnumerable<HostGroup> GetByName(List<string> names, IList<HostGroupInclude> include = null)
+        {
+            return Get(
+                filter: new
+                {
+                    name = names
+                },
+                include: include
+            );
+        }
+
+        public HostGroup GetByName(string name, HostGroupInclude include)
+        {
+            return GetByName(
+                names: new List<string>() { name },
+                include: include
+            ).FirstOrDefault();
+        }
+
+        public IEnumerable<HostGroup> GetByName(List<string> names, HostGroupInclude include)
+        {
+            return Get(
+                filter: new
+                {
+                    name = names
+                },
+                include: include
+            );
         }
     }
 

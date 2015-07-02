@@ -43,9 +43,7 @@ namespace ZabbixApi.Test
             
             var result = target.GetByName("teste");
 
-            Assert.AreEqual(1, result.Count());
-
-            var r = result.First();
+            var r = result;
 
             Assert.AreEqual("teste", r.host);
             Assert.AreEqual("127.0.0.1", r.interfaces.First().ip);

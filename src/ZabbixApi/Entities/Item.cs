@@ -381,11 +381,13 @@ namespace ZabbixApi.Entities
         /// <summary>
         ///  LLD rule that created the item
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryRule { get; set; }
 
         /// <summary>
         /// Item discovery object
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<ItemDiscovery>))]
         public ItemDiscovery itemDiscovery { get; set; }
 
         #endregion

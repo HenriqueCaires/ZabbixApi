@@ -70,12 +70,12 @@ namespace ZabbixApi
             values.Add("content-type", "application/json-rpc");
             _webClient.Headers.Add(values);
 
-            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request)));
-            var responseString = Encoding.UTF8.GetString(responseData);
-
             var settings = new JsonSerializerSettings();
-            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }; ;
             settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
+
+            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, settings)));
+            var responseString = Encoding.UTF8.GetString(responseData);
 
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings);
 

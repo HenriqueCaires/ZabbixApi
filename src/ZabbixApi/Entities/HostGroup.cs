@@ -49,12 +49,12 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// LLD rule that created the host group
         /// </summary>
-        public DiscoveryRule discoveryRule { get; set; }
+        public IList<DiscoveryRule> discoveryRule { get; set; }
 
         /// <summary>
         /// Host group discovery object
         /// </summary>
-        public GroupDiscovery groupDiscovery { get; set; }
+        public IList<GroupDiscovery> groupDiscovery { get; set; }
 
         /// <summary>
         /// Hosts that belong to the host group

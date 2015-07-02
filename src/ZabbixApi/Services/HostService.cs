@@ -12,10 +12,8 @@ namespace ZabbixApi.Services
 {
     public interface IHostService : ICRUDService<Host, HostInclude>
     {
-        IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null);
+        Host GetByName(string name, IList<HostInclude> include = null);
         IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null);
-        IEnumerable<Host> GetById(string id, IList<HostInclude> include = null);
-        IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null);
     }
 
     public class HostService : CRUDService<Host, HostService.HostidsResult, HostInclude>, IHostService
@@ -52,42 +50,15 @@ namespace ZabbixApi.Services
             return BaseGet(@params);
         }
 
-        public IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null)
+        public Host GetByName(string name, IList<HostInclude> include = null)
         {
-            return GetByName(
-                names: new List<string>() { name },
-                include: include
-            );
+            return GetByPropety("host", name, include);
         }
 
         public IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null)
         {
-            return Get(
-                filter: new
-                {
-                    host = names
-                },
-                include: include
-            );
-        }
-
-        public IEnumerable<Host> GetById(string id, IList<HostInclude> include = null)
-        {
-            return GetById(
-                ids: new List<string>() { id },
-                include: include
-            );
-        }
-
-        public IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null)
-        {
-            return Get(
-                filter: new
-                {
-                    hostids = ids
-                },
-                include: include
-            );
+            return GetByPropety("host", names, include);
+            
         }
 
         public class HostidsResult : EntityResultBase
