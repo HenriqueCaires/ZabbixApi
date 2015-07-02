@@ -19,21 +19,22 @@ namespace ZabbixApi.Services
     {
         public ITServiceService(IContext context) : base(context, "ITService") { }
 
-        public override IEnumerable<ITService> Get(object filter = null, IEnumerable<ITServiceInclude> include = null)
+        public override IEnumerable<ITService> Get(object filter = null, IEnumerable<ITServiceInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectParent = includeHelper.WhatShouldInclude(ITServiceInclude.Parent),
-                selectDependencies = includeHelper.WhatShouldInclude(ITServiceInclude.Dependencies),
-                selectParentDependencies = includeHelper.WhatShouldInclude(ITServiceInclude.ParentDependencies),
-                selectTimes = includeHelper.WhatShouldInclude(ITServiceInclude.Times),
-                selectAlarms = includeHelper.WhatShouldInclude(ITServiceInclude.Alarms),
-                selectTrigger = includeHelper.WhatShouldInclude(ITServiceInclude.Trigger),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectParent", includeHelper.WhatShouldInclude(ITServiceInclude.Parent));
+            @params.AddOrReplace("selectDependencies", includeHelper.WhatShouldInclude(ITServiceInclude.Dependencies));
+            @params.AddOrReplace("selectParentDependencies", includeHelper.WhatShouldInclude(ITServiceInclude.ParentDependencies));
+            @params.AddOrReplace("selectTimes", includeHelper.WhatShouldInclude(ITServiceInclude.Times));
+            @params.AddOrReplace("selectAlarms", includeHelper.WhatShouldInclude(ITServiceInclude.Alarms));
+            @params.AddOrReplace("selectTrigger", includeHelper.WhatShouldInclude(ITServiceInclude.Trigger));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

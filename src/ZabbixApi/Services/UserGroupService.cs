@@ -18,16 +18,17 @@ namespace ZabbixApi.Services
     {
         public UserGroupService(IContext context) : base(context, "usergroup") { }
 
-        public override IEnumerable<UserGroup> Get(object filter = null, IEnumerable<UserGroupInclude> include = null)
+        public override IEnumerable<UserGroup> Get(object filter = null, IEnumerable<UserGroupInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectUsers = includeHelper.WhatShouldInclude(UserGroupInclude.Users),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectUsers", includeHelper.WhatShouldInclude(UserGroupInclude.Users));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

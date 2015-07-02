@@ -17,17 +17,19 @@ namespace ZabbixApi.Services
     {
         public ActionService(IContext context) : base(context, "action") { }
 
-        public override IEnumerable<Entities.Action> Get(object filter = null, IEnumerable<ActionInclude> include = null)
+        public override IEnumerable<Entities.Action> Get(object filter = null, IEnumerable<ActionInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-                    {
-                        output = "extend",
-                        selectConditions = includeHelper.WhatShouldInclude(ActionInclude.Conditions),
-                        selectOperations = includeHelper.WhatShouldInclude(ActionInclude.Operations),
 
-                        filter = filter
-                    };
+            if(@params == null)
+                @params = new Dictionary<string, object>();
+
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectConditions", includeHelper.WhatShouldInclude(ActionInclude.Conditions));
+            @params.AddOrReplace("selectOperations", includeHelper.WhatShouldInclude(ActionInclude.Operations));
+
+            @params.AddOrReplace("filter", filter);
+                    
             return BaseGet(@params);
         }
 

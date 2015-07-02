@@ -11,25 +11,26 @@ namespace ZabbixApi.Services
 {
     public interface IAlertService
     {
-        IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null);
+        IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null, Dictionary<string, object> @params = null);
     }
 
     public class AlertService : ServiceBase<Alert>, IAlertService
     {
         public AlertService(IContext context) : base(context, "alert") { }
 
-        public IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null)
+        public IEnumerable<Alert> Get(object filter = null, IEnumerable<AlertInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectHosts = includeHelper.WhatShouldInclude(AlertInclude.Hosts),
-                selectMediatypes = includeHelper.WhatShouldInclude(AlertInclude.MediaTypes),
-                selectUsers = includeHelper.WhatShouldInclude(AlertInclude.Users),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(AlertInclude.Hosts));
+            @params.AddOrReplace("selectMediatypes", includeHelper.WhatShouldInclude(AlertInclude.MediaTypes));
+            @params.AddOrReplace("selectUsers", includeHelper.WhatShouldInclude(AlertInclude.Users));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
 {
@@ -49,6 +50,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// LLD rule that the host prototype belongs to
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryRule { get; set; }
 
         /// <summary>
@@ -64,6 +66,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Host that the host prototype belongs
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<Host>))]
         public Host parentHost { get; set; }
 
         /// <summary>

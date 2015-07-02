@@ -18,17 +18,18 @@ namespace ZabbixApi.Services
     {
         public DiscoveryRuleService(IContext context) : base(context, "drule") { }
 
-        public override IEnumerable<DiscoveryRule> Get(object filter = null, IEnumerable<DiscoveryRuleInclude> include = null)
+        public override IEnumerable<DiscoveryRule> Get(object filter = null, IEnumerable<DiscoveryRuleInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectDHosts = includeHelper.WhatShouldInclude(DiscoveryRuleInclude.DiscoveredHosts),
-                selectDChecks = includeHelper.WhatShouldInclude(DiscoveryRuleInclude.DiscoveryChecks),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectDHosts", includeHelper.WhatShouldInclude(DiscoveryRuleInclude.DiscoveredHosts));
+            @params.AddOrReplace("selectDChecks", includeHelper.WhatShouldInclude(DiscoveryRuleInclude.DiscoveryChecks));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

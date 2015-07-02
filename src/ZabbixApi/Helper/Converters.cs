@@ -17,13 +17,13 @@ namespace ZabbixApi.Helper
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var t = long.Parse((string)reader.Value);
-            return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddMilliseconds(t);
+            return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(t);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var t = ((DateTime)value).ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-            writer.WriteValue(t);
+            var t = (long)((DateTime)value).ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+            writer.WriteValue(t > 0 ? t : 0);
         }
     }
 
@@ -44,6 +44,31 @@ namespace ZabbixApi.Helper
         {
             var t = Convert.ToInt32(value) != 0;
             writer.WriteValue(t);
+        }
+    }
+
+    public class SingleObjectConverter<T> : JsonConverter
+    {
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.StartObject)
+            {
+                return serializer.Deserialize(reader, objectType); 
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(T);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
         }
     }
 }

@@ -52,6 +52,7 @@ namespace ZabbixApi.Entities
         /// The proxy interface used by a passive proxy
         /// </summary>
         [JsonProperty("interface")]
+        [JsonConverter(typeof(SingleObjectConverter<ProxyInterface>))]
         public ProxyInterface @interface { get; set; }
 
         #endregion

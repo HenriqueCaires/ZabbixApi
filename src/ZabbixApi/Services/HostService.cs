@@ -12,10 +12,8 @@ namespace ZabbixApi.Services
 {
     public interface IHostService : ICRUDService<Host, HostInclude>
     {
-        IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null);
+        Host GetByName(string name, IList<HostInclude> include = null);
         IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null);
-        IEnumerable<Host> GetById(string id, IList<HostInclude> include = null);
-        IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null);
     }
 
     public class HostService : CRUDService<Host, HostService.HostidsResult, HostInclude>, IHostService
@@ -23,70 +21,44 @@ namespace ZabbixApi.Services
         public HostService(IContext context) : base(context, "host") { }
 
 
-        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null)
+        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
 
-            var @params = new
-                    {
-                        output = "extend",
-                        selectGroups = includeHelper.WhatShouldInclude(HostInclude.Groups),
-                        selectApplications = includeHelper.WhatShouldInclude(HostInclude.Applications),
-                        selectDiscoveries = includeHelper.WhatShouldInclude(HostInclude.Discoveries),
-                        selectDiscoveryRule = includeHelper.WhatShouldInclude(HostInclude.DiscoveryRule),
-                        selectGraphs = includeHelper.WhatShouldInclude(HostInclude.Graphs),
-                        selectHostDiscovery = includeHelper.WhatShouldInclude(HostInclude.HostDiscovery),
-                        selectHttpTests = includeHelper.WhatShouldInclude(HostInclude.HttpTests),
-                        selectInterfaces = includeHelper.WhatShouldInclude(HostInclude.Interfaces),
-                        selectInventory = includeHelper.WhatShouldInclude(HostInclude.Inventory),
-                        selectItems = includeHelper.WhatShouldInclude(HostInclude.Items),
-                        selectMacros = includeHelper.WhatShouldInclude(HostInclude.Macros),
-                        selectParentTemplates = includeHelper.WhatShouldInclude(HostInclude.ParentTemplates),
-                        selectScreens = includeHelper.WhatShouldInclude(HostInclude.Screens),
-                        selectTriggers = includeHelper.WhatShouldInclude(HostInclude.Triggers),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                        filter = filter
-                    };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(HostInclude.Groups));
+            @params.AddOrReplace("selectApplications", includeHelper.WhatShouldInclude(HostInclude.Applications));
+            @params.AddOrReplace("selectDiscoveries", includeHelper.WhatShouldInclude(HostInclude.Discoveries));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(HostInclude.DiscoveryRule));
+            @params.AddOrReplace("selectGraphs", includeHelper.WhatShouldInclude(HostInclude.Graphs));
+            @params.AddOrReplace("selectHostDiscovery", includeHelper.WhatShouldInclude(HostInclude.HostDiscovery));
+            @params.AddOrReplace("selectHttpTests", includeHelper.WhatShouldInclude(HostInclude.HttpTests));
+            @params.AddOrReplace("selectInterfaces", includeHelper.WhatShouldInclude(HostInclude.Interfaces));
+            @params.AddOrReplace("selectInventory", includeHelper.WhatShouldInclude(HostInclude.Inventory));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(HostInclude.Items));
+            @params.AddOrReplace("selectMacros", includeHelper.WhatShouldInclude(HostInclude.Macros));
+            @params.AddOrReplace("selectParentTemplates", includeHelper.WhatShouldInclude(HostInclude.ParentTemplates));
+            @params.AddOrReplace("selectScreens", includeHelper.WhatShouldInclude(HostInclude.Screens));
+            @params.AddOrReplace("selectTriggers", includeHelper.WhatShouldInclude(HostInclude.Triggers));
+
+            @params.AddOrReplace("filter", filter);
+                    
 
             return BaseGet(@params);
         }
 
-        public IEnumerable<Host> GetByName(string name, IList<HostInclude> include = null)
+        public Host GetByName(string name, IList<HostInclude> include = null)
         {
-            return GetByName(
-                names: new List<string>() { name },
-                include: include
-            );
+            return GetByPropety("host", name, include);
         }
 
         public IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null)
         {
-            return Get(
-                filter: new
-                {
-                    host = names
-                },
-                include: include
-            );
-        }
-
-        public IEnumerable<Host> GetById(string id, IList<HostInclude> include = null)
-        {
-            return GetById(
-                ids: new List<string>() { id },
-                include: include
-            );
-        }
-
-        public IEnumerable<Host> GetById(List<string> ids, IList<HostInclude> include = null)
-        {
-            return Get(
-                filter: new
-                {
-                    hostids = ids
-                },
-                include: include
-            );
+            return GetByPropety("host", names, include);
+            
         }
 
         public class HostidsResult : EntityResultBase

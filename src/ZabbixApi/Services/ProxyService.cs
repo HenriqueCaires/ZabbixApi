@@ -19,17 +19,18 @@ namespace ZabbixApi.Services
     {
         public ProxyService(IContext context) : base(context, "proxy") { }
 
-        public override IEnumerable<Proxy> Get(object filter = null, IEnumerable<ProxyInclude> include = null)
+        public override IEnumerable<Proxy> Get(object filter = null, IEnumerable<ProxyInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectHosts = includeHelper.WhatShouldInclude(ProxyInclude.Hosts),
-                selectInterface = includeHelper.WhatShouldInclude(ProxyInclude.Interface),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(ProxyInclude.Hosts));
+            @params.AddOrReplace("selectInterface", includeHelper.WhatShouldInclude(ProxyInclude.Interface));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

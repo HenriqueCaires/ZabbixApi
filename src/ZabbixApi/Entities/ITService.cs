@@ -77,6 +77,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Hard-dependent parent IT service
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<ITService>))]
         public ITService parent { get; set; }
 
         /// <summary>
@@ -102,6 +103,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// The associated trigger
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<Trigger>))]
         public Trigger trigger { get; set; }
         
 

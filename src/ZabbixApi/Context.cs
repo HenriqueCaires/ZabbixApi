@@ -18,9 +18,9 @@ namespace ZabbixApi
 
     public class Context : IContext
     {
-        private readonly string _url;
-        private readonly string _user;
-        private readonly string _password;
+        private string _url;
+        private string _user;
+        private string _password;
 
         private string _authenticationToken;
 
@@ -28,20 +28,19 @@ namespace ZabbixApi
 
         public Context()
         {
-            _url = ConfigurationManager.AppSettings["ZabbixApi.url"];
-            _user = ConfigurationManager.AppSettings["ZabbixApi.user"];
-            _password = ConfigurationManager.AppSettings["ZabbixApi.password"];
+            var url = ConfigurationManager.AppSettings["ZabbixApi.url"];
+            var user = ConfigurationManager.AppSettings["ZabbixApi.user"];
+            var password = ConfigurationManager.AppSettings["ZabbixApi.password"];
 
-            Check.NotEmpty(_url, "ZabbixApi.url");
-            Check.NotEmpty(_user, "ZabbixApi.user");
-            Check.NotEmpty(_password, "ZabbixApi.password");
-
-            _webClient = new WebClient();
-
-            Authenticate();
+            Initialize(url, user, password);
         }
         
         public Context(string url, string user, string password)
+        {
+            Initialize(url, user, password);
+        }
+
+        private void Initialize(string url, string user, string password)
         {
             _url = url;
             _user = user;
@@ -85,12 +84,12 @@ namespace ZabbixApi
             values.Add("content-type", "application/json-rpc");
             _webClient.Headers.Add(values);
 
-            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request)));
-            var responseString = Encoding.UTF8.GetString(responseData);
-
             var settings = new JsonSerializerSettings();
-            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }; ;
             settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
+
+            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, settings)));
+            var responseString = Encoding.UTF8.GetString(responseData);
 
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings);
 

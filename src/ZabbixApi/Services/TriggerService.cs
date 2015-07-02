@@ -19,26 +19,27 @@ namespace ZabbixApi.Services
     {
         public TriggerService(IContext context) : base(context, "trigger") { }
 
-        public override IEnumerable<Trigger> Get(object filter = null, IEnumerable<TriggerInclude> include = null)
+        public override IEnumerable<Trigger> Get(object filter = null, IEnumerable<TriggerInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                expandData = includeHelper.WhatShouldInclude(TriggerInclude.expandData) != null,
-                expandComment = includeHelper.WhatShouldInclude(TriggerInclude.expandComment) != null,
-                expandDescription = includeHelper.WhatShouldInclude(TriggerInclude.expandDescription) != null,
-                expandExpression = includeHelper.WhatShouldInclude(TriggerInclude.expandExpression) != null,
-                selectGroups = includeHelper.WhatShouldInclude(TriggerInclude.Groups),
-                selectHosts = includeHelper.WhatShouldInclude(TriggerInclude.Hosts),
-                selectItems = includeHelper.WhatShouldInclude(TriggerInclude.Items),
-                selectFunctions = includeHelper.WhatShouldInclude(TriggerInclude.Functions),
-                selectDependencies = includeHelper.WhatShouldInclude(TriggerInclude.Dependencies),
-                selectDiscoveryRule = includeHelper.WhatShouldInclude(TriggerInclude.DiscoveryRule),
-                selectLastEvent = includeHelper.WhatShouldInclude(TriggerInclude.LastEvent),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("expandData", includeHelper.WhatShouldInclude(TriggerInclude.expandData) != null);
+            @params.AddOrReplace("expandComment", includeHelper.WhatShouldInclude(TriggerInclude.expandComment) != null);
+            @params.AddOrReplace("expandDescription", includeHelper.WhatShouldInclude(TriggerInclude.expandDescription) != null);
+            @params.AddOrReplace("expandExpression", includeHelper.WhatShouldInclude(TriggerInclude.expandExpression) != null);
+            @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(TriggerInclude.Groups));
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(TriggerInclude.Hosts));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(TriggerInclude.Items));
+            @params.AddOrReplace("selectFunctions", includeHelper.WhatShouldInclude(TriggerInclude.Functions));
+            @params.AddOrReplace("selectDependencies", includeHelper.WhatShouldInclude(TriggerInclude.Dependencies));
+            @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(TriggerInclude.DiscoveryRule));
+            @params.AddOrReplace("selectLastEvent", includeHelper.WhatShouldInclude(TriggerInclude.LastEvent));
+            
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 

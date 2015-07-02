@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
 {
@@ -100,6 +101,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// The low-level discovery rule that created the trigger
         /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<DiscoveryRule>))]
         public DiscoveryRule discoveryrule { get; set; }
 
         /// <summary>

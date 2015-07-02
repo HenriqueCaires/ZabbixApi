@@ -19,20 +19,21 @@ namespace ZabbixApi.Services
     {
         public LLDRuleService(IContext context) : base(context, "discoveryrule") { }
 
-        public override IEnumerable<LLDRule> Get(object filter = null, IEnumerable<LLDRuleInclude> include = null)
+        public override IEnumerable<LLDRule> Get(object filter = null, IEnumerable<LLDRuleInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            var @params = new
-            {
-                output = "extend",
-                selectHosts = includeHelper.WhatShouldInclude(LLDRuleInclude.Hosts),
-                selectGraphs = includeHelper.WhatShouldInclude(LLDRuleInclude.Graphs),
-                selectHostPrototypes = includeHelper.WhatShouldInclude(LLDRuleInclude.HostPrototypes),
-                selectItems = includeHelper.WhatShouldInclude(LLDRuleInclude.Items),
-                selectTriggers = includeHelper.WhatShouldInclude(LLDRuleInclude.Triggers),
+            if(@params == null)
+                @params = new Dictionary<string, object>();
 
-                filter = filter
-            };
+            @params.AddOrReplace("output", "extend");
+            @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(LLDRuleInclude.Hosts));
+            @params.AddOrReplace("selectGraphs", includeHelper.WhatShouldInclude(LLDRuleInclude.Graphs));
+            @params.AddOrReplace("selectHostPrototypes", includeHelper.WhatShouldInclude(LLDRuleInclude.HostPrototypes));
+            @params.AddOrReplace("selectItems", includeHelper.WhatShouldInclude(LLDRuleInclude.Items));
+            @params.AddOrReplace("selectTriggers", includeHelper.WhatShouldInclude(LLDRuleInclude.Triggers));
+
+            @params.AddOrReplace("filter", filter);
+            
             return BaseGet(@params);
         }
 
