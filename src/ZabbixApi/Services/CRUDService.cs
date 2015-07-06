@@ -55,6 +55,8 @@ namespace ZabbixApi.Services
 
         public IEnumerable<T> GetById(IEnumerable<string> ids, IEnumerable<Y> include = null)
         {
+            Check.IEnumerableNotNullOrEmpty<string>(ids, "ids");
+
             var filter = new Dictionary<string, object>();
             filter.Add(IdsAttribute, ids);
             return Get(
@@ -65,6 +67,8 @@ namespace ZabbixApi.Services
 
         public T GetById(string id, IEnumerable<Y> include = null)
         {
+            Check.IsNotNullOrWhiteSpace(id, "id");
+
             return GetById(
                 ids: new List<string>() { id },
                 include: include
@@ -73,6 +77,8 @@ namespace ZabbixApi.Services
 
         public IEnumerable<T> GetById(IEnumerable<long> ids, IEnumerable<Y> include = null)
         {
+            Check.IEnumerableNotNullOrEmpty<long>(ids, "ids");
+
             return GetById(
                 ids: ids.Select(x => x.ToString()),
                 include: include
@@ -89,6 +95,9 @@ namespace ZabbixApi.Services
 
         public IEnumerable<T> GetByPropety(string name, IEnumerable<object> values, IEnumerable<Y> include = null)
         {
+            Check.IsNotNullOrWhiteSpace(name, "name");
+            Check.IEnumerableNotNullOrEmpty<object>(values, "values");
+
             var filter = new Dictionary<string, object>();
             filter.Add(name, values.Select(x => x.ToString()));
             return Get(
@@ -99,6 +108,9 @@ namespace ZabbixApi.Services
 
         public T GetByPropety(string name, object value, IEnumerable<Y> include = null)
         {
+            Check.IsNotNullOrWhiteSpace(name, "name");
+            Check.NotNull(value, "value");
+
             return GetByPropety(
                 name: name,
                 values: new List<string>() { value.ToString() },
@@ -108,6 +120,8 @@ namespace ZabbixApi.Services
 
         public IEnumerable<string> Create(IEnumerable<T> entities)
         {
+            Check.IEnumerableNotNullOrEmpty<T>(entities);
+
             return _context.SendRequest<X>(
                     entities,
                     _className + ".create"
@@ -116,24 +130,32 @@ namespace ZabbixApi.Services
 
         public string Create(T entity)
         {
+            Check.NotNull(entity, "entity");
+
             return Create(new List<T>() { entity }).FirstOrDefault();
         }
 
-        public IEnumerable<string> Update(IEnumerable<T> entity)
+        public IEnumerable<string> Update(IEnumerable<T> entities)
         {
+            Check.IEnumerableNotNullOrEmpty<T>(entities, "entities");
+
             return _context.SendRequest<X>(
-                    entity,
+                    entities,
                     _className + ".update"
                     ).ids;
         }
 
         public string Update(T entity)
         {
+            Check.EntityHasId(entity);
+
             return Update(new List<T>() { entity }).FirstOrDefault();
         }
 
         public IEnumerable<string> CreateOrUpdate(IEnumerable<T> entities)
         {
+            Check.IEnumerableNotNullOrEmpty<T>(entities, "entities");
+
             var objectsToCreate = entities.Where(x => x.Id == null);
             var objectsToUpdate = entities.Where(x => x.Id != null);
 
@@ -151,6 +173,8 @@ namespace ZabbixApi.Services
 
         public string CreateOrUpdate(T entity)
         {
+            Check.NotNull(entity);
+
             if (entity.Id == null)
                 return Create(new List<T>() { entity }).FirstOrDefault();
             else
@@ -159,6 +183,8 @@ namespace ZabbixApi.Services
 
         public IEnumerable<string> Delete(IEnumerable<string> ids)
         {
+            Check.IEnumerableNotNullOrEmpty<string>(ids, "ids");
+
             return _context.SendRequest<X>(
                     ids,
                     _className + ".delete"
@@ -167,16 +193,22 @@ namespace ZabbixApi.Services
 
         public string Delete(string id)
         {
+            Check.IsNotNullOrWhiteSpace(id, "id");
+
             return Delete(new List<string>() { id }).FirstOrDefault();
         }
 
         public IEnumerable<string> Delete(IEnumerable<T> entities)
         {
+            Check.IEnumerableNotNullOrEmpty<T>(entities, "entities");
+
             return Delete(entities.Select(x => x.Id));
         }
 
         public string Delete(T entity)
         {
+            Check.EntityHasId(entity);
+
             return Delete(entity.Id);
         }
     }
