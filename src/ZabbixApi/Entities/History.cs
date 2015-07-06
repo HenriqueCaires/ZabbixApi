@@ -33,6 +33,27 @@ namespace ZabbixApi.Entities
         /// </summary>
         public string value { get; set; }
 
+        /// <summary>
+        /// History object types
+        /// </summary>
+        [JsonIgnore]
+        public HistoryType historyType { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        /// <summary>
+        /// History object types. 
+        /// </summary>
+        public enum HistoryType
+        {
+            FloatType = 0,
+            StringType = 1,
+            LogType = 2,
+            IntegerType = 3,
+            TextType = 4
+        }
         #endregion
     }
 }
