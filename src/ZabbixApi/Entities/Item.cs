@@ -136,7 +136,7 @@ namespace ZabbixApi.Entities
         /// 0 - a plain item; 
         /// 4 - a discovered item.
         /// </summary>
-        public Flags flags { get; set; }
+        public Flags? flags { get; set; }
 
         /// <summary>
         /// Custom multiplier. 
@@ -172,14 +172,14 @@ namespace ZabbixApi.Entities
         /// This property will only return a value for the period configured in ZBX_HISTORY_PERIOD.
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
-        public DateTime lastclock { get; set; }
+        public DateTime? lastclock { get; set; }
 
         /// <summary>
         /// (readonly) Nanoseconds when the item was last updated. 
         /// 
         /// This property will only return a value for the period configured in ZBX_HISTORY_PERIOD.
         /// </summary>
-        public int lastns { get; set; }
+        public int? lastns { get; set; }
 
         /// <summary>
         /// (readonly) Last value of the item. 
@@ -305,7 +305,7 @@ namespace ZabbixApi.Entities
         /// 0 - (default) normal; 
         /// 1 - not supported.
         /// </summary>
-        public State state { get; set; }
+        public State? state { get; set; }
 
         /// <summary>
         /// Status of the item. 
@@ -495,8 +495,8 @@ namespace ZabbixApi.Entities
             inventory_link = 0;
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
-            state = State.Normal;
-            status = Status.Enabled;
+            //state = State.Normal;// Este é um valor que não é obrigatório informar
+            status = Status.Enabled; 
             trends = 365;
         }
 

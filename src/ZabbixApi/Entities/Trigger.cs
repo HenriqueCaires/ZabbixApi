@@ -46,13 +46,13 @@ namespace ZabbixApi.Entities
         /// 0 - (default) a plain trigger; 
         /// 4 - a discovered trigger.
         /// </summary>
-        public Flags flags { get; set; }
+        public Flags? flags { get; set; }
 
         /// <summary>
         /// (readonly) Time when the trigger last changed its state.
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
-        public DateTime lastchange { get; set; }
+        public DateTime? lastchange { get; set; }
 
         /// <summary>
         /// Severity of the trigger. 
@@ -74,7 +74,7 @@ namespace ZabbixApi.Entities
         /// 0 - (default) trigger state is up to date; 
         /// 1 - current trigger state is unknown.
         /// </summary>
-        public State state { get; set; }
+        public State? state { get; set; }
 
         /// <summary>
         /// Whether the trigger is enabled or disabled. 
@@ -111,7 +111,7 @@ namespace ZabbixApi.Entities
         /// 0 - (default) OK; 
         /// 1 - problem.
         /// </summary>
-        public TriggerState value { get; set; }
+        public TriggerState? value { get; set; }
 
         #region Properties of Expanded Data
 
@@ -224,12 +224,12 @@ namespace ZabbixApi.Entities
 
         public Trigger()
         {
-            flags = Flags.PlainTrigger;
+            //flags = Flags.PlainTrigger;
             priority = Severity.NotClassified;
-            state = State.UpToDate;
+            //state = State.UpToDate;
             status = Status.Enabled;
             type = MultipleProblemEvents.DoNotGenerateMultipleEvents;
-            value = TriggerState.Ok;
+            //value = TriggerState.Ok;
         }
 
         #endregion
