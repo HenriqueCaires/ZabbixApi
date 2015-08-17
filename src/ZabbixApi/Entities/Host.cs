@@ -362,5 +362,89 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region ShouldSerialize
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeavailable()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializedisable_until()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeerror()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeerrors_from()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeflags()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeipmi_available()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeipmi_disable_until()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeipmi_error()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeipmi_errors_from()
+        {
+            return false;
+        }
+
+        #endregion
     }
 }

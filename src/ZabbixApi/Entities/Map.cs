@@ -15,7 +15,6 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// (readonly) ID of the map.
         /// </summary>
-        public string sysmapid { get; set; }
         [JsonProperty("sysmapid")]
         public override string Id { get; set; }
 

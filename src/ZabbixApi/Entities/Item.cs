@@ -496,10 +496,85 @@ namespace ZabbixApi.Entities
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             state = State.Normal;
-            status = Status.Enabled;
+            status = Status.Enabled; 
             trends = 365;
         }
 
+        #endregion
+
+        #region ShouldSerialize
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeerror()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeflags()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializelastclock()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializelastns()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializelastvalue()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeprevvalue()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializestate()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializetemplateid()
+        {
+            return false;
+        }
         #endregion
     }
 

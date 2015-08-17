@@ -41,7 +41,7 @@ namespace ZabbixApi.Helper
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var t = Convert.ToInt32(value) != 0;
+            var t = Convert.ToBoolean(value) ? 1 : 0;
             writer.WriteValue(t);
         }
     }
