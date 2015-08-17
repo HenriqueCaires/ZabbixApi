@@ -46,9 +46,9 @@ namespace ZabbixApi
             _user = user;
             _password = password;
 
-            Check.NotEmpty(_url, "ZabbixApi.url");
-            Check.NotEmpty(_user, "ZabbixApi.user");
-            Check.NotEmpty(_password, "ZabbixApi.password");
+            Check.IsNotNullOrWhiteSpace(_url, "ZabbixApi.url");
+            Check.IsNotNullOrWhiteSpace(_user, "ZabbixApi.user");
+            Check.IsNotNullOrWhiteSpace(_password, "ZabbixApi.password");
 
             _webClient = new WebClient();
 

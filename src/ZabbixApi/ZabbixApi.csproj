@@ -87,6 +87,7 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserGroup.cs" />
     <Compile Include="Entities\WebScenario.cs" />
+    <Compile Include="Helper\DateTimeExtensions.cs" />
     <Compile Include="Helper\DictionaryExtensions.cs" />
     <Compile Include="Helper\IncludeHelper.cs" />
     <Compile Include="Helper\Check.cs" />

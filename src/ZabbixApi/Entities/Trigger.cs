@@ -233,6 +233,63 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region ShouldSerialize
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeerror()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeflags()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializelastchange()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializestate()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializetemplateid()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializevalue()
+        {
+            return false;
+        }
+        #endregion
     }
 
     public class Function : EntityBase
