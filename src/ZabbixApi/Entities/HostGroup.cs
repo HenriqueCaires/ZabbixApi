@@ -85,6 +85,28 @@ namespace ZabbixApi.Entities
 
         #endregion
 
+        #region ShouldSerialize
+
+        /// <summary>
+        /// As propriedades @internal não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeinternal()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// As propriedades flags não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeflags()
+        {
+            return false;
+        }
+
+        #endregion
+
     }
 
     public partial class GroupDiscovery
