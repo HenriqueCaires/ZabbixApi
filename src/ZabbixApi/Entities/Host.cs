@@ -75,14 +75,7 @@ namespace ZabbixApi.Entities
         /// 6 - RMCP+.
         /// </summary>
         public AuthenticationAlgorithm ipmi_authtype { get; set; }
-
-
-        /// <summary>
-        /// (readonly) Inventory of host. 
-        /// </summary>
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public HostInventory inventory { get; set; }
-
+        
         /// <summary>
         /// (readonly) Availability of IPMI agent. 
         /// 
@@ -289,7 +282,12 @@ namespace ZabbixApi.Entities
         /// Maintenances
         /// </summary>
         public IList<Maintenance> maintenances { get; set; }
-        
+
+        /// <summary>
+        /// (readonly) Inventory of host. 
+        /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<HostInventory>))]
+        public HostInventory inventory { get; set; }
 
         #endregion
 
@@ -367,7 +365,6 @@ namespace ZabbixApi.Entities
             maintenance_type = MaintenanceType.MaintenanceWithDataCollection;
             snmp_available = SNMPAvailability.Unknown;
             status = Status.Monitored;
-            inventory = new HostInventory();
         }
 
         #endregion
