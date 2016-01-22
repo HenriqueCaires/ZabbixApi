@@ -56,6 +56,7 @@
     <Compile Include="Entities\DiscoveryRule.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\EntityBase.cs" />
+    <Compile Include="Entities\HostInventory.cs" />
     <Compile Include="Entities\UserMacro.cs" />
     <Compile Include="Entities\Graph.cs" />
     <Compile Include="Entities\GraphItem.cs" />
