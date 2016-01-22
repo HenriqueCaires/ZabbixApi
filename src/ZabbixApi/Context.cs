@@ -73,35 +73,38 @@ namespace ZabbixApi
 
         T IContext.SendRequest<T>(object @params, string method)
         {
-            var id = new Random(DateTime.Now.Millisecond).Next();
-            var request = new Request();
-            request.method = method;
-            request.@params = @params;
-            request.id = id;
-            request.auth = _authenticationToken;
-
-            var values = new NameValueCollection();
-            values.Add("content-type", "application/json-rpc");
-            _webClient.Headers.Add(values);
-
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
-            settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
-
-            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, settings)));
-            var responseString = Encoding.UTF8.GetString(responseData);
-
-            var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings);
-
-            if (response.error != null)
+            lock(_webClient)
             {
-                throw new Exception(response.error.message, new Exception(string.Format("{0} - code:{1}", response.error.data, response.error.code)));
+                var id = new Random(DateTime.Now.Millisecond).Next();
+                var request = new Request();
+                request.method = method;
+                request.@params = @params;
+                request.id = id;
+                request.auth = _authenticationToken;
+
+                var values = new NameValueCollection();
+                values.Add("content-type", "application/json-rpc");
+                _webClient.Headers.Add(values);
+
+                var settings = new JsonSerializerSettings();
+                settings.NullValueHandling = NullValueHandling.Ignore;
+                settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
+
+                var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, settings)));
+                var responseString = Encoding.UTF8.GetString(responseData);
+
+                var response = JsonConvert.DeserializeObject<Response<T>>(responseString, settings);
+
+                if (response.error != null)
+                {
+                    throw new Exception(response.error.message, new Exception(string.Format("{0} - code:{1}", response.error.data, response.error.code)));
+                }
+
+                if (response.id != id)
+                    throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.id, id));
+
+                return response.result;
             }
-
-            if (response.id != id)
-                throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.id, id));
-
-            return response.result;
         }
 
         private class Request
