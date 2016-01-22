@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Entities;
 using ZabbixApi.Services;
+using System.ComponentModel;
 
 namespace ZabbixApi.Entities
 {
@@ -74,7 +75,7 @@ namespace ZabbixApi.Entities
         /// 6 - RMCP+.
         /// </summary>
         public AuthenticationAlgorithm ipmi_authtype { get; set; }
-
+        
         /// <summary>
         /// (readonly) Availability of IPMI agent. 
         /// 
@@ -281,7 +282,12 @@ namespace ZabbixApi.Entities
         /// Maintenances
         /// </summary>
         public IList<Maintenance> maintenances { get; set; }
-        
+
+        /// <summary>
+        /// (readonly) Inventory of host. 
+        /// </summary>
+        [JsonConverter(typeof(SingleObjectConverter<HostInventory>))]
+        public HostInventory inventory { get; set; }
 
         #endregion
 
