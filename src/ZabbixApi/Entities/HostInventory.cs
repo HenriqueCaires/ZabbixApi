@@ -106,17 +106,6 @@ namespace ZabbixApi.Entities
         public string installer_name { get; set; }
 
         /// <summary>
-        /// Host inventory population mode. 
-        /// 
-        /// Possible values are: 
-        /// -1 - Disabled; 
-        /// 0 - Manual; 
-        /// 1 - Automatic; 
-        /// 
-        /// </summary>
-        public int inventory_mode { get; set; }
-
-        /// <summary>
         /// Location.
         /// </summary>
         public string location { get; set; }
@@ -383,15 +372,5 @@ namespace ZabbixApi.Entities
 
         #endregion Properties
 
-        #region ENUMS
-
-        public enum InventoryMode
-        {
-            Disabled=-1,
-            Manual=0,
-            Automatic=1
-        }
-
-        #endregion ENUMS
     }
 }
