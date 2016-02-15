@@ -361,13 +361,6 @@ namespace ZabbixApi.Entities
             RMCPPlus = 6
         }
         
-        public enum InventoryMode
-        {
-            Disabled=-1,
-            Manual=0,
-            Automatic=1
-        }
-
         #endregion
 
         #region Constructors
