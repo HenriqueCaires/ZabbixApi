@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
@@ -229,6 +229,36 @@ namespace ZabbixApi.Entities
         /// </summary>
         public Status status { get; set; }
 
+        /// <summary>
+        /// Host inventory population mode. 
+        /// 
+        /// Possible values are: 
+        /// -1 - Disabled; 
+        /// 0 - Manual; 
+        /// 1 - Automatic; 
+        /// 
+        /// </summary>
+        private int _inventory_mode=(int)HostInventory.InventoryMode.Disabled;
+        public int inventory_mode
+        {
+            get
+            {
+                if (inventory != null)
+                {
+                    _inventory_mode = inventory.inventory_mode ;
+                }
+                return _inventory_mode;
+
+            }
+            set
+            {
+                _inventory_mode = value;
+                if (inventory != null)
+                {
+                    inventory.inventory_mode = _inventory_mode ;
+                }
+            }
+        }
         #endregion
 
         #region Associations
