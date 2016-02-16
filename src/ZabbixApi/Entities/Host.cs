@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using ZabbixApi.Helper;
 using System;
 using System.Collections.Generic;
@@ -238,8 +238,27 @@ namespace ZabbixApi.Entities
         /// 1 - Automatic; 
         /// 
         /// </summary>
-        public int inventory_mode { get; set; }
-        
+        private int _inventory_mode=(int)HostInventory.InventoryMode.Disabled;
+        public int inventory_mode
+        {
+            get
+            {
+                if (inventory != null)
+                {
+                    _inventory_mode = inventory.inventory_mode ;
+                }
+                return _inventory_mode;
+
+            }
+            set
+            {
+                _inventory_mode = value;
+                if (inventory != null)
+                {
+                    inventory.inventory_mode = _inventory_mode ;
+                }
+            }
+        }
         #endregion
 
         #region Associations
@@ -360,7 +379,7 @@ namespace ZabbixApi.Entities
             OEM = 5,
             RMCPPlus = 6
         }
-        
+
         #endregion
 
         #region Constructors
@@ -463,6 +482,5 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
-        
     }
 }
