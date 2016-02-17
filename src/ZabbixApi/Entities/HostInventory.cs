@@ -16,6 +16,9 @@ namespace ZabbixApi.Entities
         /// (readonly) ID of the host.
         /// </summary>
         [JsonProperty("hostid")]
+        public string hostidSetter { set { Id = value; } }
+
+        [JsonIgnore]
         public string Id { get; set; }
 
         /// <summary>
@@ -114,6 +117,10 @@ namespace ZabbixApi.Entities
         /// 1 - Automatic; 
         /// 
         /// </summary>
+        [JsonProperty("inventory_mode")]
+        public int inventory_modeSetter { set { inventory_mode = value; } }
+
+        [JsonIgnore]
         public int inventory_mode { get; set; }
 
         /// <summary>
