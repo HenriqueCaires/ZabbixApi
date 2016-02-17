@@ -25,7 +25,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("expandUrls", includeHelper.WhatShouldInclude(MapInclude.ExpandUrls) != null);
             @params.AddOrReplace("selectIconMap", includeHelper.WhatShouldInclude(MapInclude.IconMap));
             @params.AddOrReplace("selectLinks", includeHelper.WhatShouldInclude(MapInclude.Links));
