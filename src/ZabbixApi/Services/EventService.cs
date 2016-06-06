@@ -32,7 +32,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(EventInclude.Hosts));
             @params.AddOrReplace("selectRelatedObject", includeHelper.WhatShouldInclude(EventInclude.RelatedObject));
             @params.AddOrReplace("select_alerts", includeHelper.WhatShouldInclude(EventInclude.Alerts));

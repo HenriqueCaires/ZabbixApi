@@ -25,7 +25,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(HostPrototypeInclude.DiscoveryRule));
             @params.AddOrReplace("selectGroupLinks", includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupLinks));
             @params.AddOrReplace("selectGroupPrototypes", includeHelper.WhatShouldInclude(HostPrototypeInclude.GroupPrototypes));
