@@ -229,6 +229,16 @@ namespace ZabbixApi.Entities
         /// </summary>
         public Status status { get; set; }
 
+        /// <summary>
+        /// Host inventory population mode. 
+        ///
+        /// Possible values are: 
+        /// -1 - disabled; 
+        /// 0 - (default) manual; 
+        /// 1 - automatic.
+        /// </summary>
+        public InventoryMode inventory_mode { get; set; }
+
         #endregion
 
         #region Associations
@@ -350,6 +360,13 @@ namespace ZabbixApi.Entities
             RMCPPlus = 6
         }
 
+        public enum InventoryMode
+        {
+            Disabled = -1,
+            Manual = 0,
+            Automatic = 1,
+        }
+
         #endregion
 
         #region Constructors
@@ -365,6 +382,7 @@ namespace ZabbixApi.Entities
             maintenance_type = MaintenanceType.MaintenanceWithDataCollection;
             snmp_available = SNMPAvailability.Unknown;
             status = Status.Monitored;
+            inventory_mode = InventoryMode.Disabled;
         }
 
         #endregion
