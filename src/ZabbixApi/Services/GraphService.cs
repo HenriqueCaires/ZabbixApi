@@ -24,7 +24,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(GraphInclude.Groups));
             @params.AddOrReplace("selectTemplates", includeHelper.WhatShouldInclude(GraphInclude.Templates));
             @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(GraphInclude.Hosts));

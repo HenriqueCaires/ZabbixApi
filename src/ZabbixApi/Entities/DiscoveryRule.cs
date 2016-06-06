@@ -69,6 +69,7 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<DiscoveredHost> selectDHosts { get; set; }
 
+        public IList<DiscoveryCheck> dchecks { get; set; }
         #endregion
 
         #region ENUMS
@@ -85,6 +86,7 @@ namespace ZabbixApi.Entities
         {
             delay = 3600;
             status = Status.Enabled;
+            dchecks = new List<DiscoveryCheck>();
         }
 
         #endregion

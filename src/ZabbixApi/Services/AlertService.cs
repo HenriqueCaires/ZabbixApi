@@ -24,7 +24,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(AlertInclude.Hosts));
             @params.AddOrReplace("selectMediatypes", includeHelper.WhatShouldInclude(AlertInclude.MediaTypes));
             @params.AddOrReplace("selectUsers", includeHelper.WhatShouldInclude(AlertInclude.Users));

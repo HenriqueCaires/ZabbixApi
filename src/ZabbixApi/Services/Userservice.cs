@@ -24,7 +24,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("getAccess", includeHelper.WhatShouldInclude(UserInclude.Access) != null);
             @params.AddOrReplace("selectMedias", includeHelper.WhatShouldInclude(UserInclude.Medias));
             @params.AddOrReplace("selectMediatypes", includeHelper.WhatShouldInclude(UserInclude.MediaTypes));

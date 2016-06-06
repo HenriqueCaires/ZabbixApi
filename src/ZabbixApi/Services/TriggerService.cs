@@ -25,7 +25,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("expandData", includeHelper.WhatShouldInclude(TriggerInclude.expandData) != null);
             @params.AddOrReplace("expandComment", includeHelper.WhatShouldInclude(TriggerInclude.expandComment) != null);
             @params.AddOrReplace("expandDescription", includeHelper.WhatShouldInclude(TriggerInclude.expandDescription) != null);
