@@ -24,7 +24,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectConditions", includeHelper.WhatShouldInclude(ActionInclude.Conditions));
             @params.AddOrReplace("selectOperations", includeHelper.WhatShouldInclude(ActionInclude.Operations));
 

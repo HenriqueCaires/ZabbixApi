@@ -24,7 +24,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("globalmacro", true);
             
             @params.AddOrReplace("filter", filter);
@@ -54,7 +54,7 @@ namespace ZabbixApi.Services
             if(@params == null)
                 @params = new Dictionary<string, object>();
 
-            @params.AddOrReplace("output", "extend");
+            @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("selectGroups", includeHelper.WhatShouldInclude(HostMacroInclude.Groups));
             @params.AddOrReplace("selectHosts", includeHelper.WhatShouldInclude(HostMacroInclude.Hosts));
             @params.AddOrReplace("selectTemplates", includeHelper.WhatShouldInclude(HostMacroInclude.Templates));
