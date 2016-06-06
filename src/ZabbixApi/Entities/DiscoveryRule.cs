@@ -62,12 +62,12 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Discovery Checks
         /// </summary>
-        public IList<DiscoveryCheck> selectDChecks { get; set; }
+        public IList<DiscoveryCheck> dchecks { get; set; }
 
         /// <summary>
         /// Discovered Rules
         /// </summary>
-        public IList<DiscoveredHost> selectDHosts { get; set; }
+        public IList<DiscoveredHost> dhosts { get; set; }
 
         #endregion
 
