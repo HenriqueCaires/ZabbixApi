@@ -37,7 +37,7 @@ namespace ZabbixApi
 
             Initialize(url, user, password);
         }
-        
+
         public Context(string url, string user, string password)
         {
             Initialize(url, user, password);
@@ -59,21 +59,29 @@ namespace ZabbixApi
 
             Authenticate();
         }
-        
+
         private void Authenticate()
         {
-            var request = new Request();
-            request.method = "user.login";
-            request.@params = new Dictionary<string, string>() { { "user", _user }, { "password", _password } };
+            try
+            {
+                var request = new Request();
+                request.method = "user.login";
+                request.@params = new Dictionary<string, string>() { { "user", _user }, { "password", _password } };
 
-            var values = new NameValueCollection();
-            values.Add("content-type", "application/json-rpc");
-            _webClient.Headers.Add(values);
+                var values = new NameValueCollection();
+                values.Add("content-type", "application/json-rpc");
+                _webClient.Headers.Add(values);
 
-            var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request)));
-            var responseString = Encoding.UTF8.GetString(responseData);
+                var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request)));
+                var responseString = Encoding.UTF8.GetString(responseData);
 
-            _authenticationToken = JsonConvert.DeserializeObject<Response<string>>(responseString).result.ToString();
+                _authenticationToken = JsonConvert.DeserializeObject<Response<string>>(responseString).result.ToString();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error on Authenticate", ex);
+                throw;
+            }
         }
 
         T IContext.SendRequest<T>(object @params, string method)
@@ -124,7 +132,7 @@ namespace ZabbixApi
 
         private class Request
         {
-            public string jsonrpc  { get; set; }
+            public string jsonrpc { get; set; }
             public string method { get; set; }
             public object @params { get; set; }
             public int id { get; set; }
