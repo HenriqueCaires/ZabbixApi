@@ -62,6 +62,7 @@ namespace ZabbixApi
 
         private void Authenticate()
         {
+            string responseString = string.Empty;
             try
             {
                 var request = new Request();
@@ -73,13 +74,16 @@ namespace ZabbixApi
                 _webClient.Headers.Add(values);
 
                 var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request)));
-                var responseString = Encoding.UTF8.GetString(responseData);
+                responseString = Encoding.UTF8.GetString(responseData);
 
                 _authenticationToken = JsonConvert.DeserializeObject<Response<string>>(responseString).result.ToString();
             }
             catch (Exception ex)
             {
-                _log.Error("Error on Authenticate", ex);
+                var msg = "Error on Authenticate";
+                if (!string.IsNullOrWhiteSpace(responseString))
+                    msg += Environment.NewLine + "Response: " + responseString;
+                _log.Error(msg, ex);
                 throw;
             }
         }
