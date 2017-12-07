@@ -21,7 +21,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the item in seconds.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// ID of the host that the item belongs to.
@@ -115,7 +115,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 90.
         /// </summary>
-        public int history { get; set; }
+        public string history { get; set; }
 
         /// <summary>
         /// ID of the host inventory field that is populated by the item. 
@@ -291,7 +291,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 365.
         /// </summary>
-        public int trends { get; set; }
+        public string trends { get; set; }
 
         /// <summary>
         /// Value units.
@@ -441,13 +441,13 @@ namespace ZabbixApi.Entities
         public Item()
         {
             authtype = SSHAuthenticationMethod.Password;
-            history = 90;
+            history = "90d";
             inventory_link = 0;
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             state = State.Normal;
             status = Status.Enabled; 
-            trends = 365;
+            trends = "365d";
         }
 
         #endregion

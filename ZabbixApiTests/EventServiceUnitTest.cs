@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Rhino.Mocks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,19 +32,19 @@ namespace ZabbixApi.Test
         {
             _context = Builder<Context>.CreateNew().Build(); //MockRepository.GenerateStub<IContext>();
         }
-
+        /*
         [TestMethod]
-        public void GetHost_SomeName_SomeHost()
+        public void GeEvent_SomeName_SomeHost()
         {
-            /*var data = JsonConvert.DeserializeObject<Event[]>(File.ReadAllText(_hostGet), _settings);
+            var data = JsonConvert.DeserializeObject<Event[]>(File.ReadAllText(_hostGet), _settings);
 
             _context.Stub(x => x.SendRequest<Event[]>(Arg<object>.Is.Anything, Arg<string>.Is.Anything)).Return(data);
 
             var target = new EventService(_context) as IEventService;
             
             var result = target.Get();
-            Assert.IsNotNull(result);*/
+            Assert.IsNotNull(result);
 
-        }
+        }*/
     }
 }

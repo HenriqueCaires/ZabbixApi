@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using ZabbixApi.Services;
-using Rhino.Mocks;
 using Moq;
 namespace ZabbixApi.Test
 {
@@ -33,7 +32,7 @@ namespace ZabbixApi.Test
         }
 
         [TestMethod]
-        public void GetHost_SomeName_SomeHost()
+        public void GetAction_SomeName_SomeHost()
         {
             var target = new ActionService(_context) as IActionService;
             

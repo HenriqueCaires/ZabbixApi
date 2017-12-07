@@ -33,9 +33,6 @@
     <PackageReference Include="NBuilder" Version="5.0.0" />
     
     
-    <PackageReference Include="RhinoMocks" Version="3.6.1" />
-    
-    
     <PackageReference Include="xunit" Version="2.2.0" />
     
     

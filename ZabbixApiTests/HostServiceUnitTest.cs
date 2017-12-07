@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Newtonsoft.Json;
-using Rhino.Mocks;
 using System.IO;
-using ZabbixApi;
 using ZabbixApi.Entities;
 using ZabbixApi.Services;
-using FizzWare.NBuilder;
 using Moq;
 
 namespace ZabbixApi.Test

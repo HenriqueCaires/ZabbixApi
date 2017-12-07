@@ -54,7 +54,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 900.
         /// </summary>
-        public int autologout { get; set; }
+        public string autologout { get; set; }
 
         /// <summary>
         /// Language code of the user's language. 
@@ -73,7 +73,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 30.
         /// </summary>
-        public int refresh { get; set; }
+        public string refresh { get; set; }
 
         /// <summary>
         /// Amount of object rows to show per page. 
@@ -172,9 +172,9 @@ namespace ZabbixApi.Entities
         public User()
         {
             autologin = false;
-            autologout = 900;
+            autologout = "15m";
             lang = "en_GB";
-            refresh = 30;
+            refresh = "30s";
             rows_per_page = 50;
             theme = "default";
             type = UserType.ZabbixUser;

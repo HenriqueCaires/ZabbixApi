@@ -102,9 +102,7 @@ namespace ZabbixApi
                 var settings = new JsonSerializerSettings();
                 settings.NullValueHandling = NullValueHandling.Ignore;
                 settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
-                File.WriteAllText(@"C:\Users\bbemfica\Documents\Projetos\teste.json", JsonConvert.SerializeObject(request, settings));
                 
-
                 var responseData = _webClient.UploadData(_url, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, settings)));
                 var responseString = Encoding.UTF8.GetString(responseData);
 
