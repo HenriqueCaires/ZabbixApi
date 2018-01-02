@@ -5,8 +5,10 @@
     <PropertyGroup>
     
     
-        <TargetFramework>netcoreapp2.0</TargetFramework>
+        <!-- <TargetFramework>netcoreapp2.0</TargetFramework> -->
 
+
+        <TargetFramework>net45</TargetFramework>
 
     
     <IsPackable>false</IsPackable>

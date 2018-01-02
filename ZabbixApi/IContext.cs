@@ -6,9 +6,8 @@ using System.Collections.Specialized;
 using System.Net;
 using System.Text;
 using System.IO;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Configuration.Json;
+using System.Configuration;
+
 
 namespace ZabbixApi
 {
@@ -24,26 +23,14 @@ namespace ZabbixApi
         private string _password;
 
         private string _authenticationToken;
-        private static IConfigurationRoot Configuration { get; set; }
+      //  private static IConfigurationRoot Configuration { get; set; }
         private WebClient _webClient;
 
         public Context()
         {
-            var _directory = "";
-            
-            #if DEBUG
-            _directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-            #else
-            _directory = Directory.GetCurrentDirectory();
-            #endif
-
-            var builder = new  ConfigurationBuilder().SetBasePath(_directory)
-             .AddJsonFile("appsettings.json");
-            Configuration = builder.Build();
-
-            var url =  Configuration["ZabbixApi.url"];
-            var user = Configuration["ZabbixApi.user"];
-            var password = Configuration["ZabbixApi.password"];
+            var url = ConfigurationManager.AppSettings["ZabbixApi.url"];
+            var user = ConfigurationManager.AppSettings["ZabbixApi.user"];
+            var password = ConfigurationManager.AppSettings["ZabbixApi.password"];
 
             Initialize(url, user, password);
         }
@@ -73,7 +60,7 @@ namespace ZabbixApi
             var request = new Request();
             request.method = "user.login";
             request.@params = new Dictionary<string, string>() { { "user", _user }, { "password", _password } };
-
+            //request.id = 1;
             var values = new NameValueCollection();
             values.Add("content-type", "application/json-rpc");
             _webClient.Headers.Add(values);
