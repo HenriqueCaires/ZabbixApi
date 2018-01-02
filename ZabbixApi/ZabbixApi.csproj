@@ -1,9 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <TargetFrameworks>net45;net461;netcoreapp2.0</TargetFrameworks> -->
     <TargetFrameworks>net45</TargetFrameworks>
+	<PackageId>Zabbix</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Authors>Henrique Caires</Authors>
+    <PackageTags>Zabbix ZabbixApi</PackageTags>
+    <PackageProjectUrl>https://github.com/HenriqueCaires/ZabbixApi</PackageProjectUrl>
+    <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+	<VersionPrefix>2.0.1</VersionPrefix>
+	<VersionSuffix>beta</VersionSuffix>
   </PropertyGroup>
 
   <ItemGroup>
