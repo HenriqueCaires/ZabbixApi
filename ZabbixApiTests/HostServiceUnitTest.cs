@@ -12,7 +12,7 @@ namespace ZabbixApi.Test
     [DeploymentItem(@"Samples\Host\host.get.json", @"Samples\Host\")]
     public class HostServiceUnitTest
     {
-        string _hostGet = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName + @"\Samples\Host\host.get.json";
+        string _hostGet = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + @"\Samples\Host\host.get.json";
         JsonSerializerSettings _settings;
         IContext _context;
         Mock<IContext> mock;
