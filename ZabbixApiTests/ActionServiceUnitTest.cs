@@ -10,7 +10,7 @@ namespace ZabbixApi.Test
     [DeploymentItem(@"Samples\Action\action.get.json", @"Samples\Action\")]
     public class ActionServiceUnitTest
     {
-        string _actionGet = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName +  @"\Samples\Action\action.get.json";
+        string _actionGet = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName +  @"\Samples\Action\action.get.json";
         JsonSerializerSettings _settings;
         IContext _context;
 
