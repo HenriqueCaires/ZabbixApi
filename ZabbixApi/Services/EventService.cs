@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
-using ZabbixApi;
-using Newtonsoft.Json;
 
 namespace ZabbixApi.Services
 {
     public interface IEventService
     {
         IEnumerable<Event> Get(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null);
-
         IEnumerable<string> Acknowledge(IList<Event> events, string message = null);
-
         IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null);
 
-
+        Task<IReadOnlyList<Event>> GetAsync(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null);
+        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null);
+        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null);
     }
 
-    public class EventService : ServiceBase<Event>, IEventService
+    public class EventService : ServiceBase<Event, EventInclude>, IEventService
     {
         public EventService(IContext context) : base(context, "event") { }
 
-        public IEnumerable<Event> Get(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             
@@ -40,7 +37,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
 
-            return BaseGet(@params);
+            return @params;
         }
 
         public IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null)
@@ -55,9 +52,26 @@ namespace ZabbixApi.Services
                     ).ids;
         }
 
+        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null)
+        {
+            return (await _context.SendRequestAsync<EventidsResult>(
+                new
+                {
+                    eventids = eventIds,
+                    message = message,
+                },
+                _className + ".acknowledge"
+            )).ids;
+        }
+
         public IEnumerable<string> Acknowledge(IList<Event> events, string message = null)
         {
             return Acknowledge(events.Select(x => x.Id).ToList(), message);
+        }
+
+        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null)
+        {
+            return await AcknowledgeAsync(events.Select(x => x.Id).ToList(), message);
         }
 
         public class EventidsResult : EntityResultBase

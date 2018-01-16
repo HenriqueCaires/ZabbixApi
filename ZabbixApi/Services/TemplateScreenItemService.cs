@@ -14,11 +14,11 @@ namespace ZabbixApi.Services
         IEnumerable<TemplateScreenItem> Get(object filter = null, IEnumerable<TemplateScreenItemInclude> include = null, Dictionary<string, object> @params = null);
     }
 
-    public class TemplateScreenItemService : ServiceBase<TemplateScreenItem>, ITemplateScreenItemService
+    public class TemplateScreenItemService : ServiceBase<TemplateScreenItem, TemplateScreenItemInclude>, ITemplateScreenItemService
     {
         public TemplateScreenItemService(IContext context) : base(context, "templatescreenitem") { }
 
-        public IEnumerable<TemplateScreenItem> Get(object filter = null, IEnumerable<TemplateScreenItemInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<TemplateScreenItemInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -28,7 +28,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
     }
 

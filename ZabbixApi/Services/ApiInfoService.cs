@@ -22,5 +22,13 @@ namespace ZabbixApi.Services
                     "apiinfo.version"
                     );
         }
+
+        public async Task<string> GetVersionAsync()
+        {
+            return await _context.SendRequestAsync<string>(
+                null,
+                "apiinfo.version"
+            );
+        }
     }
 }

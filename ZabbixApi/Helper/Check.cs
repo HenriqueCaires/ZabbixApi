@@ -8,7 +8,7 @@ using ZabbixApi.Entities;
 
 namespace ZabbixApi.Helper
 {
-    public class Check
+    internal class Check
     {
         public static void NotNull(object value, string name = null)
         {
