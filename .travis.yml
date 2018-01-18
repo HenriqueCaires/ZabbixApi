@@ -3,6 +3,6 @@ solution: ZabbixApi.sln
 install:
   - sudo apt-get install -y gtk-sharp2
 script:
-  - nuget restore ZabbixApi.sln
+  - nuget restore -Source NuGet.Config
   - msbuild ZabbixApi.sln
     
