@@ -16,7 +16,7 @@ namespace ZabbixApi.Services
     {
         public ApplicationService(IContext context) : base(context, "application") { }
 
-        public override IEnumerable<Application> Get(object filter = null, IEnumerable<ApplicationInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<ApplicationInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -28,7 +28,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class ApplicationsidsResult : EntityResultBase

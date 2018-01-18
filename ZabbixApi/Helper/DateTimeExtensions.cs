@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Helper
 {
-    public static class DateTimeExtensions
+    internal static class DateTimeExtensions
     {
         public static long ToTimestamp(this DateTime dateTime)
         {

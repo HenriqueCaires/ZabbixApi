@@ -18,7 +18,7 @@ namespace ZabbixApi.Services
     {
         public GraphService(IContext context) : base(context, "graph") { }
 
-        public override IEnumerable<Graph> Get(object filter = null, IEnumerable<GraphInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<GraphInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -34,7 +34,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class GraphsidsResult : EntityResultBase
