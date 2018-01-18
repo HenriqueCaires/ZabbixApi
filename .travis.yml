@@ -1,7 +1,6 @@
 language: csharp
 solution: ZabbixApi.sln
 install:
-  - sudo apt-get install mono-devel nunit-console
-  - nuget restore ZabbixApi.sln
+    - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ZabbixApi.sln
 script:
-    - msbuild ZabbixApi.sln
+    - xbuild ZabbixApi.sln
