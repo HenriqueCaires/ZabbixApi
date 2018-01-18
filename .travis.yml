@@ -2,7 +2,7 @@ language: csharp
 solution: ZabbixApi.sln
 install:
   - sudo apt-get install -y gtk-sharp2
-  - nuget restore solution-name.sln
+  - nuget restore ZabbixApi.sln
 script:
     - msbuild ZabbixApi.sln
     
