@@ -19,7 +19,7 @@ namespace ZabbixApi.Services
     {
         public TriggerService(IContext context) : base(context, "trigger") { }
 
-        public override IEnumerable<Trigger> Get(object filter = null, IEnumerable<TriggerInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<TriggerInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -39,7 +39,7 @@ namespace ZabbixApi.Services
             
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class TriggersidsResult : EntityResultBase

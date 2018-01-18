@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Helper
 {
-    public class TimestampToDateTimeConverter : JsonConverter
+    internal class TimestampToDateTimeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -26,7 +26,7 @@ namespace ZabbixApi.Helper
         }
     }
 
-    public class IntToBoolConverter : JsonConverter
+    internal class IntToBoolConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -46,7 +46,7 @@ namespace ZabbixApi.Helper
         }
     }
 
-    public class SingleObjectConverter<T> : JsonConverter
+    internal class SingleObjectConverter<T> : JsonConverter
     {
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {

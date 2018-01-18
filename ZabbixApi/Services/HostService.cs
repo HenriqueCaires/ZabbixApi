@@ -1,12 +1,9 @@
-﻿using Newtonsoft.Json;
-using ZabbixApi.Helper;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ZabbixApi;
+using Newtonsoft.Json;
 using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Services
 {
@@ -14,6 +11,9 @@ namespace ZabbixApi.Services
     {
         Host GetByName(string name, IList<HostInclude> include = null);
         IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null);
+
+        Task<Host> GetByNameAsync(string name, IList<HostInclude> include = null);
+        Task<IReadOnlyList<Host>> GetByNameAsync(List<string> names, IList<HostInclude> include = null);
     }
 
     public class HostService : CRUDService<Host, HostService.HostidsResult, HostInclude>, IHostService
@@ -21,7 +21,7 @@ namespace ZabbixApi.Services
         public HostService(IContext context) : base(context, "host") { }
 
 
-        public override IEnumerable<Host> Get(object filter = null, IEnumerable<HostInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<HostInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
 
@@ -51,18 +51,27 @@ namespace ZabbixApi.Services
             settings.Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() };
             var z = JsonConvert.SerializeObject(@params, settings);
 
-            return BaseGet(@params);
+            return @params;
         }
 
         public Host GetByName(string name, IList<HostInclude> include = null)
         {
-            return GetByPropety("host", name, include);
+            return GetByProperty("host", name, include);
+        }
+
+        public async Task<Host> GetByNameAsync(string name, IList<HostInclude> include = null)
+        {
+            return await GetByPropertyAsync("host", name, include);
         }
 
         public IEnumerable<Host> GetByName(List<string> names, IList<HostInclude> include = null)
         {
-            return GetByPropety("host", names, include);
-            
+            return GetByProperty("host", names, include);
+        }
+
+        public async Task<IReadOnlyList<Host>> GetByNameAsync(List<string> names, IList<HostInclude> include = null)
+        {
+            return await GetByPropertyAsync("host", names, include);
         }
 
         public class HostidsResult : EntityResultBase

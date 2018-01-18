@@ -14,11 +14,11 @@ namespace ZabbixApi.Services
         IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null, Dictionary<string, object> @params = null);
     }
 
-    public class GlobalMacroService : ServiceBase<GlobalMacro>, IGlobalMacroService
+    public class GlobalMacroService : ServiceBase<GlobalMacro, GlobalMacroInclude>, IGlobalMacroService
     {
         public GlobalMacroService(IContext context) : base(context, "usermacro") { }
 
-        public IEnumerable<GlobalMacro> Get(object filter = null, IEnumerable<GlobalMacroInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<GlobalMacroInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -29,7 +29,7 @@ namespace ZabbixApi.Services
             
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
     }
 
@@ -48,7 +48,7 @@ namespace ZabbixApi.Services
     {
         public HostMacroService(IContext context) : base(context, "usermacro") { }
 
-        public override IEnumerable<HostMacro> Get(object filter = null, IEnumerable<HostMacroInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<HostMacroInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -61,7 +61,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class HostMacrosidsResult : EntityResultBase
