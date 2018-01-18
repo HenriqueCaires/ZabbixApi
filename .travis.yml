@@ -4,4 +4,4 @@ install:
   - sudo apt-get install mono-devel nunit-console
   - nuget restore ZabbixApi.sln
 script:
-    - xbuild ZabbixApi/ZabbixApi.csproj
+    - msbuild ZabbixApi.sln
