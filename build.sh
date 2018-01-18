@@ -1,4 +1,5 @@
 #!/bin/sh
+nuget help
 nuget restore ZabbixApi.sln
 nuget restore ZabbixApi/ZabbixApi.csproj
 nuget restore ZabbixApiTests/ZabbixApiTests.csproj
