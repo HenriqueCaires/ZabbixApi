@@ -26,6 +26,7 @@ namespace ZabbixApi
       //  private static IConfigurationRoot Configuration { get; set; }
         private WebClient _webClient;
 
+#if !NETSTANDARD2_0
         public Context()
         {
             var url = ConfigurationManager.AppSettings["ZabbixApi.url"];
@@ -34,6 +35,7 @@ namespace ZabbixApi
 
             Initialize(url, user, password);
         }
+#endif
         
         public Context(string url, string user, string password)
         {
