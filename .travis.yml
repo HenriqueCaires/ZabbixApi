@@ -1,0 +1,4 @@
+language: csharp
+solution: ZabbixApi.sln
+script:
+    - dotnet build
