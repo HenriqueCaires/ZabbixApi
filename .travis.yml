@@ -1,7 +1,7 @@
 language: csharp
 solution: ZabbixApi.sln
 install:
-  - sudo apt-get install -y gtk-sharp2
+  - sudo apt-get install mono-devel mono-gmcs nunit-console
   - nuget restore ZabbixApi.sln
 script:
-    - msbuild ZabbixApi.sln
+    - xbuild ZabbixApi/ZabbixApi.csproj
