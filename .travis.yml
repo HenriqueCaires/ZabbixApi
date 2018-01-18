@@ -1,6 +1,7 @@
 language: csharp
 solution: ZabbixApi.sln
-mono: none
-dotnet: 2.0.3
+install:
+  - sudo apt-get install -y gtk-sharp2
+  - nuget restore ZabbixApi.sln
 script:
-    - dotnet build
+    - msbuild ZabbixApi.sln
