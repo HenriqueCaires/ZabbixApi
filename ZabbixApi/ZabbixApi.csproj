@@ -10,8 +10,8 @@
     <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-	<VersionPrefix>2.0.2</VersionPrefix>
-	<VersionSuffix>beta</VersionSuffix>
+	<VersionPrefix>1.1</VersionPrefix>
+	<VersionSuffix></VersionSuffix>
   </PropertyGroup>
 
   <ItemGroup>
