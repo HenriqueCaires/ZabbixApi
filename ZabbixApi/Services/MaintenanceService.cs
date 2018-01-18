@@ -17,7 +17,7 @@ namespace ZabbixApi.Services
 
     public class MaintenanceService : CRUDService<Maintenance, MaintenanceService.MaintenancesidsResult, MaintenanceInclude>, IMaintenanceService
     {
-        public MaintenanceService(IContext context) : base(context, "discoveryrule") { }
+        public MaintenanceService(IContext context) : base(context, "maintenance") { }
 
         protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<MaintenanceInclude> include = null, Dictionary<string, object> @params = null)
         {
