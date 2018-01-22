@@ -1,0 +1,5 @@
+language: csharp
+mono: none
+dotnet: 2.0.3
+script:
+ - dotnet build -f netstandard2.0 ZabbixApi/ZabbixApi.csproj
