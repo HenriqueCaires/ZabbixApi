@@ -1,8 +1,5 @@
 language: csharp
-solution: ZabbixApi.sln
-install:
-  - sudo apt-get update
-  - sudo apt-get install -y gtk-sharp2 mono-devel
-  - chmod a+x build.sh
+mono: none
+dotnet: 2.0.3
 script:
-  - ./build.sh
+ - dotnet build -f netstandard2.0 ZabbixApi/ZabbixApi.csproj
