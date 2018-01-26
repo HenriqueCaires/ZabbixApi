@@ -5,7 +5,7 @@ using System.IO;
 using ZabbixApi.Entities;
 using ZabbixApi.Services;
 using Moq;
-
+using System;
 namespace ZabbixApi.Test
 {
     [TestClass]
@@ -54,7 +54,7 @@ namespace ZabbixApi.Test
             const string user = "Admin";
             const string password = "zabbix";
 
-            var ctx = new ZabbixApi.Context(url, user, password);
+            var ctx = new Context(url, user, password);
             Assert.IsNotNull(ctx);
         }
 
@@ -62,7 +62,7 @@ namespace ZabbixApi.Test
         public void GetVersion()
         {
             var _zabbixContext = new Context();
-            var apiInfoService = new ApiInfoService(_zabbixContext);
+            var apiInfoService = new ApiInfoService();
             var version = apiInfoService.GetVersion();
             Assert.IsNotNull(version);
             Assert.IsFalse(version == "");

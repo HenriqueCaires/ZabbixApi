@@ -10,12 +10,9 @@ namespace ZabbixApi.Services
 {
     public class ApiInfoService
     {
-        protected IContext _context;
+        
         static HttpClient client = new HttpClient();
-        public ApiInfoService(IContext context)
-        {
-            _context = context;
-        }
+        public ApiInfoService() { }
 
         public string GetVersion()
         {
