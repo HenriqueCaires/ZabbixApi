@@ -10,9 +10,10 @@
     <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-	<VersionPrefix>1.1</VersionPrefix>
-	<VersionSuffix></VersionSuffix>
+    <VersionPrefix>2.0.3</VersionPrefix>
+    <VersionSuffix>beta</VersionSuffix>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
