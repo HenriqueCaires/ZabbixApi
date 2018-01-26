@@ -50,7 +50,7 @@ namespace ZabbixApi.Test
         [TestMethod]
         public void CheckStatus()
         {
-            const string url = "http://10.0.0.129/zabbix/api_jsonrpc.php";
+            const string url = "http://myzabbixserver/zabbix/api_jsonrpc.php";
             const string user = "Admin";
             const string password = "zabbix";
 
