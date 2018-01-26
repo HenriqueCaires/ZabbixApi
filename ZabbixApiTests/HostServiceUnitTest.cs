@@ -5,7 +5,7 @@ using System.IO;
 using ZabbixApi.Entities;
 using ZabbixApi.Services;
 using Moq;
-
+using System;
 namespace ZabbixApi.Test
 {
     [TestClass]
@@ -30,7 +30,6 @@ namespace ZabbixApi.Test
             mock = new Mock<IContext>();
             var data = JsonConvert.DeserializeObject<Host[]>(File.ReadAllText(_hostGet), _settings);
             mock.Setup(x => x.SendRequest<Host[]>(It.IsAny<object>(), It.IsAny<string>())).Returns(data);
-            
         }
 
         [TestMethod]
@@ -47,5 +46,28 @@ namespace ZabbixApi.Test
             Assert.AreEqual(hostName, host);
             Assert.AreEqual("127.0.0.1", r.interfaces.First().ip);
         }
+
+        [TestMethod]
+        public void CheckStatus()
+        {
+            const string url = "http://myzabbixserver/zabbix/api_jsonrpc.php";
+            const string user = "Admin";
+            const string password = "zabbix";
+
+            var ctx = new Context(url, user, password);
+            Assert.IsNotNull(ctx);
+        }
+
+        [TestMethod]
+        public void GetVersion()
+        {
+            var _zabbixContext = new Context();
+            var apiInfoService = new ApiInfoService();
+            var version = apiInfoService.GetVersion();
+            Assert.IsNotNull(version);
+            Assert.IsFalse(version == "");
+            //return !string.IsNullOrWhiteSpace(version);
+        }
+
     }
 }

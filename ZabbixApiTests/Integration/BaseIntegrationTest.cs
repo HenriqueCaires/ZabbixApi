@@ -1,10 +1,11 @@
-﻿using ZabbixApi;
+﻿using System.Configuration;
+using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
     public class BaseIntegrationTest
     {
-        protected string url = "http://myZabbixServer/zabbix/api_jsonrpc.php";
+        protected string url = ConfigurationManager.AppSettings["ZabbixApi.url"];
         protected string user = "Admin";
         protected string password = "zabbix";
         protected IContext context;

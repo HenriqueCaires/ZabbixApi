@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFramework>net45</TargetFramework>
     <PackageId>Zabbix</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>Henrique Caires</Authors>
@@ -10,9 +10,10 @@
     <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-	<VersionPrefix>1.1</VersionPrefix>
-	<VersionSuffix></VersionSuffix>
+    <VersionPrefix>2.0.3</VersionPrefix>
+    <VersionSuffix>beta</VersionSuffix>
   </PropertyGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
@@ -24,3 +25,4 @@
   </ItemGroup>
 
 </Project>
+
