@@ -146,7 +146,7 @@ namespace ZabbixApi
             }
         }
 
-        private T SendRequest<T>(object @params, string method, string token)
+        internal T SendRequest<T>(object @params, string method, string token)
         {
             lock(_webClient)
             {
@@ -175,7 +175,7 @@ namespace ZabbixApi
             return await SendRequestAsync<T>(@params, method, token);
         }
 
-        private async Task<T> SendRequestAsync<T>(object @params, string method, string token)
+        internal async Task<T> SendRequestAsync<T>(object @params, string method, string token)
         {
             var request = GetRequest(@params, method, token);
             var content = new ByteArrayContent(Serialize(request));

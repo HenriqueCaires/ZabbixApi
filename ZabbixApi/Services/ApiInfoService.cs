@@ -8,26 +8,30 @@ namespace ZabbixApi.Services
 {
     public class ApiInfoService
     {
-        protected IContext _context;
+        protected Context _context;
 
-        public ApiInfoService(IContext context)
+        public ApiInfoService(Context context)
         {
             _context = context;
         }
 
         public string GetVersion()
         {
+            var @params = new Dictionary<string, object>() { { "id", 1 } };
             return _context.SendRequest<string>(
-                    null,
-                    "apiinfo.version"
+                    @params,
+                    "apiinfo.version",
+                    null
                     );
         }
 
         public async Task<string> GetVersionAsync()
         {
+            var @params = new Dictionary<string, object>() { { "id", 1 } };
             return await _context.SendRequestAsync<string>(
-                null,
-                "apiinfo.version"
+                @params,
+                "apiinfo.version",
+                null
             );
         }
     }
