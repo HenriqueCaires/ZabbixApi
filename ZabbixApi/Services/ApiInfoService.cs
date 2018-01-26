@@ -1,7 +1,5 @@
 ﻿using System.Configuration;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Text;
@@ -26,10 +24,8 @@ namespace ZabbixApi.Services
             var body = new StringContent(JsonConvert.SerializeObject(parameters), Encoding.UTF8, "application/json");
             HttpResponseMessage response = client.PostAsync(uri, body).Result;
             var responseContent = response.Content.ReadAsStringAsync().Result;
-            //response.EnsureSuccessStatusCode();
             return responseContent;
-            //var version = _context.SendRequest<string>(new object(), "apiinfo.version", "");
-            //return version;
+            
         }
     }
 }
