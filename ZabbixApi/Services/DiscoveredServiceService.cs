@@ -14,11 +14,11 @@ namespace ZabbixApi.Services
         IEnumerable<DiscoveredService> Get(object filter = null, IEnumerable<DiscoveredServiceInclude> include = null, Dictionary<string, object> @params = null);
     }
 
-    public class DiscoveredServiceService : ServiceBase<DiscoveredService>, IDiscoveredServiceService
+    public class DiscoveredServiceService : ServiceBase<DiscoveredService, DiscoveredServiceInclude>, IDiscoveredServiceService
     {
         public DiscoveredServiceService(IContext context) : base(context, "dservice") { }
 
-        public IEnumerable<DiscoveredService> Get(object filter = null, IEnumerable<DiscoveredServiceInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<DiscoveredServiceInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -31,7 +31,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
     }
 

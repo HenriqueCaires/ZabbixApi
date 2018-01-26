@@ -15,11 +15,11 @@ namespace ZabbixApi.Services
         IEnumerable<Media> Get(object filter = null, IEnumerable<MediaInclude> include = null, Dictionary<string, object> @params = null);
     }
 
-    public class MediaService : ServiceBase<Media>, IMediaService
+    public class MediaService : ServiceBase<Media, MediaInclude>, IMediaService
     {
         public MediaService(IContext context) : base(context, "usermedia") { }
 
-        public IEnumerable<Media> Get(object filter = null, IEnumerable<MediaInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<MediaInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -29,7 +29,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
     }
 

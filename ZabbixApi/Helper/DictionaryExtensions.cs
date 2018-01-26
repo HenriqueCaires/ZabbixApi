@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZabbixApi.Helper
 {
-    public static class DictionaryExtensions
+    internal static class DictionaryExtensions
     {
         public static void AddIfNotExist<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {

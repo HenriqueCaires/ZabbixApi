@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ZabbixApi.Helper;
-using ZabbixApi;
 using ZabbixApi.Entities;
 
 namespace ZabbixApi.Services
@@ -16,13 +13,18 @@ namespace ZabbixApi.Services
         IEnumerable<HostGroup> GetByName(List<string> names, IList<HostGroupInclude> include = null);
         HostGroup GetByName(string name, HostGroupInclude include);
         IEnumerable<HostGroup> GetByName(List<string> names, HostGroupInclude include);
+
+        Task<HostGroup> GetByNameAsync(string name, IList<HostGroupInclude> include = null);
+        Task<IReadOnlyList<HostGroup>> GetByNameAsync(List<string> names, IList<HostGroupInclude> include = null);
+        Task<HostGroup> GetByNameAsync(string name, HostGroupInclude include);
+        Task<IReadOnlyList<HostGroup>> GetByNameAsync(List<string> names, HostGroupInclude include);
     }
 
     public class HostGroupService : CRUDService<HostGroup, HostGroupService.HostGroupsidsResult, HostGroupInclude>, IHostGroupService
     {
         public HostGroupService(IContext context) : base(context, "hostgroup") { }
 
-        public override IEnumerable<HostGroup> Get(object filter = null, IEnumerable<HostGroupInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<HostGroupInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -36,7 +38,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class HostGroupsidsResult : EntityResultBase
@@ -48,9 +50,17 @@ namespace ZabbixApi.Services
         public HostGroup GetByName(string name, IList<HostGroupInclude> include = null)
         {
             return GetByName(
-                names: new List<string>() { name },
+                names: new List<string> { name },
                 include: include
             ).FirstOrDefault();
+        }
+
+        public async Task<HostGroup> GetByNameAsync(string name, IList<HostGroupInclude> include = null)
+        {
+            return (await GetByNameAsync(
+                names: new List<string> { name },
+                include: include
+            )).FirstOrDefault();
         }
 
         public IEnumerable<HostGroup> GetByName(List<string> names, IList<HostGroupInclude> include = null)
@@ -64,17 +74,47 @@ namespace ZabbixApi.Services
             );
         }
 
+        public async Task<IReadOnlyList<HostGroup>> GetByNameAsync(List<string> names, IList<HostGroupInclude> include = null)
+        {
+            return await GetAsync(
+                filter: new
+                {
+                    name = names
+                },
+                include: include
+            );
+        }
+
         public HostGroup GetByName(string name, HostGroupInclude include)
         {
             return GetByName(
-                names: new List<string>() { name },
+                names: new List<string> { name },
                 include: include
             ).FirstOrDefault();
+        }
+
+        public async Task<HostGroup> GetByNameAsync(string name, HostGroupInclude include)
+        {
+            return (await GetByNameAsync(
+                names: new List<string> { name },
+                include: include
+            )).FirstOrDefault();
         }
 
         public IEnumerable<HostGroup> GetByName(List<string> names, HostGroupInclude include)
         {
             return Get(
+                filter: new
+                {
+                    name = names
+                },
+                include: include
+            );
+        }
+
+        public async Task<IReadOnlyList<HostGroup>> GetByNameAsync(List<string> names, HostGroupInclude include)
+        {
+            return await GetAsync(
                 filter: new
                 {
                     name = names

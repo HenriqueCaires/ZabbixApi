@@ -1,14 +1,10 @@
 ﻿using ZabbixApi.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ZabbixApi;
 
 namespace ZabbixApi.Services
 {
-    public class ServiceBase<T> where T : EntityBase
+    public abstract class ServiceBase<TEntity, TInclude> where TEntity : EntityBase
     {
         protected IContext _context;
         protected readonly string _className;
@@ -19,13 +15,26 @@ namespace ZabbixApi.Services
             _className = className;
         }
 
-        public IEnumerable<T> BaseGet(object @params)
+        protected abstract Dictionary<string, object> BuildParams(object filter = null, IEnumerable<TInclude> include = null, Dictionary<string, object> @params = null);
+
+        public IEnumerable<TEntity> Get(object filter = null, IEnumerable<TInclude> include = null, Dictionary<string, object> @params = null)
         {
-            var resp = _context.SendRequest<T[]>(
-                    @params,
-                    _className + ".get"
-                    );
-            return resp;
+            return BaseGet(BuildParams(filter, include, @params));
+        }
+
+        public Task<IReadOnlyList<TEntity>> GetAsync(object filter = null, IEnumerable<TInclude> include = null, Dictionary<string, object> @params = null)
+        {
+            return BaseGetAsync(BuildParams(filter, include, @params));
+        }
+
+        protected IEnumerable<TEntity> BaseGet(object @params)
+        {
+            return _context.SendRequest<TEntity[]>(@params, _className + ".get");
+        }
+
+        protected async Task<IReadOnlyList<TEntity>> BaseGetAsync(object @params)
+        {
+            return await _context.SendRequestAsync<TEntity[]>(@params, _className + ".get");
         }
     }
 }

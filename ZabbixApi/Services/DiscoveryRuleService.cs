@@ -18,7 +18,7 @@ namespace ZabbixApi.Services
     {
         public DiscoveryRuleService(IContext context) : base(context, "drule") { }
 
-        public override IEnumerable<DiscoveryRule> Get(object filter = null, IEnumerable<DiscoveryRuleInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<DiscoveryRuleInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
             if(@params == null)
@@ -30,7 +30,7 @@ namespace ZabbixApi.Services
 
             @params.AddOrReplace("filter", filter);
             
-            return BaseGet(@params);
+            return @params;
         }
 
         public class DiscoveryRulesidsResult : EntityResultBase

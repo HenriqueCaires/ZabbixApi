@@ -17,7 +17,7 @@ namespace ZabbixApi.Services
     {
         public ActionService(IContext context) : base(context, "action") { }
 
-        public override IEnumerable<Entities.Action> Get(object filter = null, IEnumerable<ActionInclude> include = null, Dictionary<string, object> @params = null)
+        protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<ActionInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
 
@@ -29,8 +29,8 @@ namespace ZabbixApi.Services
             @params.AddOrReplace("selectOperations", includeHelper.WhatShouldInclude(ActionInclude.Operations));
 
             @params.AddOrReplace("filter", filter);
-                    
-            return BaseGet(@params);
+
+            return @params;
         }
 
         public class ActionsidsResult : EntityResultBase
