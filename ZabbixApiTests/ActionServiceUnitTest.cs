@@ -27,7 +27,7 @@ namespace ZabbixApi.Test
             var mock = new Mock<IContext>();
             var data = JsonConvert.DeserializeObject<Entities.Action[]>(File.ReadAllText(_actionGet), _settings);
             mock.Setup(x => x.SendRequest<Entities.Action[]>(It.IsAny<object>(), It.IsAny<string>())).Returns(data);
-            _context = mock.Object;// MockRepository.GenerateStub<IContext>();
+            _context = mock.Object;
             
         }
 

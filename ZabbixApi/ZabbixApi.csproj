@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- <TargetFrameworks>net45;net461;netcoreapp2.0</TargetFrameworks> -->
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFramework>net45</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
@@ -12,6 +11,7 @@
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
 
