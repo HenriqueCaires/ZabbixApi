@@ -14,7 +14,7 @@ namespace ZabbixApi.Entities
         #region Properties
 
         /// <summary>
-        /// (readonly) ID of the item prototype.
+        /// (readonly) ID of the item prototype.
         /// </summary>
         [JsonProperty("itemid")]
         public override string Id { get; set; }
@@ -22,7 +22,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the item prototype in seconds.
         /// </summary>
-        public string delay { get; set; }
+        public int delay { get; set; }
 
         /// <summary>
         /// ID of the host that the item prototype belongs to.
@@ -30,7 +30,7 @@ namespace ZabbixApi.Entities
         public string hostid { get; set; }
 
         /// <summary>
-        /// ID of the item prototype's host interface. Used only for host item prototypes. 
+        /// ID of the item prototype's host interface. Used only for host item prototypes. 
         /// 
         /// Optional for Zabbix agent (active), Zabbix internal, Zabbix trapper, Zabbix aggregate, database monitor and calculated item prototypes.
         /// </summary>
@@ -47,49 +47,77 @@ namespace ZabbixApi.Entities
         public string name { get; set; }
 
         /// <summary>
-        /// Type of the item prototype. 
+        /// Type of the item prototype. 
         /// 
-        /// Possible values: 
-        /// 0 - Zabbix agent; 
-        /// 1 - SNMPv1 agent; 
-        /// 2 - Zabbix trapper; 
-        /// 3 - simple check; 
-        /// 4 - SNMPv2 agent; 
-        /// 5 - Zabbix internal; 
-        /// 6 - SNMPv3 agent; 
-        /// 7 - Zabbix agent (active); 
-        /// 8 - Zabbix aggregate; 
-        /// 10 - external check; 
-        /// 11 - database monitor; 
-        /// 12 - IPMI agent; 
-        /// 13 - SSH agent; 
-        /// 14 - TELNET agent; 
-        /// 15 - calculated; 
-        /// 16 - JMX agent; 
+        /// Possible values: 
+        /// 0 - Zabbix agent; 
+        /// 1 - SNMPv1 agent; 
+        /// 2 - Zabbix trapper; 
+        /// 3 - simple check; 
+        /// 4 - SNMPv2 agent; 
+        /// 5 - Zabbix internal; 
+        /// 6 - SNMPv3 agent; 
+        /// 7 - Zabbix agent (active); 
+        /// 8 - Zabbix aggregate; 
+        /// 10 - external check; 
+        /// 11 - database monitor; 
+        /// 12 - IPMI agent; 
+        /// 13 - SSH agent; 
+        /// 14 - TELNET agent; 
+        /// 15 - calculated; 
+        /// 16 - JMX agent; 
         /// 17 - SNMP trap.
         /// </summary>
         public ItemPrototypeType type { get; set; }
 
         /// <summary>
-        /// Type of information of the item prototype. 
+        /// Type of information of the item prototype. 
         /// 
-        /// Possible values: 
-        /// 0 - numeric float; 
-        /// 1 - character; 
-        /// 2 - log; 
-        /// 3 - numeric unsigned; 
+        /// Possible values: 
+        /// 0 - numeric float; 
+        /// 1 - character; 
+        /// 2 - log; 
+        /// 3 - numeric unsigned; 
         /// 4 - text.
         /// </summary>
         public ValueType value_type { get; set; }
 
         /// <summary>
-        /// SSH authentication method. Used only by SSH agent item prototypes. 
+        /// SSH authentication method. Used only by SSH agent item prototypes. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) password; 
+        /// Possible values: 
+        /// 0 - (default) password; 
         /// 1 - public key.
         /// </summary>
         public SSHAuthenticationMethod authtype { get; set; }
+
+        /// <summary>
+        /// Data type of the item prototype. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) decimal; 
+        /// 1 - octal; 
+        /// 2 - hexadecimal; 
+        /// 3 - boolean.
+        /// </summary>
+        public DataType data_type { get; set; }
+
+        /// <summary>
+        /// Flexible intervals as a serialized string. 
+        /// 
+        /// Each serialized flexible interval consists of an update interval and a time period separated by a forward slash. Multiple intervals are separated by a colon.
+        /// </summary>
+        public string delay_flex { get; set; }
+
+        /// <summary>
+        /// Value that will be stored. 
+        /// 
+        /// Possible values: 
+        /// 0 - (default) as is; 
+        /// 1 - Delta, speed per second; 
+        /// 2 - Delta, simple change.
+        /// </summary>
+        public Delta delta { get; set; }
 
         /// <summary>
         /// Description of the item prototype.
@@ -97,11 +125,18 @@ namespace ZabbixApi.Entities
         public string description { get; set; }
 
         /// <summary>
-        /// Number of days to keep item prototype's history data. 
+        /// Custom multiplier. 
+        /// 
+        /// Default: 1.
+        /// </summary>
+        public float formula { get; set; }
+
+        /// <summary>
+        /// Number of days to keep item prototype's history data. 
         /// 
         /// Default: 90.
         /// </summary>
-        public string history { get; set; }
+        public int history { get; set; }
 
         /// <summary>
         /// IPMI sensor. Used only by IPMI item prototypes.
@@ -114,9 +149,14 @@ namespace ZabbixApi.Entities
         public string logtimefmt { get; set; }
 
         /// <summary>
-        /// Additional parameters depending on the type of the item prototype: 
-        /// - executed script for SSH and Telnet item prototypes; 
-        /// - SQL query for database monitor item prototypes; 
+        /// Whether to use a custom multiplier.
+        /// </summary>
+        public int multiplier { get; set; }
+
+        /// <summary>
+        /// Additional parameters depending on the type of the item prototype: 
+        /// - executed script for SSH and Telnet item prototypes; 
+        /// - SQL query for database monitor item prototypes; 
         /// - formula for calculated item prototypes.
         /// </summary>
         [JsonProperty("params")]
@@ -143,7 +183,7 @@ namespace ZabbixApi.Entities
         public string publickey { get; set; }
 
         /// <summary>
-        /// SNMP community. 
+        /// SNMP community. 
         /// 
         /// Used only by SNMPv1 and SNMPv2 item prototypes.
         /// </summary>
@@ -160,10 +200,10 @@ namespace ZabbixApi.Entities
         public string snmpv3_authpassphrase { get; set; }
 
         /// <summary>
-        /// SNMPv3 authentication protocol. Used only by SNMPv3 items. 
+        /// SNMPv3 authentication protocol. Used only by SNMPv3 items. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) MD5; 
+        /// Possible values: 
+        /// 0 - (default) MD5; 
         /// 1 - SHA.
         /// </summary>
         public SNMPv3AuthenticationProtocol snmpv3_authprotocol { get; set; }
@@ -179,20 +219,20 @@ namespace ZabbixApi.Entities
         public string snmpv3_privpassphrase { get; set; }
 
         /// <summary>
-        /// SNMPv3 privacy protocol. Used only by SNMPv3 items. 
+        /// SNMPv3 privacy protocol. Used only by SNMPv3 items. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) DES; 
+        /// Possible values: 
+        /// 0 - (default) DES; 
         /// 1 - AES.
         /// </summary>
         public SNMPv3PrivacyProtocol snmpv3_privprotocol { get; set; }
 
         /// <summary>
-        /// SNMPv3 security level. Used only by SNMPv3 item prototypes. 
+        /// SNMPv3 security level. Used only by SNMPv3 item prototypes. 
         /// 
-        /// Possible values: 
-        /// 0 - noAuthNoPriv; 
-        /// 1 - authNoPriv; 
+        /// Possible values: 
+        /// 0 - noAuthNoPriv; 
+        /// 1 - authNoPriv; 
         /// 2 - authPriv.
         /// </summary>
         public SNMPv3SecurityLevel snmpv3_securitylevel { get; set; }
@@ -203,11 +243,11 @@ namespace ZabbixApi.Entities
         public string snmpv3_securityname { get; set; }
 
         /// <summary>
-        /// Status of the item prototype. 
+        /// Status of the item prototype. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) enabled item prototype; 
-        /// 1 - disabled item prototype; 
+        /// Possible values: 
+        /// 0 - (default) enabled item prototype; 
+        /// 1 - disabled item prototype; 
         /// 3 - unsupported item prototype.
         /// </summary>
         public Status status { get; set; }
@@ -223,11 +263,11 @@ namespace ZabbixApi.Entities
         public string trapper_hosts { get; set; }
 
         /// <summary>
-        /// Number of days to keep item prototype's trends data. 
+        /// Number of days to keep item prototype's trends data. 
         /// 
         /// Default: 365.
         /// </summary>
-        public string trends { get; set; }
+        public int trends { get; set; }
 
         /// <summary>
         /// Value units.
@@ -235,7 +275,7 @@ namespace ZabbixApi.Entities
         public string units { get; set; }
 
         /// <summary>
-        /// Username for authentication. Used by simple check, SSH, Telnet, database monitor and JMX item prototypes. 
+        /// Username for authentication. Used by simple check, SSH, Telnet, database monitor and JMX item prototypes. 
         /// 
         /// Required by SSH and Telnet item prototypes.
         /// </summary>
@@ -322,7 +362,13 @@ namespace ZabbixApi.Entities
             Boolean = 3
         }
 
-  
+        public enum Delta
+        {
+            AsIs = 0,
+            DeltaSpeedPerSecond = 1,
+            DeltaSimpleChange = 2
+        }
+
         public enum SNMPv3AuthenticationProtocol
         {
             MD5 = 0,
@@ -355,11 +401,14 @@ namespace ZabbixApi.Entities
         public ItemPrototype()
         {
             authtype = SSHAuthenticationMethod.Password;
-            history = "90d";
+            data_type = DataType.Decimal;
+            delta = Delta.AsIs;
+            formula = 1;
+            history = 90;
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             status = Status.Enabled;
-            trends = "365d";
+            trends = 365;
         }
 
         #endregion
