@@ -256,7 +256,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Templates
         /// </summary>
-        public IList<Template> templates { get; set; }
+        public IList<Template> parentTemplates { get; set; }
 
         /// <summary>
         /// Triggers
