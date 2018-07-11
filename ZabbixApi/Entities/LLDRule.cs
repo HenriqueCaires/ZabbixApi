@@ -13,7 +13,7 @@ namespace ZabbixApi.Entities
         #region Properties
 
         /// <summary>
-        /// (readonly) ID of the LLD rule.
+        /// (readonly) ID of the LLD rule.
         /// </summary>
         [JsonProperty("itemid")]
         public override string Id { get; set; }
@@ -21,7 +21,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the LLD rule in seconds.
         /// </summary>
-        public string delay { get; set; }
+        public int delay { get; set; }
 
         /// <summary>
         /// ID of the host that the LLD rule belongs to.
@@ -29,7 +29,7 @@ namespace ZabbixApi.Entities
         public string hostid { get; set; }
 
         /// <summary>
-        /// ID of the LLD rule's host interface. Used only for host LLD rules. 
+        /// ID of the LLD rule's host interface. Used only for host LLD rules. 
         /// 
         /// Optional for Zabbix agent (active), Zabbix internal, Zabbix trapper and database monitor LLD rules.
         /// </summary>
@@ -46,48 +46,55 @@ namespace ZabbixApi.Entities
         public string name { get; set; }
 
         /// <summary>
-        /// Type of the LLD rule. 
+        /// Type of the LLD rule. 
         /// 
-        /// Possible values: 
-        /// 0 - Zabbix agent; 
-        /// 1 - SNMPv1 agent; 
-        /// 2 - Zabbix trapper; 
-        /// 3 - simple check; 
-        /// 4 - SNMPv2 agent; 
-        /// 5 - Zabbix internal; 
-        /// 6 - SNMPv3 agent; 
-        /// 7 - Zabbix agent (active); 
-        /// 10 - external check; 
-        /// 11 - database monitor; 
-        /// 12 - IPMI agent; 
-        /// 13 - SSH agent; 
-        /// 14 - TELNET agent; 
+        /// Possible values: 
+        /// 0 - Zabbix agent; 
+        /// 1 - SNMPv1 agent; 
+        /// 2 - Zabbix trapper; 
+        /// 3 - simple check; 
+        /// 4 - SNMPv2 agent; 
+        /// 5 - Zabbix internal; 
+        /// 6 - SNMPv3 agent; 
+        /// 7 - Zabbix agent (active); 
+        /// 10 - external check; 
+        /// 11 - database monitor; 
+        /// 12 - IPMI agent; 
+        /// 13 - SSH agent; 
+        /// 14 - TELNET agent; 
         /// 16 - JMX agent.
         /// </summary>
         public LLDRuleType type { get; set; }
 
         /// <summary>
-        /// SSH authentication method. Used only by SSH agent LLD rules. 
+        /// SSH authentication method. Used only by SSH agent LLD rules. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) password; 
+        /// Possible values: 
+        /// 0 - (default) password; 
         /// 1 - public key.
         /// </summary>
         public SSHAuthenticationMethod authtype { get; set; }
-        
+
+        /// <summary>
+        /// Flexible intervals as a serialized string. 
+        /// 
+        /// Each serialized flexible interval consists of an update interval and a time period separated by a forward slash. Multiple intervals are separated by a colon.
+        /// </summary>
+        public string delay_flex { get; set; }
+
         /// <summary>
         /// Description of the LLD rule.
         /// </summary>
         public string description { get; set; }
 
         /// <summary>
-        /// (readonly) Error text if there are problems updating the LLD rule.
+        /// (readonly) Error text if there are problems updating the LLD rule.
         /// </summary>
         public string error { get; set; }
 
         /// <summary>
         /// LLD rule filter containing the macro to filter by and the regexp to be used for filtering separated by a colon. 
-        /// For example {#IFNAME}:@Network interfaces for discovery.
+        /// For example {#IFNAME}:@Network interfaces for discovery.
         /// </summary>
         public string filter { get; set; }
 
@@ -97,16 +104,16 @@ namespace ZabbixApi.Entities
         public string ipmi_sensor { get; set; }
 
         /// <summary>
-        /// Time period after which items that are no longer discovered will be deleted, in days. 
+        /// Time period after which items that are no longer discovered will be deleted, in days. 
         /// 
-        /// Default: 30.
+        /// Default: 30.
         /// </summary>
-        public string lifetime { get; set; }
+        public int lifetime { get; set; }
 
         /// <summary>
-        /// Additional parameters depending on the type of the LLD rule: 
-        /// - executed script for SSH and Telnet LLD rules; 
-        /// - SQL query for database monitor LLD rules; 
+        /// Additional parameters depending on the type of the LLD rule: 
+        /// - executed script for SSH and Telnet LLD rules; 
+        /// - SQL query for database monitor LLD rules; 
         /// - formula for calculated LLD rules.
         /// </summary>
         [JsonProperty("params")]
@@ -133,7 +140,7 @@ namespace ZabbixApi.Entities
         public string publickey { get; set; }
 
         /// <summary>
-        /// SNMP community. 
+        /// SNMP community. 
         /// 
         /// Required for SNMPv1 and SNMPv2 LLD rules.
         /// </summary>
@@ -150,10 +157,10 @@ namespace ZabbixApi.Entities
         public string snmpv3_authpassphrase { get; set; }
 
         /// <summary>
-        /// SNMPv3 authentication protocol. Used only by SNMPv3 LLD rules. 
+        /// SNMPv3 authentication protocol. Used only by SNMPv3 LLD rules. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) MD5; 
+        /// Possible values: 
+        /// 0 - (default) MD5; 
         /// 1 - SHA.
         /// </summary>
         public SNMPv3AuthenticationProtocol snmpv3_authprotocol { get; set; }
@@ -169,20 +176,20 @@ namespace ZabbixApi.Entities
         public string snmpv3_privpassphrase { get; set; }
 
         /// <summary>
-        /// SNMPv3 privacy protocol. Used only by SNMPv3 LLD rules. 
+        /// SNMPv3 privacy protocol. Used only by SNMPv3 LLD rules. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) DES; 
+        /// Possible values: 
+        /// 0 - (default) DES; 
         /// 1 - AES.
         /// </summary>
         public SNMPv3PrivacyProtocol snmpv3_privprotocol { get; set; }
 
         /// <summary>
-        /// SNMPv3 security level. Used only by SNMPv3 LLD rules. 
+        /// SNMPv3 security level. Used only by SNMPv3 LLD rules. 
         /// 
-        /// Possible values: 
-        /// 0 - noAuthNoPriv; 
-        /// 1 - authNoPriv; 
+        /// Possible values: 
+        /// 0 - noAuthNoPriv; 
+        /// 1 - authNoPriv; 
         /// 2 - authPriv.
         /// </summary>
         public SNMPv3SecurityLevel snmpv3_securitylevel { get; set; }
@@ -193,19 +200,19 @@ namespace ZabbixApi.Entities
         public string snmpv3_securityname { get; set; }
 
         /// <summary>
-        /// (readonly) State of the LLD rule. 
+        /// (readonly) State of the LLD rule. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) normal; 
+        /// Possible values: 
+        /// 0 - (default) normal; 
         /// 1 - not supported.
         /// </summary>
         public State state { get; set; }
 
         /// <summary>
-        /// Status of the LLD rule. 
+        /// Status of the LLD rule. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) enabled LLD rule; 
+        /// Possible values: 
+        /// 0 - (default) enabled LLD rule; 
         /// 1 - disabled LLD rule.
         /// </summary>
         public Status status { get; set; }
@@ -221,7 +228,7 @@ namespace ZabbixApi.Entities
         public string trapper_hosts { get; set; }
 
         /// <summary>
-        /// Username for authentication. Used by simple check, SSH, Telnet, database monitor and JMX LLD rules. 
+        /// Username for authentication. Used by simple check, SSH, Telnet, database monitor and JMX LLD rules. 
         /// 
         /// Required by SSH and Telnet LLD rules.
         /// </summary>
@@ -273,7 +280,7 @@ namespace ZabbixApi.Entities
             ExternalCheck = 10,
             DatabaseMonitor = 11,
             IPMIAgent = 12,
-            SSHAgent  = 13,
+            SSHAgent = 13,
             TELNETAgent = 14,
             JMXAgent = 16
         }
@@ -322,7 +329,7 @@ namespace ZabbixApi.Entities
         public LLDRule()
         {
             authtype = SSHAuthenticationMethod.Password;
-            lifetime = "30d";
+            lifetime = 30;
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             state = State.Normal;

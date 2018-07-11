@@ -89,6 +89,7 @@ namespace ZabbixApi
             HostPrototypes = new HostPrototypeService(this);
             Hosts = new HostService(this);
             IconMaps = new IconMapService(this);
+            ITServiceService = new ITServiceService(this);
             Images = new ImageService(this);
             ItemPrototypes = new ItemPrototypeService(this);
             Items = new ItemService(this);
@@ -236,6 +237,7 @@ namespace ZabbixApi
         public HostPrototypeService HostPrototypes { get; private set; }
         public HostService Hosts { get; private set; }
         public IconMapService IconMaps { get; private set; }
+        public ITServiceService ITServiceService { get; private set; }
         public ImageService Images { get; private set; }
         public ItemPrototypeService ItemPrototypes { get; private set; }
         public ItemService Items { get; private set; }

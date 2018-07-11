@@ -19,7 +19,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Default operation step duration. Must be greater than 60 seconds.
         /// </summary>
-        public string esc_period { get; set; }
+        public int esc_period { get; set; }
 
         /// <summary>
         /// Action condition evaluation method. 
@@ -293,7 +293,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 0.
         /// </summary>
-        public string esc_period { get; set; }
+        public int esc_period { get; set; }
 
         /// <summary>
         /// Step to start escalation from. 
@@ -535,7 +535,7 @@ namespace ZabbixApi.Entities
 
         public ActionOperation()
         {
-            esc_period = "0s";
+            esc_period = 0;
             esc_step_from = 1;
             esc_step_to = 1;
             evaltype = ConditionOperation.AndOr;
