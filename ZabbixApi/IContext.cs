@@ -24,8 +24,8 @@ namespace ZabbixApi
     public class Context : IContext
     {
         private string _url;
-        private string _user;
-        private string _password;
+        private volatile string _user;
+        private volatile string _password;
 
         private volatile string _authenticationToken;
         private WebClient _webClient;
