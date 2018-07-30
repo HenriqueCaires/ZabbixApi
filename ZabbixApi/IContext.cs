@@ -24,6 +24,8 @@ namespace ZabbixApi
     public class Context : IContext
     {
         private string _url;
+        private volatile string _user;
+        private volatile string _password;
 
         private volatile string _authenticationToken;
         private WebClient _webClient;
@@ -118,6 +120,9 @@ namespace ZabbixApi
             Check.IsNotNullOrWhiteSpace(user, "ZabbixApi.user");
             Check.IsNotNullOrWhiteSpace(password, "ZabbixApi.password");
 
+            _user = user;
+            _password = password;
+
             lock (_webClient)
             {
                 _authenticationToken = SendRequest<string>(
@@ -132,6 +137,9 @@ namespace ZabbixApi
             Check.IsNotNullOrWhiteSpace(user, "ZabbixApi.user");
             Check.IsNotNullOrWhiteSpace(password, "ZabbixApi.password");
 
+            _user = user;
+            _password = password;
+
             _authenticationToken = await SendRequestAsync<string>(
                 new Dictionary<string, string> {{"user", user}, {"password", password}},
                 "user.login",
@@ -142,12 +150,21 @@ namespace ZabbixApi
         {
             lock(_webClient)
             {
-                var token = CheckAndGetToken();
-                return SendRequest<T>(@params, method, token);
+                try
+                {
+                    var token = CheckAndGetToken();
+                    return SendRequest<T>(@params, method, token, true);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    Authenticate(_user, _password);
+                    var token = CheckAndGetToken();
+                    return SendRequest<T>(@params, method, token);
+                }
             }
         }
 
-        internal T SendRequest<T>(object @params, string method, string token)
+        internal T SendRequest<T>(object @params, string method, string token, bool reAuth = false)
         {
             lock(_webClient)
             {
@@ -155,7 +172,7 @@ namespace ZabbixApi
                 
                 _webClient.Headers.Add("content-type", "application/json-rpc");
                 var responseData = _webClient.UploadData(_url, Serialize(request));
-                return HandleResponse<T>(request.id, responseData);
+                return HandleResponse<T>(request.id, responseData, reAuth);
             }
         }
 
@@ -172,11 +189,20 @@ namespace ZabbixApi
 
         async Task<T> IContext.SendRequestAsync<T>(object @params, string method)
         {
-            var token = CheckAndGetToken();
-            return await SendRequestAsync<T>(@params, method, token);
+            try
+            {
+                var token = CheckAndGetToken();
+                return await SendRequestAsync<T>(@params, method, token, true);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await AuthenticateAsync(_user, _password);
+                var token = CheckAndGetToken();
+                return await SendRequestAsync<T>(@params, method, token);
+            }
         }
 
-        internal async Task<T> SendRequestAsync<T>(object @params, string method, string token)
+        internal async Task<T> SendRequestAsync<T>(object @params, string method, string token, bool reAuth = false)
         {
             var request = GetRequest(@params, method, token);
             var content = new ByteArrayContent(Serialize(request));
@@ -184,16 +210,20 @@ namespace ZabbixApi
 
             var response = await _httpClient.PostAsync(_url, content);
             var responseData = await response.Content.ReadAsByteArrayAsync();
-            return HandleResponse<T>(request.id, responseData);
+            return HandleResponse<T>(request.id, responseData, reAuth);
         }
 
-        private static T HandleResponse<T>(string requestId, byte[] responseData)
+        private static T HandleResponse<T>(string requestId, byte[] responseData, bool reAuth)
         {
             var responseString = Encoding.UTF8.GetString(responseData);
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, _serializerSettings);
 
             if (response.error != null)
             {
+                if (reAuth && IsSessionExpiredError(response.error))
+                {
+                    throw new UnauthorizedAccessException("Session expired");
+                }
                 throw new Exception(response.error.message, new Exception(string.Format("{0} - code:{1}", response.error.data, response.error.code)));
             }
 
@@ -201,6 +231,11 @@ namespace ZabbixApi
                 throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.id, requestId));
 
             return response.result;
+        }
+
+        private static bool IsSessionExpiredError(Error error)
+        {
+            return error.code == -32602 && error.data == "Session terminated, re-login, please.";
         }
 
         private static byte[] Serialize<T>(T value)
