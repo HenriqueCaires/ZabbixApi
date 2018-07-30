@@ -148,7 +148,7 @@ namespace ZabbixApi
 
         T IContext.SendRequest<T>(object @params, string method)
         {
-            lock (_webClient)
+            lock(_webClient)
             {
                 try
                 {
