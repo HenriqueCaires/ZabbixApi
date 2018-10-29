@@ -29,16 +29,8 @@ namespace ZabbixApi
         private WebClient _webClient;
         private HttpClient _httpClient;
 
-        private static readonly JsonSerializerSettings _serializerSettings;
+        private JsonSerializerSettings _serializerSettings;
 
-        static Context()
-        {
-            _serializerSettings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }
-            };
-        }
 
 #if !NETSTANDARD2_0
         public Context()
@@ -65,6 +57,12 @@ namespace ZabbixApi
 
         private void Initialize(string url)
         {
+            _serializerSettings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                Converters = new JsonConverter[] { new Newtonsoft.Json.Converters.JavaScriptDateTimeConverter() }
+            };
+
             Check.IsNotNullOrWhiteSpace(url, "ZabbixApi.url");
 
             _url = url;
@@ -187,7 +185,7 @@ namespace ZabbixApi
             return HandleResponse<T>(request.id, responseData);
         }
 
-        private static T HandleResponse<T>(string requestId, byte[] responseData)
+        private T HandleResponse<T>(string requestId, byte[] responseData)
         {
             var responseString = Encoding.UTF8.GetString(responseData);
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, _serializerSettings);
@@ -203,12 +201,12 @@ namespace ZabbixApi
             return response.result;
         }
 
-        private static byte[] Serialize<T>(T value)
+        private byte[] Serialize<T>(T value)
         {
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value, _serializerSettings));
         }
 
-        private static Request GetRequest(object @params, string method, string authenticationToken)
+        private Request GetRequest(object @params, string method, string authenticationToken)
         {
             return new Request
             {
