@@ -1,17 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<!-- <TargetFramework>netcoreapp2.0</TargetFramework> -->
-		<TargetFramework>net45</TargetFramework>
+		<TargetFrameworks>net45;netstandard2.0;netcoreapp2.0</TargetFrameworks>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-		<PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
 		<PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
 		<PackageReference Include="Moq" Version="4.7.145" />
 		<PackageReference Include="NBuilder" Version="5.0.0" />
+		<PackageReference Include="NUnitTestAdapter" Version="2.1.1" />
 		<PackageReference Include="xunit" Version="2.2.0" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ZabbixApi\ZabbixApi.csproj" />

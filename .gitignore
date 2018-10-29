@@ -22,7 +22,6 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -30,8 +29,11 @@ Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
 
+# Dump file
+*.stackdump
+
 # Folder config file
-Desktop.ini
+[Dd]esktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
@@ -39,6 +41,7 @@ $RECYCLE.BIN/
 # Windows Installer files
 *.cab
 *.msi
+*.msix
 *.msm
 *.msp
 
@@ -52,6 +55,7 @@ $RECYCLE.BIN/
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+*.rsuser
 *.suo
 *.user
 *.userosscache
@@ -72,10 +76,13 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-# Visual Studio 2015 cache/options directory
+# Visual Studio 2015/2017 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
+
+# Visual Studio 2017 auto generated files
+Generated\ Files/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -90,20 +97,28 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
 # .NET Core
 project.lock.json
 project.fragment.lock.json
 artifacts/
-**/Properties/launchSettings.json
 
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
 *_i.c
 *_p.c
-*_i.h
+*_h.h
 *.ilk
 *.meta
 *.obj
+*.iobj
 *.pch
 *.pdb
+*.ipdb
 *.pgc
 *.pgd
 *.rsp
@@ -113,6 +128,7 @@ artifacts/
 *.tlh
 *.tmp
 *.tmp_proj
+*_wpftmp.csproj
 *.log
 *.vspscc
 *.vssscc
@@ -141,6 +157,9 @@ ipch/
 *.vspx
 *.sap
 
+# Visual Studio Trace Files
+*.e2e
+
 # TFS 2012 Local Workspace
 $tf/
 
@@ -160,6 +179,10 @@ _TeamCity*
 
 # DotCover is a Code Coverage Tool
 *.dotCover
+
+# AxoCover is a Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
 
 # Visual Studio code coverage results
 *.coverage
@@ -196,11 +219,9 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Uncomment the next line to ignore your web deploy settings.
-# By default, sensitive information, such as encrypted password
-# should be stored in the .pubxml.user file.
-#*.pubxml
-*.pubxml.user
+# Note: Comment the next line if you want to checkin your web deploy settings,
+# but database connection strings (with potential passwords) will be unencrypted
+*.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to
@@ -211,11 +232,11 @@ PublishScripts/
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore
-**/packages/*
+**/[Pp]ackages/*
 # except build/, which is used as an MSBuild target.
-!**/packages/build/
+!**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
-#!**/packages/repositories.config
+#!**/[Pp]ackages/repositories.config
 # NuGet v3's project.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
@@ -233,6 +254,7 @@ AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
 _pkginfo.txt
+*.appx
 
 # Visual Studio cache files
 # files ending in .cache can be ignored
@@ -250,6 +272,10 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
+# Including strong name files can present a security risk
+# (https://github.com/github/gitignore/pull/2483#issue-259490424)
+#*.snk
+
 # Since there are multiple workflows, uncomment next line to ignore bower_components
 # (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
 #bower_components/
@@ -264,6 +290,8 @@ _UpgradeReport_Files/
 Backup*/
 UpgradeLog*.XML
 UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
 
 # SQL Server files
 *.mdf
@@ -274,6 +302,7 @@ UpgradeLog*.htm
 *.rdl.data
 *.bim.layout
 *.bim_*.settings
+*.rptproj.rsuser
 
 # Microsoft Fakes
 FakesAssemblies/
@@ -284,9 +313,6 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
-
-# Typescript v1 declaration files
-typings/
 
 # Visual Studio 6 build log
 *.plg
@@ -316,8 +342,8 @@ paket-files/
 .idea/
 *.sln.iml
 
-# CodeRush
-.cr/
+# CodeRush personal settings
+.cr/personal
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
@@ -326,6 +352,9 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/**
 # !tools/packages.config
+
+# Tabs Studio
+*.tss
 
 # Telerik's JustMock configuration file
 *.jmconfig
@@ -336,8 +365,23 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-### VisualStudio Patch ###
-# By default, sensitive information, such as encrypted password
-# should be stored in the .pubxml.user file.
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+.mfractor/
+
+# Local History for Visual Studio
+.localhistory/
+
 
 # End of https://www.gitignore.io/api/linux,windows,visualstudio,visualstudiocode
