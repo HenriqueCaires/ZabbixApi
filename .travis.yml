@@ -9,6 +9,7 @@ before_install:
 - docker ps -a
 
 language: csharp
+mono: none
 solution: ZabbixApi.sln
 dotnet: 2.1.3
 script:
