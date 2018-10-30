@@ -22,7 +22,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the item prototype in seconds.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// ID of the host that the item prototype belongs to.
@@ -136,7 +136,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 90.
         /// </summary>
-        public int history { get; set; }
+        public string history { get; set; }
 
         /// <summary>
         /// IPMI sensor. Used only by IPMI item prototypes.
@@ -267,7 +267,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 365.
         /// </summary>
-        public int trends { get; set; }
+        public string trends { get; set; }
 
         /// <summary>
         /// Value units.
@@ -404,11 +404,11 @@ namespace ZabbixApi.Entities
             data_type = DataType.Decimal;
             delta = Delta.AsIs;
             formula = 1;
-            history = 90;
+            history = "90d";
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             status = Status.Enabled;
-            trends = 365;
+            trends = "365d";
         }
 
         #endregion

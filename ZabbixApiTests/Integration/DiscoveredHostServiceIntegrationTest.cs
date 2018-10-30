@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using ZabbixApi.Services;
+﻿using Xunit;
+using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class DiscoveredHostServiceIntegrationTest : BaseIntegrationTest
+    public class DiscoveredHostServiceIntegrationTest
     {
         [Fact]
-        public void DiscoveredHostServiceeMustGet()
+        public void MustGetAny()
         {
-            var service = new DiscoveredHostService(this.context);
-            var result = service.Get();
-            Assert.NotNull(result);
-
+            using (IContext context = new Context())
+            {
+                var result = context.DiscoveredHosts.Get();
+                Assert.NotNull(result);
+            }
         }
-
     }
 }

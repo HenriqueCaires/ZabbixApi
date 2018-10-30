@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZabbixApi.Services;
-using Xunit;
+﻿using Xunit;
+using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class GraphPrototypeServiceIntegrationTest : BaseIntegrationTest
+    public class GraphPrototypeServiceIntegrationTest
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new GraphPrototypeService(this.context);
-            var result = service.Get();
-            Assert.NotNull(result);
-
+            using (IContext context = new Context())
+            {
+                var result = context.GraphPrototypes.Get();
+                Assert.NotNull(result);
+                Assert.NotEmpty(result);
+            }
         }
     }
    

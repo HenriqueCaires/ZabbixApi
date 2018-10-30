@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using ZabbixApi.Helper;
 using ZabbixApi.Services;
 
@@ -19,6 +19,46 @@ namespace ZabbixApi
 
         void Authenticate(string user, string password);
         Task AuthenticateAsync(string user, string password);
+
+        IActionService Actions { get; }
+        IAlertService Alerts { get; }
+        ApiInfoService ApiInfo { get; }
+        IApplicationService Applications { get; }
+        IDiscoveredHostService DiscoveredHosts { get; }
+        IDiscoveredServiceService DiscoveredServices { get; }
+        IDiscoveryCheckService DiscoveryChecks { get; }
+        IDiscoveryRuleService DiscoveryRules { get; }
+        IEventService Events { get; }
+        IGraphItemService GraphItems { get; }
+        IGraphPrototypeService GraphPrototypes { get; }
+        IGraphService Graphs { get; }
+        IHistoryService History { get; }
+        IHostGroupService HostGroups { get; }
+        IHostInterfaceService HostInterfaces { get; }
+        IHostPrototypeService HostPrototypes { get; }
+        IHostService Hosts { get; }
+        IIconMapService IconMaps { get; }
+        IITServiceService ITServiceService { get; }
+        IImageService Images { get; }
+        IItemPrototypeService ItemPrototypes { get; }
+        IItemService Items { get; }
+        ILLDRuleService LLDRules { get; }
+        IMaintenanceService Maintenance { get; }
+        IMapService Maps { get; }
+        IMediaTypeService MediaTypes { get; }
+        IProxyService Proxies { get; }
+        IScreenItemService ScreenItems { get; }
+        IScreenService Screens { get; }
+        IScriptService Scripts { get; }
+        ITemplateScreenItemService TemplateScreenItems { get; }
+        ITemplateScreenService TemplateScreens { get; }
+        ITemplateService Templates { get; }
+        ITriggerPrototypeService TriggerPrototypes { get; }
+        ITriggerService Triggers { get; }
+        IUserGroupService UserGroups { get; }
+        IGlobalMacroService GlobalMacros { get; }
+        IHostMacroService HostMacros { get; }
+        IUserService Users { get; }
     }
 
     public class Context : IContext
@@ -32,18 +72,27 @@ namespace ZabbixApi
         private JsonSerializerSettings _serializerSettings;
 
 
-#if !NETSTANDARD2_0
         public Context()
         {
-            var url = ConfigurationManager.AppSettings["ZabbixApi.url"];
-            var user = ConfigurationManager.AppSettings["ZabbixApi.user"];
-            var password = ConfigurationManager.AppSettings["ZabbixApi.password"];
+            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+            var configFile = "appsettings.json";
+
+            if (!string.IsNullOrWhiteSpace(environment))
+                configFile = $"appsettings.{environment}.json";
+
+            var builder = new ConfigurationBuilder()
+                            .AddJsonFile(configFile);
+
+            var config = builder.Build();
+
+            var url = config["ZabbixApi:url"];
+            var user = config["ZabbixApi:user"];
+            var password = config["ZabbixApi:password"];
 
             Initialize(url);
             Authenticate(user, password);
         }
-#endif
-        
+
         public Context(string url)
         {
             Initialize(url);
@@ -94,7 +143,6 @@ namespace ZabbixApi
             LLDRules = new LLDRuleService(this);
             Maintenance = new MaintenanceService(this);
             Maps = new MapService(this);
-            Medias = new MediaService(this);
             MediaTypes = new MediaTypeService(this);
             Proxies = new ProxyService(this);
             ScreenItems = new ScreenItemService(this);
@@ -110,7 +158,7 @@ namespace ZabbixApi
             HostMacros = new HostMacroService(this);
             Users = new UserService(this);
         }
-        
+
         public void Authenticate(string user, string password)
         {
             Check.IsNotNullOrWhiteSpace(user, "ZabbixApi.user");
@@ -119,7 +167,7 @@ namespace ZabbixApi
             lock (_webClient)
             {
                 _authenticationToken = SendRequest<string>(
-                    new Dictionary<string, string> {{"user", user}, {"password", password}},
+                    new Dictionary<string, string> { { "user", user }, { "password", password } },
                     "user.login",
                     null);
             }
@@ -131,14 +179,14 @@ namespace ZabbixApi
             Check.IsNotNullOrWhiteSpace(password, "ZabbixApi.password");
 
             _authenticationToken = await SendRequestAsync<string>(
-                new Dictionary<string, string> {{"user", user}, {"password", password}},
+                new Dictionary<string, string> { { "user", user }, { "password", password } },
                 "user.login",
                 null);
         }
 
         T IContext.SendRequest<T>(object @params, string method)
         {
-            lock(_webClient)
+            lock (_webClient)
             {
                 var token = CheckAndGetToken();
                 return SendRequest<T>(@params, method, token);
@@ -147,13 +195,13 @@ namespace ZabbixApi
 
         internal T SendRequest<T>(object @params, string method, string token)
         {
-            lock(_webClient)
+            lock (_webClient)
             {
                 var request = GetRequest(@params, method, token);
-                
+
                 _webClient.Headers.Add("content-type", "application/json-rpc");
                 var responseData = _webClient.UploadData(_url, Serialize(request));
-                return HandleResponse<T>(request.id, responseData);
+                return HandleResponse<T>(request.Id, responseData);
             }
         }
 
@@ -182,7 +230,7 @@ namespace ZabbixApi
 
             var response = await _httpClient.PostAsync(_url, content);
             var responseData = await response.Content.ReadAsByteArrayAsync();
-            return HandleResponse<T>(request.id, responseData);
+            return HandleResponse<T>(request.Id, responseData);
         }
 
         private T HandleResponse<T>(string requestId, byte[] responseData)
@@ -190,15 +238,15 @@ namespace ZabbixApi
             var responseString = Encoding.UTF8.GetString(responseData);
             var response = JsonConvert.DeserializeObject<Response<T>>(responseString, _serializerSettings);
 
-            if (response.error != null)
+            if (response.Error != null)
             {
-                throw new Exception(response.error.message, new Exception(string.Format("{0} - code:{1}", response.error.data, response.error.code)));
+                throw new Exception(response.Error.Message, new Exception(string.Format("{0} - code:{1}", response.Error.Data, response.Error.Code)));
             }
 
-            if (response.id != requestId)
-                throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.id, requestId));
+            if (response.Id != requestId)
+                throw new Exception(string.Format("O Id do response ({0}) não corresponde ao id do request ({1})", response.Id, requestId));
 
-            return response.result;
+            return response.Result;
         }
 
         private byte[] Serialize<T>(T value)
@@ -210,81 +258,92 @@ namespace ZabbixApi
         {
             return new Request
             {
-                method = method,
-                @params = @params,
-                id = Guid.NewGuid().ToString(),
-                auth = authenticationToken
+                Method = method,
+                Params = @params,
+                Id = Guid.NewGuid().ToString(),
+                Auth = authenticationToken
             };
         }
 
-        public ActionService Actions { get; private set; }
-        public AlertService Alerts { get; private set; }
+        public IActionService Actions { get; private set; }
+        public IAlertService Alerts { get; private set; }
         public ApiInfoService ApiInfo { get; private set; }
-        public ApplicationService Applications { get; private set; }
-        public DiscoveredHostService DiscoveredHosts { get; private set; }
-        public DiscoveredServiceService DiscoveredServices { get; private set; }
-        public DiscoveryCheckService DiscoveryChecks { get; private set; }
-        public DiscoveryRuleService DiscoveryRules { get; private set; }
-        public EventService Events { get; private set; }
-        public GraphItemService GraphItems { get; private set; }
-        public GraphPrototypeService GraphPrototypes { get; private set; }
-        public GraphService Graphs { get; private set; }
-        public HistoryService History { get; private set; }
-        public HostGroupService HostGroups { get; private set; }
-        public HostInterfaceService HostInterfaces { get; private set; }
-        public HostPrototypeService HostPrototypes { get; private set; }
-        public HostService Hosts { get; private set; }
-        public IconMapService IconMaps { get; private set; }
-        public ITServiceService ITServiceService { get; private set; }
-        public ImageService Images { get; private set; }
-        public ItemPrototypeService ItemPrototypes { get; private set; }
-        public ItemService Items { get; private set; }
-        public LLDRuleService LLDRules { get; private set; }
-        public MaintenanceService Maintenance { get; private set; }
-        public MapService Maps { get; private set; }
-        public MediaService Medias { get; private set; }
-        public MediaTypeService MediaTypes { get; private set; }
-        public ProxyService Proxies { get; private set; }
-        public ScreenItemService ScreenItems { get; private set; }
-        public ScreenService Screens { get; private set; }
-        public ScriptService Scripts { get; private set; }
-        public TemplateScreenItemService TemplateScreenItems { get; private set; }
-        public TemplateScreenService TemplateScreens { get; private set; }
-        public TemplateService Templates { get; private set; }
-        public TriggerPrototypeService TriggerPrototypes { get; private set; }
-        public TriggerService Triggers { get; private set; }
-        public UserGroupService UserGroups { get; private set; }
-        public GlobalMacroService GlobalMacros { get; private set; }
-        public HostMacroService HostMacros { get; private set; }
-        public UserService Users { get; private set; }
+        public IApplicationService Applications { get; private set; }
+        public IDiscoveredHostService DiscoveredHosts { get; private set; }
+        public IDiscoveredServiceService DiscoveredServices { get; private set; }
+        public IDiscoveryCheckService DiscoveryChecks { get; private set; }
+        public IDiscoveryRuleService DiscoveryRules { get; private set; }
+        public IEventService Events { get; private set; }
+        public IGraphItemService GraphItems { get; private set; }
+        public IGraphPrototypeService GraphPrototypes { get; private set; }
+        public IGraphService Graphs { get; private set; }
+        public IHistoryService History { get; private set; }
+        public IHostGroupService HostGroups { get; private set; }
+        public IHostInterfaceService HostInterfaces { get; private set; }
+        public IHostPrototypeService HostPrototypes { get; private set; }
+        public IHostService Hosts { get; private set; }
+        public IIconMapService IconMaps { get; private set; }
+        public IITServiceService ITServiceService { get; private set; }
+        public IImageService Images { get; private set; }
+        public IItemPrototypeService ItemPrototypes { get; private set; }
+        public IItemService Items { get; private set; }
+        public ILLDRuleService LLDRules { get; private set; }
+        public IMaintenanceService Maintenance { get; private set; }
+        public IMapService Maps { get; private set; }
+        public IMediaTypeService MediaTypes { get; private set; }
+        public IProxyService Proxies { get; private set; }
+        public IScreenItemService ScreenItems { get; private set; }
+        public IScreenService Screens { get; private set; }
+        public IScriptService Scripts { get; private set; }
+        public ITemplateScreenItemService TemplateScreenItems { get; private set; }
+        public ITemplateScreenService TemplateScreens { get; private set; }
+        public ITemplateService Templates { get; private set; }
+        public ITriggerPrototypeService TriggerPrototypes { get; private set; }
+        public ITriggerService Triggers { get; private set; }
+        public IUserGroupService UserGroups { get; private set; }
+        public IGlobalMacroService GlobalMacros { get; private set; }
+        public IHostMacroService HostMacros { get; private set; }
+        public IUserService Users { get; private set; }
 
         private class Request
         {
-            public string jsonrpc  { get; set; }
-            public string method { get; set; }
-            public object @params { get; set; }
-            public string id { get; set; }
-            public string auth { get; set; }
+            [JsonProperty("jsonrpc")]
+            public string JSonRCP { get; set; }
+            [JsonProperty("method")]
+            public string Method { get; set; }
+            [JsonProperty("params")]
+            public object Params { get; set; }
+            [JsonProperty("id")]
+            public string Id { get; set; }
+            [JsonProperty("auth")]
+            public string Auth { get; set; }
 
             public Request()
             {
-                jsonrpc = "2.0";
+                JSonRCP = "2.0";
             }
         }
 
         private class Response<T>
         {
-            public string jsonrpc { get; set; }
-            public T result { get; set; }
-            public Error error { get; set; }
-            public string id { get; set; }
+            [JsonProperty("jsonrpc")]
+            public string JSonRCP { get; set; }
+            [JsonProperty("result")]
+            public T Result { get; set; }
+            [JsonProperty("error")]
+            public Error Error { get; set; }
+            [JsonProperty("id")]
+            public string Id { get; set; }
         }
 
         private class Error
         {
-            public long code { get; set; }
-            public string message { get; set; }
-            public string data { get; set; }
+            [JsonProperty("code")]
+            public long Code { get; set; }
+            [JsonProperty("message")]
+            public string Message { get; set; }
+            [JsonProperty("data")]
+            public string Data { get; set; }
         }
 
         #region IDisposable implementation

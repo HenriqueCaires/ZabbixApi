@@ -1,16 +1,19 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
+using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class TemplateScreenServiceIntegrationTest : BaseIntegrationTest
+    public class TemplateScreenServiceIntegrationTest
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new TemplateScreenService(this.context);
-            var result = service.Get();
-            Assert.NotNull(result);
+            using (IContext context = new Context())
+            {
+                var result = context.TemplateScreens.Get();
+                Assert.NotNull(result);
+                Assert.NotEmpty(result);
+            }
         }
     }
 }

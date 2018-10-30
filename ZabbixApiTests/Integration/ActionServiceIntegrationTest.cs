@@ -1,18 +1,19 @@
 ﻿using Xunit;
 using ZabbixApi;
-using ZabbixApi.Services;
+
 namespace ZabbixApiTests.Integration
 {
-    public class ActionServiceIntegrationTest: BaseIntegrationTest
+    public class ActionServiceIntegrationTest
     {
-        
         [Fact]
-        public void ActionServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new ActionService(this.context);
-            var result = service.Get();
-            Assert.NotNull(result);
-
+            using(IContext context = new Context())
+            {
+                var result = context.Actions.Get();
+                Assert.NotNull(result);
+                Assert.NotEmpty(result);
+            }
         }
     }
 

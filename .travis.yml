@@ -16,4 +16,4 @@ solution: ZabbixApi.sln
 dotnet: 2.1.3
 script:
  - dotnet build -f netstandard2.0
- - dotnet test -f netcoreapp2.0 ZabbixApiTests
+ - dotnet test ZabbixApiTests

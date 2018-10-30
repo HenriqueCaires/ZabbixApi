@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net45;netstandard2.0;netcoreapp2.0</TargetFrameworks>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 	<ItemGroup>
@@ -14,5 +14,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ZabbixApi\ZabbixApi.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

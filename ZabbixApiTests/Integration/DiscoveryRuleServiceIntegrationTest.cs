@@ -3,14 +3,14 @@ using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class ScreenServiceIntegrationTest
+    public class DiscoveryRuleServiceIntegrationTest
     {
         [Fact]
         public void MustGetAny()
         {
             using (IContext context = new Context())
             {
-                var result = context.Screens.Get();
+                var result = context.DiscoveryRules.Get();
                 Assert.NotNull(result);
                 Assert.NotEmpty(result);
             }
