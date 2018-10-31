@@ -243,6 +243,8 @@ namespace ZabbixApi.Entities
 
         #region Associations
 
+        private IList<Template> _templates;
+
         /// <summary>
         /// Host Interfaces
         /// </summary>
@@ -256,7 +258,32 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Templates
         /// </summary>
-        public IList<Template> parentTemplates { get; set; }
+        public IList<Template> parentTemplates
+        {
+            get
+            {
+                return _templates;
+            }
+            set
+            {
+                _templates = value;
+            }
+        }
+
+        /// <summary>
+        /// Templates
+        /// </summary>
+        public IList<Template> templates
+        {
+            get
+            {
+                return _templates;
+            }
+            set
+            {
+                _templates = value;
+            }
+        }
 
         /// <summary>
         /// Triggers
@@ -393,6 +420,11 @@ namespace ZabbixApi.Entities
         /// </summary>
         /// <returns></returns>
         public bool ShouldSerializeavailable()
+        {
+            return false;
+        }
+
+        public bool ShouldSerializeparentTemplates()
         {
             return false;
         }

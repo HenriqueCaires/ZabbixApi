@@ -13,12 +13,6 @@ namespace ZabbixApi.Entities
         #region Properties
 
         /// <summary>
-        /// (readonly) ID of the host.
-        /// </summary>
-        [JsonProperty("hostid")]
-        public string Id { get; set; }
-
-        /// <summary>
         /// Alias.
         /// </summary>
         public string alias { get; set; }
@@ -114,7 +108,7 @@ namespace ZabbixApi.Entities
         /// 1 - Automatic; 
         /// 
         /// </summary>
-        public int inventory_mode { get; set; }
+        public InventoryMode inventory_mode { get; set; }
 
         /// <summary>
         /// Location.

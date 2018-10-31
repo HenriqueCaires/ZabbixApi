@@ -8,7 +8,7 @@ using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
 {
-    public partial class ITService : EntityBase
+    public partial class Service : EntityBase
     {
         #region Properties
 
@@ -77,8 +77,8 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Hard-dependent parent IT service
         /// </summary>
-        [JsonConverter(typeof(SingleObjectConverter<ITService>))]
-        public ITService parent { get; set; }
+        [JsonConverter(typeof(SingleObjectConverter<Service>))]
+        public Service parent { get; set; }
 
         /// <summary>
         /// Child service dependencies
@@ -122,7 +122,7 @@ namespace ZabbixApi.Entities
 
         #region Constructors
 
-        public ITService()
+        public Service()
         {
             goodsla = 99.9f;
         }

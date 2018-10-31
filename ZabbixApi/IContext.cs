@@ -38,7 +38,7 @@ namespace ZabbixApi
         IHostPrototypeService HostPrototypes { get; }
         IHostService Hosts { get; }
         IIconMapService IconMaps { get; }
-        IITServiceService ITServiceService { get; }
+        IServiceService ServiceService { get; }
         IImageService Images { get; }
         IItemPrototypeService ItemPrototypes { get; }
         IItemService Items { get; }
@@ -136,7 +136,7 @@ namespace ZabbixApi
             HostPrototypes = new HostPrototypeService(this);
             Hosts = new HostService(this);
             IconMaps = new IconMapService(this);
-            ITServiceService = new ITServiceService(this);
+            ServiceService = new ServiceService(this);
             Images = new ImageService(this);
             ItemPrototypes = new ItemPrototypeService(this);
             Items = new ItemService(this);
@@ -283,7 +283,7 @@ namespace ZabbixApi
         public IHostPrototypeService HostPrototypes { get; private set; }
         public IHostService Hosts { get; private set; }
         public IIconMapService IconMaps { get; private set; }
-        public IITServiceService ITServiceService { get; private set; }
+        public IServiceService ServiceService { get; private set; }
         public IImageService Images { get; private set; }
         public IItemPrototypeService ItemPrototypes { get; private set; }
         public IItemService Items { get; private set; }

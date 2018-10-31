@@ -227,5 +227,12 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region ShouldSerialize
+        public bool ShouldSerializeflags()
+        {
+            return false;
+        }
+        #endregion
     }
 }
