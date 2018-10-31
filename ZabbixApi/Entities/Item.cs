@@ -349,6 +349,15 @@ namespace ZabbixApi.Entities
         /// ID of the associated value map.
         /// </summary>
         public string valuemapid { get; set; }
+
+        /// <summary>
+        /// Master item ID.
+        ///Recursion up to 3 dependent items and maximum count of dependent items equal to 999 are allowed.
+        ///
+        ///Required by Dependent items.
+        /// </summary>
+        public int master_itemid { get; set; }
+
         #endregion
 
         #region Associations
