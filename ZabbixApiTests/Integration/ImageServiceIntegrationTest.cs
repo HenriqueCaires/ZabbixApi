@@ -1,19 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class ImageServiceIntegrationTest
+    public class ImageServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
         public void MustGetAny()
         {
-            using (IContext context = new Context())
-            {
-                var result = context.Images.Get();
-                Assert.NotNull(result);
-                Assert.NotEmpty(result);
-            }
+            var result = context.Images.Get();
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

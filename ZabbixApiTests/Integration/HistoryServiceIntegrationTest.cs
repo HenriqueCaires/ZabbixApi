@@ -1,19 +1,14 @@
 ﻿using Xunit;
-using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class HistoryServiceIntegrationTest
+    public class HistoryServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
         public void MustGetAny()
         {
-            using (IContext context = new Context())
-            {
-                var result = context.History.Get();
-                Assert.NotNull(result);
-                //Assert.NotEmpty(result);
-            }
+            var result = context.History.Get();
+            Assert.NotNull(result);
         }
     }
 }

@@ -1,19 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class UserGroupServiceIntegrationTest
+    public class UserGroupServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
         public void MustGetAny()
         {
-            using (IContext context = new Context())
-            {
-                var result = context.UserGroups.Get();
-                Assert.NotNull(result);
-                Assert.NotEmpty(result);
-            }
+            var result = context.UserGroups.Get();
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

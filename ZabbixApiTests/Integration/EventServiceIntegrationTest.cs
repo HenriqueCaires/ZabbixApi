@@ -1,19 +1,14 @@
 ﻿using Xunit;
-using ZabbixApi;
 
 namespace ZabbixApiTests.Integration
 {
-    public class EventServiceIntegrationTest
+    public class EventServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
         public void MustGetAny()
         {
-            using (IContext context = new Context())
-            {
-                var result = context.Events.Get();
-                Assert.NotNull(result);
-                //Assert.NotEmpty(result);
-            }
+            var result = context.Events.Get();
+            Assert.NotNull(result);
         }
     }
 }
