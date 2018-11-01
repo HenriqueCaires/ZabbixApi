@@ -635,73 +635,49 @@ namespace ZabbixApi.Entities
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeerror()
-        {
-            return false;
-        }
+        public bool ShouldSerializeerror() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeflags()
-        {
-            return false;
-        }
+        public bool ShouldSerializeflags() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastclock()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastclock() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastns()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastns() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastvalue()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastvalue() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeprevvalue()
-        {
-            return false;
-        }
+        public bool ShouldSerializeprevvalue() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializestate()
-        {
-            return false;
-        }
+        public bool ShouldSerializestate() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializetemplateid()
-        {
-            return false;
-        }
+        public bool ShouldSerializetemplateid() => false;
         #endregion
     }
 

@@ -166,10 +166,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeeval_formula()
-        {
-            return false;
-        }
+        public bool ShouldSerializeeval_formula() => false;
 
         #endregion
     }
@@ -527,10 +524,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeoperationid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeoperationid() => false;
 
         #endregion
     }
@@ -714,10 +708,7 @@ namespace ZabbixApi.Entities
         
         #region ShouldSerialize
 
-        public bool ShouldSerializeoperationid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeoperationid() => false;
 
         #endregion
     }
@@ -778,10 +769,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeoperationid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeoperationid() => false;
 
         #endregion
     }
@@ -872,10 +860,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeoperationid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeoperationid() => false;
 
         #endregion
     }
@@ -976,10 +961,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeoperationid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeoperationid() => false;
 
         #endregion
     }
@@ -1004,10 +986,7 @@ namespace ZabbixApi.Entities
 
         #region ShouldSerialize
 
-        public bool ShouldSerializeopcommand_grpid()
-        {
-            return false;
-        }
+        public bool ShouldSerializeopcommand_grpid() => false;
 
         #endregion
 

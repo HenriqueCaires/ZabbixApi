@@ -240,55 +240,37 @@ namespace ZabbixApi.Entities
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeerror()
-        {
-            return false;
-        }
+        public bool ShouldSerializeerror() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeflags()
-        {
-            return false;
-        }
+        public bool ShouldSerializeflags() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastchange()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastchange() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializestate()
-        {
-            return false;
-        }
+        public bool ShouldSerializestate() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializetemplateid()
-        {
-            return false;
-        }
+        public bool ShouldSerializetemplateid() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializevalue()
-        {
-            return false;
-        }
+        public bool ShouldSerializevalue() => false;
         #endregion
     }
 

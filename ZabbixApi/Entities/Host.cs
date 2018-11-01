@@ -419,87 +419,56 @@ namespace ZabbixApi.Entities
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeavailable()
-        {
-            return false;
-        }
+        public bool ShouldSerializeavailable() => false;
 
-        public bool ShouldSerializeparentTemplates()
-        {
-            return false;
-        }
+        public bool ShouldSerializeparentTemplates() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializedisable_until()
-        {
-            return false;
-        }
+        public bool ShouldSerializedisable_until() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeerror()
-        {
-            return false;
-        }
+        public bool ShouldSerializeerror() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeerrors_from()
-        {
-            return false;
-        }
+        public bool ShouldSerializeerrors_from() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeflags()
-        {
-            return false;
-        }
+        public bool ShouldSerializeflags() => false;
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializeipmi_available() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeipmi_available()
-        {
-            return false;
-        }
+        public bool ShouldSerializeipmi_disable_until() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeipmi_disable_until()
-        {
-            return false;
-        }
+        public bool ShouldSerializeipmi_error() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeipmi_error()
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// As propriedades Readonly não deverá Serializar
-        /// </summary>
-        /// <returns></returns>
-        public bool ShouldSerializeipmi_errors_from()
-        {
-            return false;
-        }
+        public bool ShouldSerializeipmi_errors_from() => false;
 
         #endregion
     }
