@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
 {
@@ -20,16 +17,6 @@ namespace ZabbixApi.Entities
         /// Default operation step duration. Must be greater than 60 seconds.
         /// </summary>
         public string esc_period { get; set; }
-
-        /// <summary>
-        /// Action condition evaluation method. 
-        /// 
-        /// Possible values: 
-        /// 0 - AND / OR; 
-        /// 1 - AND; 
-        /// 2 - OR.
-        /// </summary>
-        public EvalType evaltype { get; set; }
 
         /// <summary>
         /// (constant) Type of events that the action will handle. 
@@ -64,13 +51,14 @@ namespace ZabbixApi.Entities
         public string r_shortdata { get; set; }
 
         /// <summary>
-        /// Whether recovery messages are enabled. 
-        /// 
-        /// Possible values: 
-        /// 0 - (default) disabled; 
-        /// 1 - enabled.
+        /// Acknowledge operation message text.
         /// </summary>
-        public RecoveryMessageStatus recovery_msg { get; set; }
+        public string ack_longdata { get; set; }
+
+        /// <summary>
+        /// Acknowledge operation message subject.
+        /// </summary>
+        public string ack_shortdata { get; set; }
 
         /// <summary>
         /// Whether the action is enabled or disabled. 
@@ -81,34 +69,42 @@ namespace ZabbixApi.Entities
         /// </summary>
         public Status status { get; set; }
 
+        /// <summary>
+        /// Whether to pause escalation during maintenance periods or not. 
+        /// 
+        /// Possible values: 
+        /// 0 - Don't pause escalation; 
+        /// 1 - (default) Pause escalation.
+        /// </summary>
+        public PauseSuppressed pause_suppressed { get; set; }
+
         #endregion
 
         #region Associations
 
-        public IList<ActionCondition> conditions { get; set; }
+        [JsonConverter(typeof(SingleObjectConverter<ActionFilter>))]
+        public ActionFilter filter { get; set; }
 
         public IList<ActionOperation> operations { get; set; }
+
+        public IList<ActionRecoveryOperation> recoveryOperations { get; set; }
+
+        public IList<ActionAcknowledgeOperation> acknowledgeOperations { get; set; }
 
         #endregion
 
         #region ENUMS
-        public enum EvalType
-        {
-            AndOr = 0,
-            And = 1,
-            Or = 2
-        }
-
-        public enum RecoveryMessageStatus
-        {
-            Disabled = 0,
-            Enabled = 1
-        }
 
         public enum Status
         {
             Enabled = 0,
             Disabled = 1
+        }
+
+        public enum PauseSuppressed
+        {
+            DontPauseEscalation = 0,
+            PauseEscalation = 1
         }
         #endregion
 
@@ -116,15 +112,69 @@ namespace ZabbixApi.Entities
 
         public Action()
         {
-            recovery_msg = RecoveryMessageStatus.Disabled;
             status = Status.Enabled;
+            pause_suppressed = PauseSuppressed.PauseEscalation;
         }
 
         #endregion
 
     }
+    
 
-    public partial class ActionCondition
+    public partial class ActionFilter
+    {
+        #region Properties
+
+        /// <summary>
+        /// Set of filter conditions to use for filtering results.
+        /// </summary>
+        public IList<ActionFilterCondition> conditions { get; set; }
+
+        /// <summary>
+        /// Filter condition evaluation method. 
+        /// 
+        /// Possible values: 
+        /// 0 - and/or; 
+        /// 1 - and; 
+        /// 2 - or; 
+        /// 3 - custom expression.
+        /// </summary>
+        public ConditionOperation evaltype { get; set; }
+
+        /// <summary>
+        /// (readonly) Generated expression that will be used for evaluating filter conditions. The expression contains IDs that reference specific filter conditions by its formulaid. The value of eval_formula is equal to the value of formula for filters with a custom expression.
+        /// </summary>
+        public string eval_formula { get; set; }
+
+        /// <summary>
+        /// User-defined expression to be used for evaluating conditions of filters with a custom expression. The expression must contain IDs that reference specific filter conditions by its formulaid. The IDs used in the expression must exactly match the ones defined in the filter conditions: no condition can remain unused or omitted.
+        ///
+        /// Required for custom expression filters.
+        /// </summary>
+        public string formula { get; set; }
+        #endregion
+
+        #region ENUMS
+        public enum ConditionOperation
+        {
+            AndOr = 0,
+            And = 1,
+            Or = 2,
+            CustomExpression = 3,
+        }
+        #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeeval_formula()
+        {
+            return false;
+        }
+
+        #endregion
+    }
+
+    public partial class ActionFilterCondition
     {
         #region Properties
 
@@ -182,9 +232,19 @@ namespace ZabbixApi.Entities
         public string value { get; set; }
 
         /// <summary>
+        /// Secondary value to compare with. Required for trigger actions when condition type is 26.
+        /// </summary>
+        public string value2 { get; set; }
+
+        /// <summary>
         /// (readonly) ID of the action that the condition belongs to.
         /// </summary>
         public string actionid { get; set; }
+
+        /// <summary>
+        /// Arbitrary unique ID that is used to reference the condition from a custom expression. Can only contain capital-case letters. The ID must be defined by the user when modifying filter conditions, but will be generated anew when requesting them afterward.
+        /// </summary>
+        public string formulaid { get; set; }
 
         /// <summary>
         /// Condition operator. 
@@ -213,7 +273,6 @@ namespace ZabbixApi.Entities
             Trigger = 2,
             TriggerName = 3,
             TriggerSeverity = 4,
-            TriggerValue = 5,
             TimePeriod = 6,
             HostIP = 7,
             DiscoveredServiceType = 8,
@@ -223,8 +282,7 @@ namespace ZabbixApi.Entities
             ReceivedValue = 12,
             HostTemplate = 13,
             Application = 15,
-            MaintenanceStatus = 16,
-            Node = 17,
+            ProblemIsSuppressed = 16,
             DiscoveryRule = 18,
             DiscoveryCheck = 19,
             Proxy = 20,
@@ -243,13 +301,15 @@ namespace ZabbixApi.Entities
             In = 4,
             GreaterOrEqual = 5,
             LessOrEqual = 6,
-            NotIn = 7
+            NotIn = 7,
+            Yes = 10,
+            No = 11,
         }
         #endregion
 
         #region Constructors
 
-        public ActionCondition()
+        public ActionFilterCondition()
         {
             @operator = ConditionOperator.Equal;
         }
@@ -279,7 +339,8 @@ namespace ZabbixApi.Entities
         /// 6 - link to template; 
         /// 7 - unlink from template; 
         /// 8 - enable host; 
-        /// 9 - disable host.
+        /// 9 - disable host;
+        /// 10 - set host inventory mode.
         /// </summary>
         public OperationType operationtype { get; set; }
 
@@ -412,6 +473,18 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<OperationTemplate> optemplate { get; set; }
 
+        /// <summary>
+        /// Inventory mode set host to. 
+        /// 
+        /// Object has the following properties: 
+        /// operationid - (string) ID of the operation; 
+        /// inventory_mode - (string) Inventory mode.
+        /// 
+        /// Required for “Set host inventory mode” operations.
+        /// </summary>
+        public IList<OperationInventory> opinventory { get; set; }
+        
+
         #endregion
 
         #region ENUMS
@@ -427,106 +500,15 @@ namespace ZabbixApi.Entities
             LinkToTemplate = 6,
             UnlinkFromTemplate = 7,
             EnableHost = 8,
-            DisableHost = 9
+            DisableHost = 9,
+            SetHostInventoryMode = 10,
         }
 
         public enum ConditionOperation
         {
             AndOr = 0,
             And = 1,
-            Or = 2
-        }
-
-        #endregion
-
-        #region Nested classes
-
-        public partial class OperationCommandGroup
-        {
-            /// <summary>
-            /// (readonly) ID of the object; 
-            /// </summary>
-            public string opcommand_grpid { get; set; }
-
-            /// <summary>
-            /// ID of the operation; 
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the host group. 
-            /// </summary>
-            public string groupid { get; set; }
-        }
-
-        public partial class OperationCommandHost
-        {
-            /// <summary>
-            /// (readonly) ID of the object;
-            /// </summary>
-            public string opcommand_hstid { get; set; }
-
-            /// <summary>
-            /// ID of the operation;
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the host; if set to 0 the command will be run on the current host.
-            /// </summary>
-            public string hostid { get; set; }
-        }
-
-        public partial class OperationGroup
-        {
-            /// <summary>
-            /// ID of the operation;
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the host group. 
-            /// </summary>
-            public string groupid { get; set; }
-        }
-
-        public partial class OperationMessageGroup
-        {
-            /// <summary>
-            /// ID of the operation; 
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the user group.
-            /// </summary>
-            public string usrgrpid { get; set; }
-        }
-
-        public partial class OperationMessageUser
-        {
-            /// <summary>
-            /// ID of the operation;
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the user.
-            /// </summary>
-            public string userid { get; set; }
-        }
-
-        public partial class OperationTemplate
-        {
-            /// <summary>
-            /// ID of the operation;
-            /// </summary>
-            public string operationid { get; set; }
-
-            /// <summary>
-            /// ID of the template.
-            /// </summary>
-            public string templateid { get; set; }
+            Or = 2,
         }
 
         #endregion
@@ -539,6 +521,15 @@ namespace ZabbixApi.Entities
             esc_step_from = 1;
             esc_step_to = 1;
             evaltype = ConditionOperation.AndOr;
+        }
+
+        #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeoperationid()
+        {
+            return false;
         }
 
         #endregion
@@ -646,13 +637,14 @@ namespace ZabbixApi.Entities
         public enum SSHAuthenticationMethod
         {
             Password = 0,
-            PublicKey = 1
+            PublicKey = 1,
         }
 
         public enum ExecuteOn
         {
             ZabbixAgent = 0,
-            ZabbixServer = 1
+            ZabbixServer = 1,
+            ZabbixServerProxy = 0,
         }
 
         #endregion
@@ -662,7 +654,7 @@ namespace ZabbixApi.Entities
     public partial class ActionOperationCondition
     {
         #region Properties
-        
+
         /// <summary>
         /// (readonly) ID of the action operation condition
         /// </summary>
@@ -698,7 +690,7 @@ namespace ZabbixApi.Entities
         #endregion
 
         #region ENUMS
-        
+
         public enum ConditionType
         {
             EventAcknowledged = 14
@@ -716,6 +708,15 @@ namespace ZabbixApi.Entities
         public ActionOperationCondition()
         {
             @operator = ConditionOperator.Equal;
+        }
+
+        #endregion
+        
+        #region ShouldSerialize
+
+        public bool ShouldSerializeoperationid()
+        {
+            return false;
         }
 
         #endregion
@@ -774,5 +775,328 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeoperationid()
+        {
+            return false;
+        }
+
+        #endregion
     }
+
+    public partial class ActionRecoveryOperation
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the action operation.
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// Type of operation. 
+        ///
+        /// Possible values for trigger actions: 
+        /// 0 - send message; 
+        /// 1 - remote command; 
+        /// 11 - notify all involved.
+        /// 
+        /// Possible values for internal actions: 
+        /// 0 - send message; 
+        /// 11 - notify all involved.
+        /// </summary>
+        public OperationType operationtype { get; set; }
+
+        /// <summary>
+        /// Object containing the data about the command run by the recovery operation. 
+        /// 
+        /// The operation command object is described in detail above.
+        /// 
+        /// Required for remote command operations.
+        /// </summary>
+        public string actionid { get; set; }
+
+        /// <summary>
+        /// Object containing the data about the command run by the recovery operation. 
+        /// 
+        /// Required for remote command operations.
+        /// </summary>
+        public ActionOperationCommand opcommand { get; set; }
+
+        /// <summary>
+        /// Host groups to run remote commands on
+        /// 
+        /// Required for remote command operations if opcommand_hst is not set.
+        /// </summary>
+        public IList<OperationCommandGroup> opcommand_grp { get; set; }
+
+        /// <summary>
+        /// Host to run remote commands on
+        /// 
+        /// Required for remote command operations if opcommand_grp is not set
+        /// </summary>
+        public IList<OperationCommandHost> opcommand_hst { get; set; }
+
+        /// <summary>
+        /// Object containing the data about the message sent by the recovery operation. 
+        /// 
+        /// Required for message operations.
+        /// </summary>
+        public ActionOperationMessage opmessage { get; set; }
+
+        /// <summary>
+        /// User groups to send messages to
+        /// 
+        /// Required for message operations if opmessage_usr is not set.
+        /// </summary>
+        public IList<OperationMessageGroup> opmessage_grp { get; set; }
+
+        /// <summary>
+        /// Users to send messages to
+        ///
+        /// Required for message operations if opmessage_grp is not set.
+        /// </summary>
+        public IList<OperationMessageUser> opmessage_usr { get; set; }
+        #endregion
+
+        #region ENUMS
+        public enum OperationType
+        {
+            SendMessage = 0,
+            RemoteCommand = 1,
+            NotifyAllInvolved = 11,
+        }
+        #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeoperationid()
+        {
+            return false;
+        }
+
+        #endregion
+    }
+
+    public partial class ActionAcknowledgeOperation
+    {
+        #region Properties
+
+        /// <summary>
+        /// (readonly) ID of the action operation.
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// Type of operation. 
+        /// 
+        /// Possible values for trigger actions: 
+        /// 0 - send message; 
+        /// 1 - remote command; 
+        /// 12 - notify all involved.
+        /// </summary>
+        public OperationType operationtype { get; set; }
+
+        /// <summary>
+        /// Object containing the data about the command run by the operation. 
+        /// 
+        /// The operation command object is described in detail below. 
+        /// 
+        /// Required for remote command operations.
+        /// </summary>
+        public ActionOperationCommand opcommand { get; set; }
+
+        /// <summary>
+        /// Host groups to run remote commands on. 
+        /// 
+        /// Each object has the following properties: 
+        /// opcommand_grpid - (string, readonly) ID of the object; 
+        /// operationid - (string) ID of the operation; 
+        /// groupid - (string) ID of the host group. 
+        /// 
+        /// Required for remote command operations if opcommand_hst is not set.
+        /// </summary>
+        public IList<OperationCommandGroup> opcommand_grp { get; set; }
+
+        /// <summary>
+        /// Host to run remote commands on. 
+        /// 
+        /// Each object has the following properties: 
+        /// opcommand_hstid - (string, readonly) ID of the object; 
+        /// operationid - (string) ID of the operation; 
+        /// hostid - (string) ID of the host; if set to 0 the command will be run on the current host. 
+        /// 
+        /// Required for remote command operations if opcommand_grp is not set.
+        /// </summary>
+        public IList<OperationCommandHost> opcommand_hst { get; set; }
+
+        /// <summary>
+        /// Object containing the data about the message sent by the operation. 
+        /// 
+        /// The operation message object is described in detail below. 
+        /// 
+        /// Required for message operations.
+        /// </summary>
+        public ActionOperationMessage opmessage { get; set; }
+
+        /// <summary>
+        /// User groups to send messages to. 
+        /// 
+        /// Each object has the following properties: 
+        /// operationid - (string) ID of the operation; 
+        /// usrgrpid - (string) ID of the user group. 
+        /// 
+        /// Required for message operations if opmessage_usr is not set.
+        /// </summary>
+        public IList<OperationMessageGroup> opmessage_grp { get; set; }
+
+        /// <summary>
+        /// Users to send messages to. 
+        /// 
+        /// Each object has the following properties: 
+        /// operationid - (string) ID of the operation; 
+        /// userid - (string) ID of the user. 
+        /// 
+        /// Required for message operations if opmessage_grp is not set.
+        /// </summary>
+        public IList<OperationMessageUser> opmessage_usr { get; set; }
+
+        #endregion
+
+        #region ENUMS
+        public enum OperationType
+        {
+            SendMessage = 0,
+            RemoteCommand = 1,
+            NotifyAllInvolved = 12,
+        }
+        #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeoperationid()
+        {
+            return false;
+        }
+
+        #endregion
+    }
+
+
+    public partial class OperationCommandGroup
+    {
+        /// <summary>
+        /// (readonly) ID of the object; 
+        /// </summary>
+        public string opcommand_grpid { get; set; }
+
+        /// <summary>
+        /// ID of the operation; 
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the host group. 
+        /// </summary>
+        public string groupid { get; set; }
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializeopcommand_grpid()
+        {
+            return false;
+        }
+
+        #endregion
+
+    }
+
+    public partial class OperationCommandHost
+    {
+        /// <summary>
+        /// (readonly) ID of the object;
+        /// </summary>
+        public string opcommand_hstid { get; set; }
+
+        /// <summary>
+        /// ID of the operation;
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the host; if set to 0 the command will be run on the current host.
+        /// </summary>
+        public string hostid { get; set; }
+    }
+
+    public partial class OperationGroup
+    {
+        /// <summary>
+        /// ID of the operation;
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the host group. 
+        /// </summary>
+        public string groupid { get; set; }
+    }
+
+    public partial class OperationMessageGroup
+    {
+        /// <summary>
+        /// ID of the operation; 
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the user group.
+        /// </summary>
+        public string usrgrpid { get; set; }
+    }
+
+    public partial class OperationMessageUser
+    {
+        /// <summary>
+        /// ID of the operation;
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the user.
+        /// </summary>
+        public string userid { get; set; }
+    }
+
+    public partial class OperationTemplate
+    {
+        /// <summary>
+        /// ID of the operation;
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// ID of the template.
+        /// </summary>
+        public string templateid { get; set; }
+    }
+
+    public partial class OperationInventory
+    {
+        /// <summary>
+        /// ID of the operation;
+        /// </summary>
+        public string operationid { get; set; }
+
+        /// <summary>
+        /// Inventory mode.
+        /// </summary>
+        public string inventory_mode { get; set; }
+    }
+
+
+
+
 }

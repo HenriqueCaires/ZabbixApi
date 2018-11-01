@@ -16,4 +16,4 @@ solution: ZabbixApi.sln
 dotnet: 2.1.3
 script:
  - dotnet build
- - dotnet test ZabbixApiTests -p:ParallelizeTestCollections=false
+ - dotnet test ZabbixApiTests
