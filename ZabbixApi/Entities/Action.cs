@@ -289,19 +289,6 @@ namespace ZabbixApi.Entities
             HostMetadata = 24,
         }
 
-        public enum ConditionOperator
-        {
-            Equal = 0,
-            NotEqual = 1,
-            Like = 2,
-            NotLike = 3,
-            In = 4,
-            GreaterOrEqual = 5,
-            LessOrEqual = 6,
-            NotIn = 7,
-            Yes = 10,
-            No = 11,
-        }
         #endregion
 
         #region Constructors
@@ -1076,6 +1063,22 @@ namespace ZabbixApi.Entities
     }
 
 
+    #region ENUMS
+    public enum ConditionOperator
+    {
+        Equal = 0,
+        NotEqual = 1,
+        Like = 2,
+        NotLike = 3,
+        In = 4,
+        GreaterOrEqual = 5,
+        LessOrEqual = 6,
+        NotIn = 7,
+        Yes = 10,
+        No = 11,
+    }
+
+    #endregion
 
 
 }

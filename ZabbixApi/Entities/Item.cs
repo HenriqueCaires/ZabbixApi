@@ -92,13 +92,17 @@ namespace ZabbixApi.Entities
         public AllowTraps allow_traps { get; set; }
 
         /// <summary>
-        /// SSH authentication method. Used only by SSH agent items. 
+        /// Used only by SSH agent items or HTTP agent items. 
         /// 
-        /// Possible values: 
+        /// SSH agent authentication method possible values: 
         /// 0 - (default) password; 
         /// 1 - public key.
-        /// </summary>
-        public SSHAuthenticationMethod authtype { get; set; }
+        /// 
+        /// HTTP agent authentication method possible values:
+        /// 0 - (default) none
+        /// 1 - basic
+        /// 2 - NTLM
+        public AuthenticationMethod authtype { get; set; }
 
         /// <summary>
         /// Description of the item.
@@ -126,6 +130,14 @@ namespace ZabbixApi.Entities
         /// 1 - (default) Follow redirects.
         /// </summary>
         public FollowRedirects follow_redirects { get; set; }
+
+        /// <summary>
+        /// HTTP agent item prototype field. Object with HTTP(S) request headers, where header name is used as key and header value as value. 
+        /// 
+        /// Example: 
+        /// { "User-Agent": "Zabbix" }
+        /// </summary>
+        public IList<Dictionary<string, string>> headers { get; set; }
 
         /// <summary>
         /// Number of days to keep item's history data. 
@@ -520,52 +532,6 @@ namespace ZabbixApi.Entities
             Text = 4
         }
 
-        public enum SSHAuthenticationMethod
-        {
-            Password = 0,
-            PublicKey = 1
-        }
-
-        public enum Flags
-        {
-            PlainItem = 0,
-            DiscoveredItem = 4
-        }
-
-        public enum FollowRedirects
-        {
-            DoNotFollowRedirects = 0,
-            FollowRedirects = 1,
-        }
-
-        public enum OutputFormat
-        {
-            StoreRaw = 0,
-            ConvertToJSON = 1,
-        }
-
-        public enum PostType
-        {
-            RawData = 0,
-            JSONData = 2,
-            XMLData = 3
-        }
-
-        public enum RequestMethod
-        {
-            GET = 0,
-            POST = 1,
-            PUT = 2,
-            HEAD = 3,
-        }
-
-        public enum RetrieveMode
-        {
-            Body = 0,
-            Headers = 1,
-            Both = 2,
-        }
-
         public enum SNMPv3AuthenticationProtocol
         {
             MD5 = 0,
@@ -602,19 +568,13 @@ namespace ZabbixApi.Entities
             DoNotAllow = 0,
             Allow = 1
         }
-
-        public enum Verify
-        {
-            DoNotValidate = 0,
-            Validate = 1,
-        }
         #endregion
 
         #region Constructors
 
         public Item()
         {
-            authtype = SSHAuthenticationMethod.Password;
+            authtype = AuthenticationMethod.Password;
             follow_redirects = FollowRedirects.FollowRedirects;
             history = "90d";
             inventory_link = 0;
@@ -751,4 +711,64 @@ namespace ZabbixApi.Entities
 
         #endregion
     }
+
+    #region ENUMS
+    public enum AuthenticationMethod
+    {
+        //SSH agent authentication method
+        Password = 0,
+        PublicKey = 1,
+
+        //HTTP agent authentication method
+        None = 0,
+        Basic = 1,
+        NTLM = 2,
+    }
+
+    public enum Flags
+    {
+        PlainItem = 0,
+        DiscoveredItem = 4
+    }
+
+    public enum FollowRedirects
+    {
+        DoNotFollowRedirects = 0,
+        FollowRedirects = 1,
+    }
+
+    public enum OutputFormat
+    {
+        StoreRaw = 0,
+        ConvertToJSON = 1,
+    }
+
+    public enum PostType
+    {
+        RawData = 0,
+        JSONData = 2,
+        XMLData = 3
+    }
+
+    public enum RequestMethod
+    {
+        GET = 0,
+        POST = 1,
+        PUT = 2,
+        HEAD = 3,
+    }
+
+    public enum RetrieveMode
+    {
+        Body = 0,
+        Headers = 1,
+        Both = 2,
+    }
+
+    public enum Verify
+    {
+        DoNotValidate = 0,
+        Validate = 1,
+    }
+    #endregion
 }

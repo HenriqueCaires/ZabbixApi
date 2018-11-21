@@ -113,6 +113,44 @@ namespace ZabbixApi.Entities
         /// </summary>
         public TriggerState value { get; set; }
 
+        /// <summary>
+        /// OK event generation mode. 
+        /// 
+        /// Possible values are: 
+        /// 0 - (default) Expression; 
+        /// 1 - Recovery expression; 
+        /// 2 - None.
+        /// </summary>
+        public RecoveryMode recovery_mode { get; set; }
+
+        /// <summary>
+        /// Reduced trigger recovery expression.
+        /// </summary>
+        public string recovery_expression { get; set; }
+
+        /// <summary>
+        /// OK event closes. 
+        /// 
+        /// Possible values are: 
+        /// 0 - (default) All problems; 
+        /// 1 - All problems if tag values match.
+        /// </summary>
+        public CorrelationMode correlation_mode { get; set; }
+
+        /// <summary>
+        /// Tag for matching.
+        /// </summary>
+        public string correlation_tag { get; set; }
+
+        /// <summary>
+        /// Allow manual close. 
+        /// 
+        /// Possible values are: 
+        /// 0 - (default) No; 
+        /// 1 - Yes.
+        /// </summary>
+        public ManualClose manual_close { get; set; }
+
         #region Properties of Expanded Data
 
         /// <summary>
@@ -301,4 +339,26 @@ namespace ZabbixApi.Entities
 
         #endregion
     }
+
+    #region ENUMS
+    public enum RecoveryMode
+    {
+        Expression = 0,
+        RecoveryExpression = 1,
+        None = 2,
+    }
+
+    public enum CorrelationMode
+    {
+        AllProblems = 0,
+        AllProblemsIfTagValuesMatch = 1,
+    }
+
+    public enum ManualClose
+    {
+        No = 0,
+        Yes = 1,
+    }
+    #endregion
+
 }

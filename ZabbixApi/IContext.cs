@@ -24,6 +24,7 @@ namespace ZabbixApi
         IAlertService Alerts { get; }
         ApiInfoService ApiInfo { get; }
         IApplicationService Applications { get; }
+        ICorrelationService Correlations { get; }
         IDiscoveredHostService DiscoveredHosts { get; }
         IDiscoveredServiceService DiscoveredServices { get; }
         IDiscoveryCheckService DiscoveryChecks { get; }
@@ -122,6 +123,7 @@ namespace ZabbixApi
             Alerts = new AlertService(this);
             ApiInfo = new ApiInfoService(this);
             Applications = new ApplicationService(this);
+            Correlations = new CorrelationService(this);
             DiscoveredHosts = new DiscoveredHostService(this);
             DiscoveredServices = new DiscoveredServiceService(this);
             DiscoveryChecks = new DiscoveryCheckService(this);
@@ -269,6 +271,7 @@ namespace ZabbixApi
         public IAlertService Alerts { get; private set; }
         public ApiInfoService ApiInfo { get; private set; }
         public IApplicationService Applications { get; private set; }
+        public ICorrelationService Correlations { get; private set; }
         public IDiscoveredHostService DiscoveredHosts { get; private set; }
         public IDiscoveredServiceService DiscoveredServices { get; private set; }
         public IDiscoveryCheckService DiscoveryChecks { get; private set; }
