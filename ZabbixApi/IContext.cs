@@ -60,6 +60,7 @@ namespace ZabbixApi
         IGlobalMacroService GlobalMacros { get; }
         IHostMacroService HostMacros { get; }
         IUserService Users { get; }
+        IValueMapService ValueMaps { get; }
     }
 
     public class Context : IContext
@@ -159,6 +160,7 @@ namespace ZabbixApi
             GlobalMacros = new GlobalMacroService(this);
             HostMacros = new HostMacroService(this);
             Users = new UserService(this);
+            ValueMaps = new ValueMapService(this);
         }
 
         public void Authenticate(string user, string password)
@@ -307,6 +309,7 @@ namespace ZabbixApi
         public IGlobalMacroService GlobalMacros { get; private set; }
         public IHostMacroService HostMacros { get; private set; }
         public IUserService Users { get; private set; }
+        public IValueMapService ValueMaps { get; private set; }
 
         private class Request
         {

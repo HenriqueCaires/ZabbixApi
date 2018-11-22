@@ -15,7 +15,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Name of the correlation.
         /// </summary>
-        public string Name { get; set; }
+        public string name { get; set; }
 
         /// <summary>
         /// Description of the correlation.
@@ -42,7 +42,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// The correlation filter object defines a set of conditions that must be met to perform the configured correlation operations. It has the following properties.
         /// </summary>
-        public IList<Filter> filter { get; set; }
+        public Filter filter { get; set; }
         
 
         #endregion

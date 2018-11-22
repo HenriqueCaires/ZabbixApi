@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace ZabbixApi.Services
     {
 
     }
-    public class CorrelationService : CRUDService<Entities.Correlation, ActionService.ActionsidsResult, CorrelationInclude>, ICorrelationService
+    public class CorrelationService : CRUDService<Entities.Correlation, CorrelationService.CorrelationidsResult, CorrelationInclude>, ICorrelationService
     {
         public CorrelationService(IContext context) : base(context, "correlation") { }
 
@@ -30,6 +31,11 @@ namespace ZabbixApi.Services
             return @params;
         }
 
+        public class CorrelationidsResult : EntityResultBase
+        {
+            [JsonProperty("correlationids")]
+            public override string[] ids { get; set; }
+        }
     }
     public enum CorrelationInclude
     {
