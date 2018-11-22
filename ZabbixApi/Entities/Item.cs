@@ -495,8 +495,10 @@ namespace ZabbixApi.Entities
         [JsonConverter(typeof(SingleObjectConverter<ItemDiscovery>))]
         public ItemDiscovery itemDiscovery { get; set; }
 
-        [JsonConverter(typeof(SingleObjectConverter<ItemPreprocessing>))]
-        public ItemPreprocessing preprocessing { get; set; }
+        /// <summary>
+        /// Item preprocessing
+        /// </summary>
+        public IList<ItemPreprocessing> preprocessing { get; set; }
 
         #endregion
 
