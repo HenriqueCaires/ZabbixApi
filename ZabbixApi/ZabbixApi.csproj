@@ -10,7 +10,7 @@
     <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-	<VersionPrefix>4.0.2-Beta</VersionPrefix>
+	<VersionPrefix>4.0.3-Beta</VersionPrefix>
 	<VersionSuffix></VersionSuffix>
   </PropertyGroup>
 

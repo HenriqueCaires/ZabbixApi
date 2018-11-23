@@ -1,12 +1,10 @@
-﻿using ZabbixApi.Entities;
-using ZabbixApi.Helper;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ZabbixApi;
-using Newtonsoft.Json;
+using ZabbixApi.Entities;
+using ZabbixApi.Helper;
 
 namespace ZabbixApi.Services
 {
@@ -52,7 +50,7 @@ namespace ZabbixApi.Services
     {
         private static string GetIdsAttributeViaReflection()
         {
-            var idProperty = typeof(TEntity).GetProperty("Id");
+            var idProperty = typeof(TEntityResult).GetProperty("ids");
             var attribute = (JsonPropertyAttribute)idProperty
                 .GetCustomAttributes(typeof(JsonPropertyAttribute), true)
                 .First();
@@ -85,10 +83,10 @@ namespace ZabbixApi.Services
         {
             Check.IEnumerableNotNullOrEmpty(ids, "ids");
 
-            var filter = new Dictionary<string, object>();
-            filter.Add(IdsAttribute, ids);
+            var @params = new Dictionary<string, object>();
+            @params.Add(IdsAttribute, ids);
             return Get(
-                filter: filter,
+                @params: @params,
                 include: include
             );
         }
@@ -97,10 +95,10 @@ namespace ZabbixApi.Services
         {
             Check.IEnumerableNotNullOrEmpty(ids, "ids");
 
-            var filter = new Dictionary<string, object>();
-            filter.Add(IdsAttribute, ids);
+            var @params = new Dictionary<string, object>();
+            @params.Add(IdsAttribute, ids);
             return await GetAsync(
-                filter: filter,
+                @params: @params,
                 include: include
             );
         }
