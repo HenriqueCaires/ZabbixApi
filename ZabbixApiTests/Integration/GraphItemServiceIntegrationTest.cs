@@ -1,17 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
 
 namespace ZabbixApiTests.Integration
 {
-    public class GraphItemServiceIntegrationTest : BaseIntegrationTest
+    public class GraphItemServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new GraphItemService(this.context);
-            var result = service.Get();
+            var result = context.GraphItems.Get();
             Assert.NotNull(result);
-
+            Assert.NotEmpty(result);
         }
     }
 }

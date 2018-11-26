@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZabbixApi.Services;
-using Xunit;
+﻿using Xunit;
 
 namespace ZabbixApiTests.Integration
 {
-    public class ApplicationServiceIntegrationTest : BaseIntegrationTest
+    public class ApplicationServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ApplicationServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new ApplicationService(this.context);
-            var result = service.Get();
+            var result = context.Applications.Get();
             Assert.NotNull(result);
-
+            Assert.NotEmpty(result);
         }
-
-
     }
 }

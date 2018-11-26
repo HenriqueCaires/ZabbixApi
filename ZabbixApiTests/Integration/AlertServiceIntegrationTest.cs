@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using ZabbixApi.Services;
+﻿using Xunit;
+
 namespace ZabbixApiTests.Integration
 {
-    public class AlertServiceIntegrationTest : BaseIntegrationTest
+    public class AlertServiceIntegrationTest : IntegrationTestBase
     {
-
         [Fact]
-        public void AlertServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new AlertService(this.context);
-            var result = service.Get();
+            var result = context.Alerts.Get();
             Assert.NotNull(result);
-
         }
-        
     }
 }

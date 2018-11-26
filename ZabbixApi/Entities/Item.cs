@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
@@ -21,7 +17,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the item in seconds.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// ID of the host that the item belongs to.
@@ -71,6 +67,11 @@ namespace ZabbixApi.Entities
         public ItemType type { get; set; }
 
         /// <summary>
+        /// URL string, required only for HTTP agent item type. Supports user macros, {HOST.IP}, {HOST.CONN}, {HOST.DNS}, {HOST.HOST}, {HOST.NAME}, {ITEM.ID}, {ITEM.KEY}.
+        /// </summary>
+        public string url { get; set; }
+
+        /// <summary>
         /// Type of information of the item. 
         /// 
         /// Possible values: 
@@ -83,41 +84,25 @@ namespace ZabbixApi.Entities
         public ValueType value_type { get; set; }
 
         /// <summary>
-        /// SSH authentication method. Used only by SSH agent items. 
+        /// HTTP agent item field. Allow to populate value as in trapper item type also.
         /// 
-        /// Possible values: 
+        /// 0 - (default) Do not allow to accept incoming data.
+        /// 1 - Allow to accept incoming data.
+        /// </summary>
+        public AllowTraps allow_traps { get; set; }
+
+        /// <summary>
+        /// Used only by SSH agent items or HTTP agent items. 
+        /// 
+        /// SSH agent authentication method possible values: 
         /// 0 - (default) password; 
         /// 1 - public key.
-        /// </summary>
-        public SSHAuthenticationMethod authtype { get; set; }
-
-        /// <summary>
-        /// Data type of the item. 
         /// 
-        /// Possible values: 
-        /// 0 - (default) decimal; 
-        /// 1 - octal; 
-        /// 2 - hexadecimal; 
-        /// 3 - boolean.
-        /// </summary>
-        public DataType data_type { get; set; }
-
-        /// <summary>
-        /// Flexible intervals as a serialized string. 
-        /// 
-        /// Each serialized flexible interval consists of an update interval and a time period separated by a forward slash. Multiple intervals are separated by a colon.
-        /// </summary>
-        public string delay_flex { get; set; }
-
-        /// <summary>
-        /// Value that will be stored. 
-        /// 
-        /// Possible values: 
-        /// 0 - (default) as is; 
-        /// 1 - Delta, speed per second; 
-        /// 2 - Delta, simple change.
-        /// </summary>
-        public Delta delta { get; set; }
+        /// HTTP agent authentication method possible values:
+        /// 0 - (default) none
+        /// 1 - basic
+        /// 2 - NTLM
+        public AuthenticationMethod authtype { get; set; }
 
         /// <summary>
         /// Description of the item.
@@ -139,18 +124,32 @@ namespace ZabbixApi.Entities
         public Flags flags { get; set; }
 
         /// <summary>
-        /// Custom multiplier. 
+        /// HTTP agent item field. Follow respose redirects while pooling data.
         /// 
-        /// Default: 1.
+        /// 0 - Do not follow redirects.
+        /// 1 - (default) Follow redirects.
         /// </summary>
-        public float? formula { get; set; }
+        public FollowRedirects follow_redirects { get; set; }
+
+        /// <summary>
+        /// HTTP agent item prototype field. Object with HTTP(S) request headers, where header name is used as key and header value as value. 
+        /// 
+        /// Example: 
+        /// { "User-Agent": "Zabbix" }
+        /// </summary>
+        public IList<Dictionary<string, string>> headers { get; set; }
 
         /// <summary>
         /// Number of days to keep item's history data. 
         /// 
-        /// Default: 90.
+        /// Default: 90d.
         /// </summary>
-        public int history { get; set; }
+        public string history { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. HTTP(S) proxy connection string.
+        /// </summary>
+        public string http_proxy { get; set; }
 
         /// <summary>
         /// ID of the host inventory field that is populated by the item. 
@@ -165,6 +164,14 @@ namespace ZabbixApi.Entities
         /// IPMI sensor. Used only by IPMI items.
         /// </summary>
         public string ipmi_sensor { get; set; }
+
+        /// <summary>
+        /// JMX agent custom connection string. 
+        /// 
+        /// Default value: 
+        /// service:jmx:rmi:///jndi/rmi://{HOST.CONN}:{HOST.PORT}/jmxrmi
+        /// </summary>
+        public string jmx_endpoint { get; set; }
 
         /// <summary>
         /// (readonly) Time when the item was last updated. 
@@ -194,15 +201,26 @@ namespace ZabbixApi.Entities
         public string logtimefmt { get; set; }
 
         /// <summary>
+        /// Master item ID.
+        /// Recursion up to 3 dependent items and maximum count of dependent items equal to 999 are allowed.
+        /// 
+        /// Required by Dependent items.
+        /// </summary>
+        public int master_itemid { get; set; }
+
+        /// <summary>
         /// Time when the monitored log file was last updated. Used only by log items.
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
         public DateTime mtime { get; set; }
 
         /// <summary>
-        /// Whether to use a custom multiplier.
+        /// HTTP agent item field. Should response converted to JSON.
+        /// 
+        /// 0 - (default) Store raw.
+        /// 1 - Convert to JSON
         /// </summary>
-        public int multiplier { get; set; }
+        public OutputFormat output_format { get; set; }
 
         /// <summary>
         /// Additional parameters depending on the type of the item: 
@@ -224,6 +242,20 @@ namespace ZabbixApi.Entities
         public string port { get; set; }
 
         /// <summary>
+        /// HTTP agent item field. Type of post data body stored in posts property.
+        /// 
+        /// 0 - (default) Raw data.
+        /// 2 - JSON data. 
+        /// 3 - XML data.
+        /// </summary>
+        public PostType post_type { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. HTTP(S) request body data. Used with post_type.
+        /// </summary>
+        public string posts { get; set; }
+
+        /// <summary>
         /// (readonly) Previous value of the item. 
         /// 
         /// This property will only return a value for the period configured in ZBX_HISTORY_PERIOD.
@@ -239,6 +271,32 @@ namespace ZabbixApi.Entities
         /// Name of the public key file.
         /// </summary>
         public string publickey { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Query parameters. Array of objects with 'key':'value' pairs, where value can be empty string.
+        /// </summary>
+        public IList<Dictionary<string, string>> query_fields { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Type of request method.
+        /// 
+        /// 0 - (default) GET 
+        /// 1 - POST 
+        /// 2 - PUT 
+        /// 3 - HEAD
+        /// </summary>
+        public RequestMethod request_method { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. What part of response should be stored.
+        /// 
+        /// 0 - (default) Body.
+        /// 1 - Headers.
+        /// 2 - Both body and headers will be stored.
+        /// 
+        /// For request_method HEAD only 1 is allowed value.
+        /// </summary>
+        public RetrieveMode retrieve_mode { get; set; }
 
         /// <summary>
         /// SNMP community. Used only by SNMPv1 and SNMPv2 items.
@@ -299,6 +357,21 @@ namespace ZabbixApi.Entities
         public string snmpv3_securityname { get; set; }
 
         /// <summary>
+        /// HTTP agent item field. Public SSL Key file path.
+        /// </summary>
+        public string ssl_cert_file { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Private SSL Key file path.
+        /// </summary>
+        public string ssl_key_file { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Password for SSL Key file.
+        /// </summary>
+        public string ssl_key_password { get; set; }
+
+        /// <summary>
         /// (readonly) State of the item. 
         /// 
         /// Possible values: 
@@ -317,9 +390,24 @@ namespace ZabbixApi.Entities
         public Status status { get; set; }
 
         /// <summary>
+        /// HTTP agent item field. Ranges of required HTTP status codes separated by commas. Also supports user macros as part of comma separated list. 
+        /// 
+        /// Example: 200,200-{$M},{$M},200-400
+        /// </summary>
+        public string status_codes { get; set; }
+
+        /// <summary>
         /// (readonly) ID of the parent template item.
         /// </summary>
         public string templateid { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Item data polling request timeout. Support user macros. 
+        /// 
+        /// default: 3s
+        /// maximum value: 60s
+        /// </summary>
+        public string timeout { get; set; }
 
         /// <summary>
         /// Allowed hosts. Used only by trapper items.
@@ -329,9 +417,9 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Number of days to keep item's trends data. 
         /// 
-        /// Default: 365.
+        /// Default: 365d.
         /// </summary>
-        public int trends { get; set; }
+        public string trends { get; set; }
 
         /// <summary>
         /// Value units.
@@ -349,6 +437,23 @@ namespace ZabbixApi.Entities
         /// ID of the associated value map.
         /// </summary>
         public string valuemapid { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Validate host name in URL is in Common Name field or a Subject Alternate Name field of host certificate.
+        /// 
+        /// 0 - (default) Do not validate.
+        /// 1 - Validate.
+        /// </summary>
+        public Verify verify_host { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. Validate is host certificate authentic.
+        /// 
+        /// 0 - (default) Do not validate.
+        /// 1 - Validate
+        /// </summary>
+        public Verify verify_peer { get; set; }
+
         #endregion
 
         #region Associations
@@ -390,6 +495,11 @@ namespace ZabbixApi.Entities
         [JsonConverter(typeof(SingleObjectConverter<ItemDiscovery>))]
         public ItemDiscovery itemDiscovery { get; set; }
 
+        /// <summary>
+        /// Item preprocessing
+        /// </summary>
+        public IList<ItemPreprocessing> preprocessing { get; set; }
+
         #endregion
 
         #region ENUMS
@@ -424,33 +534,6 @@ namespace ZabbixApi.Entities
             Text = 4
         }
 
-        public enum SSHAuthenticationMethod
-        {
-            Password = 0,
-            PublicKey = 1
-        }
-
-        public enum DataType
-        {
-            Decimal = 0,
-            Octal = 1,
-            Hexadecimal = 2,
-            Boolean = 3
-        }
-
-        public enum Delta
-        {
-            AsIs = 0,
-            DeltaSpeedPerSecond = 1,
-            DeltaSimpleChange = 2
-        }
-
-        public enum Flags
-        {
-            PlainItem = 0,
-            DiscoveredItem = 4
-        }
-
         public enum SNMPv3AuthenticationProtocol
         {
             MD5 = 0,
@@ -481,23 +564,29 @@ namespace ZabbixApi.Entities
             Enabled = 0,
             Disabled = 1
         }
+
+        public enum AllowTraps
+        {
+            DoNotAllow = 0,
+            Allow = 1
+        }
         #endregion
 
         #region Constructors
 
         public Item()
         {
-            authtype = SSHAuthenticationMethod.Password;
-            data_type = DataType.Decimal;
-            delta = Delta.AsIs;
-            formula = 1;
-            history = 90;
+            authtype = AuthenticationMethod.Password;
+            follow_redirects = FollowRedirects.FollowRedirects;
+            history = "90d";
             inventory_link = 0;
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             state = State.Normal;
             status = Status.Enabled;
-            trends = 365;
+            allow_traps = AllowTraps.DoNotAllow;
+            timeout = "3s";
+            trends = "365d";
         }
 
         #endregion
@@ -508,73 +597,49 @@ namespace ZabbixApi.Entities
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeerror()
-        {
-            return false;
-        }
+        public bool ShouldSerializeerror() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeflags()
-        {
-            return false;
-        }
+        public bool ShouldSerializeflags() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastclock()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastclock() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastns()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastns() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializelastvalue()
-        {
-            return false;
-        }
+        public bool ShouldSerializelastvalue() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeprevvalue()
-        {
-            return false;
-        }
+        public bool ShouldSerializeprevvalue() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializestate()
-        {
-            return false;
-        }
+        public bool ShouldSerializestate() => false;
 
         /// <summary>
         /// As propriedades Readonly não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializetemplateid()
-        {
-            return false;
-        }
+        public bool ShouldSerializetemplateid() => false;
         #endregion
     }
 
@@ -617,4 +682,95 @@ namespace ZabbixApi.Entities
 
         #endregion
     }
+
+    public partial class ItemPreprocessing
+    {
+        #region Properties
+
+        [JsonProperty("type")]
+        public ItemPreprocessingType @type { get; set; }
+
+        [JsonProperty("params")]
+        public string @params { get; set; }
+
+        #endregion
+
+        #region ENUMS
+
+        public enum ItemPreprocessingType
+        {
+            CustomMultiplier = 1,
+            RightTrim = 2,
+            LeftTrim = 3,
+            Trim = 4,
+            RegularExpressionMatching = 5,
+            BooleanToDecimal = 6,
+            OctalToDecimal = 7,
+            HexadecimalToDecimal = 8,
+            SimpleChange = 9,
+            ChangePerSecond = 10,
+        }
+
+        #endregion
+    }
+
+    #region ENUMS
+    public enum AuthenticationMethod
+    {
+        //SSH agent authentication method
+        Password = 0,
+        PublicKey = 1,
+
+        //HTTP agent authentication method
+        None = 0,
+        Basic = 1,
+        NTLM = 2,
+    }
+
+    public enum Flags
+    {
+        PlainItem = 0,
+        DiscoveredItem = 4
+    }
+
+    public enum FollowRedirects
+    {
+        DoNotFollowRedirects = 0,
+        FollowRedirects = 1,
+    }
+
+    public enum OutputFormat
+    {
+        StoreRaw = 0,
+        ConvertToJSON = 1,
+    }
+
+    public enum PostType
+    {
+        RawData = 0,
+        JSONData = 2,
+        XMLData = 3
+    }
+
+    public enum RequestMethod
+    {
+        GET = 0,
+        POST = 1,
+        PUT = 2,
+        HEAD = 3,
+    }
+
+    public enum RetrieveMode
+    {
+        Body = 0,
+        Headers = 1,
+        Both = 2,
+    }
+
+    public enum Verify
+    {
+        DoNotValidate = 0,
+        Validate = 1,
+    }
+    #endregion
 }

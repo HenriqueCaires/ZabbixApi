@@ -33,6 +33,8 @@ namespace ZabbixApi.Services
             @params.AddOrReplace("selectApplications", includeHelper.WhatShouldInclude(ItemInclude.Applications));
             @params.AddOrReplace("selectDiscoveryRule", includeHelper.WhatShouldInclude(ItemInclude.DiscoveryRule));
             @params.AddOrReplace("selectItemDiscovery", includeHelper.WhatShouldInclude(ItemInclude.ItemDiscovery));
+            @params.AddOrReplace("selectPreprocessing", includeHelper.WhatShouldInclude(ItemInclude.Preprocessing));
+            
 
             @params.AddOrReplace("filter", filter);
             
@@ -56,7 +58,8 @@ namespace ZabbixApi.Services
         Graphs = 32,
         Applications = 64,
         DiscoveryRule = 128,
-        ItemDiscovery = 256
+        ItemDiscovery = 256,
+        Preprocessing = 512,
     }
     
 }

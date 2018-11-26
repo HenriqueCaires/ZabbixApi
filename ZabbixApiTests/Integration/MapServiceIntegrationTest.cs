@@ -1,17 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class MapServiceIntegrationTest : BaseIntegrationTest
+    public class MapServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new MapService(this.context);
-            var result = service.Get();
+            var result = context.Maps.Get();
             Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

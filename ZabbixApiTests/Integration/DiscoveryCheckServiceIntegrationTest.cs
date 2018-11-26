@@ -1,17 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
 
 namespace ZabbixApiTests.Integration
 {
-    public class DiscoveryCheckServiceIntegrationTest : BaseIntegrationTest
+    public class DiscoveryCheckServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new DiscoveryCheckService(this.context);
-            var result = service.Get();
+            var result = context.DiscoveryChecks.Get();
             Assert.NotNull(result);
-
+            Assert.NotEmpty(result);
         }
     }
 }

@@ -25,8 +25,10 @@ namespace ZabbixApi.Services
                 @params = new Dictionary<string, object>();
 
             @params.AddIfNotExist("output", "extend");
-            @params.AddOrReplace("selectConditions", includeHelper.WhatShouldInclude(ActionInclude.Conditions));
+            @params.AddOrReplace("selectFilter", includeHelper.WhatShouldInclude(ActionInclude.Filters));
             @params.AddOrReplace("selectOperations", includeHelper.WhatShouldInclude(ActionInclude.Operations));
+            @params.AddOrReplace("selectRecoveryOperations", includeHelper.WhatShouldInclude(ActionInclude.RecoveryOperations));
+            @params.AddOrReplace("selectAcknowledgeOperations", includeHelper.WhatShouldInclude(ActionInclude.AcknowledgeOperations));
 
             @params.AddOrReplace("filter", filter);
 
@@ -46,7 +48,9 @@ namespace ZabbixApi.Services
     {
         All = 1,
         None = 2,
-        Conditions = 4,
-        Operations = 8
+        Filters = 4,
+        Operations = 8,
+        RecoveryOperations = 16,
+        AcknowledgeOperations = 32,
     }
 }

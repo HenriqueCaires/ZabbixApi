@@ -1,5 +1,19 @@
+sudo: required
+
+addons:
+  hosts:
+    - MyZabbixServer
+
+services:
+  - docker
+
+before_install:
+  - ./travis/run_zabbix_container.sh
+
 language: csharp
 mono: none
-dotnet: 2.0.3
+solution: ZabbixApi.sln
+dotnet: 2.1.3
 script:
- - dotnet build -f netstandard2.0 ZabbixApi/ZabbixApi.csproj
+ - dotnet build
+ - dotnet test ZabbixApiTests

@@ -1,18 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class TriggerServiceIntegrationTest : BaseIntegrationTest
+    public class TriggerServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new TriggerService(this.context);
-            var result = service.Get();
+            var result = context.Triggers.Get();
             Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
-
     }
 }

@@ -1,17 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
 
 namespace ZabbixApiTests.Integration
 {
-    public class HostInterfaceServiceIntegrationTest : BaseIntegrationTest
+    public class HostInterfaceServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new HostInterfaceService(this.context);
-            var result = service.Get();
+            var result = context.HostInterfaces.Get();
             Assert.NotNull(result);
-
+            Assert.NotEmpty(result);
         }
     }
 }

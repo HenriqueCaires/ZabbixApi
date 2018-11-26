@@ -91,19 +91,13 @@ namespace ZabbixApi.Entities
         /// As propriedades @internal não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeinternal()
-        {
-            return false;
-        }
+        public bool ShouldSerializeinternal() => false;
 
         /// <summary>
         /// As propriedades flags não deverá Serializar
         /// </summary>
         /// <returns></returns>
-        public bool ShouldSerializeflags()
-        {
-            return false;
-        }
+        public bool ShouldSerializeflags() => false;
 
         #endregion
 

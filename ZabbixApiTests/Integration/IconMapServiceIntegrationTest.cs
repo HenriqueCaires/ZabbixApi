@@ -1,16 +1,13 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class IconMapServiceIntegrationTest : BaseIntegrationTest
+    public class IconMapServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new IconMapService(this.context);
-            var result = service.Get();
+            var result = context.IconMaps.Get();
             Assert.NotNull(result);
         }
     }

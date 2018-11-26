@@ -227,5 +227,9 @@ namespace ZabbixApi.Entities
         }
 
         #endregion
+
+        #region ShouldSerialize
+        public bool ShouldSerializeflags() => false;
+        #endregion
     }
 }

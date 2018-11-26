@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 
@@ -25,8 +25,8 @@ namespace ZabbixApi.Services
         protected override Dictionary<string, object> BuildParams(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null)
         {
             var includeHelper = new IncludeHelper(include == null ? 1 : include.Sum(x => (int)x));
-            
-            if(@params == null)
+
+            if (@params == null)
                 @params = new Dictionary<string, object>();
 
             @params.AddIfNotExist("output", "extend");
@@ -34,6 +34,8 @@ namespace ZabbixApi.Services
             @params.AddOrReplace("selectRelatedObject", includeHelper.WhatShouldInclude(EventInclude.RelatedObject));
             @params.AddOrReplace("select_alerts", includeHelper.WhatShouldInclude(EventInclude.Alerts));
             @params.AddOrReplace("select_acknowledges", includeHelper.WhatShouldInclude(EventInclude.Acknowledges));
+            @params.AddOrReplace("selectTags", includeHelper.WhatShouldInclude(EventInclude.Tags));
+            @params.AddOrReplace("selectSuppressionData", includeHelper.WhatShouldInclude(EventInclude.SuppressionData));
 
             @params.AddOrReplace("filter", filter);
 
@@ -89,6 +91,8 @@ namespace ZabbixApi.Services
         Hosts = 4,
         RelatedObject = 8,
         Alerts = 16,
-        Acknowledges = 32
+        Acknowledges = 32,
+        Tags = 64,
+        SuppressionData = 128,
     }
 }

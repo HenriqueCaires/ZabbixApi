@@ -96,6 +96,16 @@ namespace ZabbixApi.Entities
         /// ID of the user that the message was sent to.
         /// </summary>
         public string userid { get; set; }
+
+        /// <summary>
+        /// ID of problem event, which generated the alert.
+        /// </summary>
+        public string p_eventid { get; set; }
+
+        /// <summary>
+        /// ID of acknowledgement, which generated the alert.
+        /// </summary>
+        public string acknowledgeid { get; set; }
         #endregion
 
         #region Associations

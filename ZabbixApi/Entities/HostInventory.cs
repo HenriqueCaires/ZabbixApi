@@ -13,12 +13,6 @@ namespace ZabbixApi.Entities
         #region Properties
 
         /// <summary>
-        /// (readonly) ID of the host.
-        /// </summary>
-        [JsonProperty("hostid")]
-        public string Id { get; set; }
-
-        /// <summary>
         /// Alias.
         /// </summary>
         public string alias { get; set; }
@@ -104,17 +98,6 @@ namespace ZabbixApi.Entities
         /// Installer name.
         /// </summary>
         public string installer_name { get; set; }
-
-        /// <summary>
-        /// Host inventory population mode. 
-        /// 
-        /// Possible values are: 
-        /// -1 - Disabled; 
-        /// 0 - Manual; 
-        /// 1 - Automatic; 
-        /// 
-        /// </summary>
-        public int inventory_mode { get; set; }
 
         /// <summary>
         /// Location.

@@ -1,16 +1,13 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class ProxyServerIntegrationTest : BaseIntegrationTest
+    public class ProxyServerIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new ProxyService(this.context);
-            var result = service.Get();
+            var result = context.Proxies.Get();
             Assert.NotNull(result);
         }
     }
