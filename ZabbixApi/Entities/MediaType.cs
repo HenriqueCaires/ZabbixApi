@@ -97,6 +97,45 @@ namespace ZabbixApi.Entities
         /// </summary>
         public string username { get; set; }
 
+        /// <summary>
+        /// Script parameters. 
+        /// 
+        /// Each parameter ends with a new line feed.
+        /// </summary>
+        public string exec_params { get; set; }
+
+        /// <summary>
+        /// The maximum number of alerts that can be processed in parallel. 
+        ///
+        /// Possible values for SMS: 
+        /// 1 - (default) 
+        /// 
+        /// Possible values for other media types: 
+        /// 0-100
+        /// </summary>
+        public int maxsessions { get; set; }
+
+        /// <summary>
+        /// The maximum number of attempts to send an alert. 
+        /// 
+        /// Possible values: 
+        /// 1-10 
+        /// 
+        /// Default value: 
+        /// 3
+        /// </summary>
+        public int maxattempts { get; set; }
+
+        /// <summary>
+        /// The interval between retry attempts. Accepts seconds and time unit with suffix. 
+        /// 
+        /// Possible values: 
+        /// 0-60s
+        /// 
+        /// Default value: 
+        /// 10s
+        /// </summary>
+        public string attempt_interval { get; set; }
         #endregion
 
         #region Associations
@@ -132,6 +171,9 @@ namespace ZabbixApi.Entities
         public MediaType()
         {
             status = Status.Enabled;
+            maxsessions = 1;
+            maxattempts = 3;
+            attempt_interval = "10s";
         }
 
         #endregion

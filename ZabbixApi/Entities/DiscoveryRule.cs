@@ -34,7 +34,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 3600.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// (readonly) Time when the discovery rule will be executed next.
@@ -83,7 +83,7 @@ namespace ZabbixApi.Entities
 
         public DiscoveryRule()
         {
-            delay = 3600;
+            delay = "1h";
             status = Status.Enabled;
         }
 

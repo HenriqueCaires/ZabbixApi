@@ -21,7 +21,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Update interval of the LLD rule in seconds.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// ID of the host that the LLD rule belongs to.
@@ -108,7 +108,7 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 30.
         /// </summary>
-        public int lifetime { get; set; }
+        public string lifetime { get; set; }
 
         /// <summary>
         /// Additional parameters depending on the type of the LLD rule: 
@@ -329,7 +329,7 @@ namespace ZabbixApi.Entities
         public LLDRule()
         {
             authtype = SSHAuthenticationMethod.Password;
-            lifetime = 30;
+            lifetime = "30";
             snmpv3_authprotocol = SNMPv3AuthenticationProtocol.MD5;
             snmpv3_privprotocol = SNMPv3PrivacyProtocol.DES;
             state = State.Normal;

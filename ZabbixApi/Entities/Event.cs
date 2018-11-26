@@ -19,20 +19,15 @@ namespace ZabbixApi.Entities
         public override string Id { get; set; }
 
         /// <summary>
-        /// Whether the event has been acknowledged.
+        /// Type of the event. 
+        /// 
+        /// Possible values: 
+        /// 0 - event created by a trigger; 
+        /// 1 - event created by a discovery rule; 
+        /// 2 - event created by active agent auto-registration; 
+        /// 3 - internal event.
         /// </summary>
-        public int acknowledged { get; set; }
-
-        /// <summary>
-        /// Time when the event was created.
-        /// </summary>
-        [JsonConverter(typeof(TimestampToDateTimeConverter))]
-        public DateTime clock { get; set; }
-
-        /// <summary>
-        /// Nanoseconds when the event was created.
-        /// </summary>
-        public int ns { get; set; }
+        public Source source { get; set; }
 
         /// <summary>
         /// Type of object that is related to the event. 
@@ -61,15 +56,25 @@ namespace ZabbixApi.Entities
         public string objectid { get; set; }
 
         /// <summary>
-        /// Type of the event. 
-        /// 
-        /// Possible values: 
-        /// 0 - event created by a trigger; 
-        /// 1 - event created by a discovery rule; 
-        /// 2 - event created by active agent auto-registration; 
-        /// 3 - internal event.
+        /// Whether the event has been acknowledged.
         /// </summary>
-        public Source source { get; set; }
+        public int acknowledged { get; set; }
+
+        /// <summary>
+        /// Time when the event was created.
+        /// </summary>
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime clock { get; set; }
+
+        /// <summary>
+        /// Nanoseconds when the event was created.
+        /// </summary>
+        public int ns { get; set; }
+
+        /// <summary>
+        /// Resolved event name.
+        /// </summary>
+        public string name { get; set; }
 
         /// <summary>
         /// State of the related object. 
@@ -85,17 +90,54 @@ namespace ZabbixApi.Entities
         /// 3 - host or service lost. 
         /// 
         /// Possible values for internal events: 
-        /// 0 - “normal” state; 
-        /// 1 - “unknown” or “not supported” state. 
+        /// 0 - "normal" state; 
+        /// 1 - "unknown" or “not supported” state. 
         /// 
         /// This parameter is not used for active agent auto-registration events.
         /// </summary>
         public int value { get; set; }
 
         /// <summary>
-        /// Whether the state of the related object has changed since the previous event.
+        /// Event current severity. 
+        /// 
+        /// Possible values: 
+        /// 0 - not classified; 
+        /// 1 - information; 
+        /// 2 - warning; 
+        /// 3 - average; 
+        /// 4 - high; 
+        /// 5 - disaster.
         /// </summary>
-        public int value_changed { get; set; }
+        public Severity severity { get; set; }
+
+        /// <summary>
+        /// Recovery event ID
+        /// </summary>
+        public string r_eventid { get; set; }
+
+        /// <summary>
+        /// Problem event ID who generated OK event
+        /// </summary>
+        public string c_eventid { get; set; }
+
+        /// <summary>
+        /// Correlation ID
+        /// </summary>
+        public string correlationid { get; set; }
+
+        /// <summary>
+        /// User ID if the event was manually closed.
+        /// </summary>
+        public string userid { get; set; }
+
+        /// <summary>
+        /// (readonly) Whether the event is suppressed. 
+        /// 
+        /// Possible values: 
+        /// 0 - event is in normal state; 
+        /// 1 - event is suppressed.
+        /// </summary>
+        public Suppressed suppressed { get; set; }
         #endregion
 
         #region Associations
@@ -120,6 +162,11 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<Acknowledge> acknowledges { get; set; }
 
+        public IList<Tag> tags { get; set; }
+
+        public IList<SuppressionData> suppression_data { get; set; }
+
+
         #endregion
 
         #region ENUMS
@@ -130,7 +177,30 @@ namespace ZabbixApi.Entities
             ActiveAgentAutoRegistration = 2,
             InternalEvent = 3
         }
+
+        public enum Severity
+        {
+            NotClassified = 0,
+            Information = 1,
+            Warning = 2,
+            Average = 3,
+            High = 4,
+            Disaster = 5,
+        }
+
+        public enum Suppressed
+        {
+            NormalState = 0,
+            Suppressed = 1,
+        }
+
         #endregion
+
+        #region ShouldSerialize
+
+        public bool ShouldSerializesuppressed() => false;
+        #endregion
+
     }
 
     public partial class Acknowledge : EntityBase
@@ -182,5 +252,19 @@ namespace ZabbixApi.Entities
 
 
         #endregion
+    }
+
+    public class Tag
+    {
+        public string tag { get; set; }
+        public string value { get; set; }
+    }
+
+    public class SuppressionData
+    {
+        public string maintenanceid { get; set; }
+
+        [JsonConverter(typeof(TimestampToDateTimeConverter))]
+        public DateTime suppress_until { get; set; }
     }
 }

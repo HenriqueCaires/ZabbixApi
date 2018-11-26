@@ -16,7 +16,7 @@ namespace ZabbixApi.Helper
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return long.Parse((string)reader.Value).AsTimestampToDateTime();
+            return Convert.ToInt64(reader.Value).AsTimestampToDateTime();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

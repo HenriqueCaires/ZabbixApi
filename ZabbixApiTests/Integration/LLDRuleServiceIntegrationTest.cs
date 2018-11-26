@@ -1,16 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
 
 namespace ZabbixApiTests.Integration
 {
-    public class LLDRuleServiceIntegrationTest: BaseIntegrationTest
+    public class LLDRuleServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new LLDRuleService(this.context);
-            var result = service.Get();
+            var result = context.LLDRules.Get();
             Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

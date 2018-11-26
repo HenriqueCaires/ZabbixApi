@@ -1,18 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class TemplateServiceIntegrationTest : BaseIntegrationTest
+    public class TemplateServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new TemplateService(this.context);
-            var result = service.Get();
+            var result = context.Templates.Get();
             Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
-
     }
 }

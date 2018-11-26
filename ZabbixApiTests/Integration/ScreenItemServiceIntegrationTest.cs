@@ -1,16 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
 
 namespace ZabbixApiTests.Integration
 {
-    public class ScreenItemServiceIntegrationTest : BaseIntegrationTest
+    public class ScreenItemServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new ScreenItemService(this.context);
-            var result = service.Get();
+            var result = context.ScreenItems.Get();
             Assert.NotNull(result);
+            Assert.NotEmpty(result);
         }
     }
 }

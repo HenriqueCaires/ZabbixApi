@@ -1,18 +1,15 @@
 ﻿using Xunit;
-using ZabbixApi.Services;
-
 
 namespace ZabbixApiTests.Integration
 {
-    public class HostPrototypeServiceIntegrationTest : BaseIntegrationTest
+    public class HostPrototypeServiceIntegrationTest : IntegrationTestBase
     {
         [Fact]
-        public void ServiceMustGet()
+        public void MustGetAny()
         {
-            var service = new HostPrototypeService(this.context);
-            var result = service.Get();
+            var result = context.HostPrototypes.Get();
             Assert.NotNull(result);
-
+            Assert.NotEmpty(result);
         }
     }
 }

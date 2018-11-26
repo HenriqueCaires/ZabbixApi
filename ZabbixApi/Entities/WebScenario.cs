@@ -51,9 +51,9 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Execution interval of the web scenario in seconds. 
         /// 
-        /// Default: 60.
+        /// Default: 1m.
         /// </summary>
-        public int delay { get; set; }
+        public string delay { get; set; }
 
         /// <summary>
         /// Password used for authentication. 
@@ -130,7 +130,7 @@ namespace ZabbixApi.Entities
         public WebScenario()
         {
             authentication = AuthenticationMethod.None;
-            delay = 60;
+            delay = "60";
             retries = 1;
             status = Status.Enabled;
         }
