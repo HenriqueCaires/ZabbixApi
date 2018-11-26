@@ -22,8 +22,7 @@ Instantiate the context and the service that you want and call the operation:
 ```csharp
 using(var context = new Context(url, user, password))
 {
-  var service = new HostService(context);
-  var host = service.GetByName("myHost");
+  var host = context.Hosts.GetByName("myHost");
 }
 ```
 
@@ -32,8 +31,7 @@ You can make your own query too, like that:
 ```csharp
 using(var context = new Context(url, user, password))
 {
-  var service = new HostService(context);
-  var host = service.Get(new {
+  var host = context.Hosts.Get(new {
       name = "myHost"
   });
 }
@@ -44,26 +42,26 @@ Or that:
 ```csharp
 using (var context = new Context(url, user, password))
 {
-    var service = new HostService(context);
-    var host2 = service.Get(new
+    var host2 = context.Hosts.Get(new
     {
         hostid = "1"
     });
 }
 ```
 
-## Configuring via the `.config` file
+## Configuring via the `appsettings.json` file
 
-Instead of specifying the configuration in the constructor the `.config` file can be used like that:
+Instead of specifying the configuration in the constructor the `appsettings.json` file can be used like that:
 
-```xml
-<configuration>
-  <appSettings>
-    <add key="ZabbixApi.url" value="http://myZabbixServer/zabbix/api_jsonrpc.php" />
-    <add key="ZabbixApi.user" value="Admin" />
-    <add key="ZabbixApi.password" value="zabbix" />
-  </appSettings>
-</configuration>
+```json
+{
+    "ZabbixApi": {
+        "url": "http://MyZabbixServer/zabbix/api_jsonrpc.php",
+        "user": "Admin",
+        "password": "zabbix"
+    }
+}
+
 ```
 
 The empty constructor can then be used:
@@ -74,5 +72,3 @@ using(var context = new Context())
   // ...
 }
 ```
-
-⚠️ *Only available on the Full .Net Framework, the .Net Standard version of the library doesn't have this constructor.*
