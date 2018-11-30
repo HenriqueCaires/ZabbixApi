@@ -17,7 +17,7 @@ namespace ZabbixApi.Services
 
         public string GetVersion()
         {
-            var @params = new Dictionary<string, object>() { { "id", 1 } };
+            var @params = new Dictionary<string, object>() { };
             return _context.SendRequest<string>(
                     @params,
                     "apiinfo.version",
@@ -27,7 +27,7 @@ namespace ZabbixApi.Services
 
         public async Task<string> GetVersionAsync()
         {
-            var @params = new Dictionary<string, object>() { { "id", 1 } };
+            var @params = new Dictionary<string, object>() { };
             return await _context.SendRequestAsync<string>(
                 @params,
                 "apiinfo.version",
