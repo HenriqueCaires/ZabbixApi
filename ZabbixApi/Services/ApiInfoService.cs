@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ZabbixApi.Services
@@ -17,9 +14,8 @@ namespace ZabbixApi.Services
 
         public string GetVersion()
         {
-            var @params = new Dictionary<string, object>() { { "id", 1 } };
             return _context.SendRequest<string>(
-                    @params,
+                    new Dictionary<string, object>(),
                     "apiinfo.version",
                     null
                     );
@@ -27,9 +23,8 @@ namespace ZabbixApi.Services
 
         public async Task<string> GetVersionAsync()
         {
-            var @params = new Dictionary<string, object>() { { "id", 1 } };
             return await _context.SendRequestAsync<string>(
-                @params,
+                new Dictionary<string, object>(),
                 "apiinfo.version",
                 null
             );
