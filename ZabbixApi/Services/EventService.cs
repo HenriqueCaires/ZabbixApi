@@ -10,12 +10,12 @@ namespace ZabbixApi.Services
     public interface IEventService
     {
         IEnumerable<Event> Get(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null);
-        IEnumerable<string> Acknowledge(IList<Event> events, string message = null);
-        IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null);
+        IEnumerable<string> Acknowledge(IList<Event> events, string message = null, int action = 2);
+        IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null, int action = 2);
 
         Task<IReadOnlyList<Event>> GetAsync(object filter = null, IEnumerable<EventInclude> include = null, Dictionary<string, object> @params = null);
-        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null);
-        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null);
+        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null, int action = 2);
+        Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null, int action = 2);
     }
 
     public class EventService : ServiceBase<Event, EventInclude>, IEventService
@@ -42,38 +42,40 @@ namespace ZabbixApi.Services
             return @params;
         }
 
-        public IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null)
+        public IEnumerable<string> Acknowledge(IList<string> eventIds, string message = null, int action = 2)
         {
             return _context.SendRequest<EventidsResult>(
                     new
                     {
                         eventids = eventIds,
-                        message = message,
+                        message,
+                        action
                     },
                     _className + ".acknowledge"
                     ).ids;
         }
 
-        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null)
+        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<string> eventIds, string message = null, int action = 2)
         {
             return (await _context.SendRequestAsync<EventidsResult>(
                 new
                 {
                     eventids = eventIds,
-                    message = message,
+                    message,
+                    action
                 },
                 _className + ".acknowledge"
             )).ids;
         }
 
-        public IEnumerable<string> Acknowledge(IList<Event> events, string message = null)
+        public IEnumerable<string> Acknowledge(IList<Event> events, string message = null, int action = 2)
         {
-            return Acknowledge(events.Select(x => x.Id).ToList(), message);
+            return Acknowledge(events.Select(x => x.Id).ToList(), message, action);
         }
 
-        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null)
+        public async Task<IReadOnlyList<string>> AcknowledgeAsync(IList<Event> events, string message = null, int action = 2)
         {
-            return await AcknowledgeAsync(events.Select(x => x.Id).ToList(), message);
+            return await AcknowledgeAsync(events.Select(x => x.Id).ToList(), message, action);
         }
 
         public class EventidsResult : EntityResultBase

@@ -49,6 +49,7 @@ namespace ZabbixApi.Services
             @params = @params ?? new Dictionary<string, object>();
             @params.AddIfNotExist("output", "extend");
             @params.AddOrReplace("filter", filter);
+            @params.AddOrReplace("limit", "10");
 
             return @params;
         }
