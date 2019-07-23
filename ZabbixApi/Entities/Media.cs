@@ -38,7 +38,7 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Address, user name or other identifier of the recipient.
         /// </summary>
-        public string sendto { get; set; }
+        public List<string> sendto { get; set; }
 
         /// <summary>
         /// Trigger severities to send notifications about. 
