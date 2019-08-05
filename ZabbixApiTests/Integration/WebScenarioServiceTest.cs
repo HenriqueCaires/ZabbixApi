@@ -9,7 +9,6 @@ namespace ZabbixApiTests.Integration
         {
             var result = context.WebScenarios.Get();
             Assert.NotNull(result);
-            Assert.NotEmpty(result);
         }
     }
 }
