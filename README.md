@@ -1,4 +1,4 @@
-# ZabbixApi [![NuGet](https://img.shields.io/nuget/v/Zabbix.svg)](https://www.nuget.org/packages/Zabbix) [![Build Status](https://travis-ci.org/HenriqueCaires/ZabbixApi.svg?branch=master)](https://travis-ci.org/HenriqueCaires/ZabbixApi)
+# ZabbixApi [![NuGet](https://img.shields.io/nuget/v/Zabbix.svg)](https://www.nuget.org/packages/Zabbix) [![Build Status](https://travis-ci.org/HenriqueCaires/ZabbixApi.svg?branch=master)](https://travis-ci.org/HenriqueCaires/ZabbixApi) [![Total alerts](https://img.shields.io/lgtm/alerts/g/HenriqueCaires/ZabbixApi.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/HenriqueCaires/ZabbixApi/alerts/)
 
 C# Zabbix Api to retrieve and modify the configuration of Zabbix
 
