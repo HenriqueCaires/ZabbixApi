@@ -8,7 +8,7 @@ You just need to instantiate the context and the service that you want and call 
 # Installing package
 On the Package Manager Cosole type this to install:
 ```
-Install-Package Zabbix
+Install-Package ZabbixCG
 ```
 
 # Configuring

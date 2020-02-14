@@ -181,3 +181,5 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/.vs/ZabbixApi/v16/Server/sqlite3/db.lock
+/.vs/ZabbixApi/v16/Server/sqlite3

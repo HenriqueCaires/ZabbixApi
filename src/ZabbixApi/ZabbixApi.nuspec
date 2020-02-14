@@ -2,15 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <version>$version$</version>
-    <authors>Henrique Caires</authors>
-    <owners>Henrique Caires</owners>
-    <id>$id$</id>
-    <title>Zabbix</title>
+    <authors>Henrique Caires / André Guergolet / Luan Santos / Compugraf</authors>
+    <owners>Compugraf</owners>
+    <id>$id$CG</id>
+    <title>ZabbixCG</title>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <summary>$description$</summary>
     <copyright>MIT</copyright>
-    <projectUrl>https://github.com/HenriqueCaires/ZabbixApi</projectUrl>
+    <projectUrl>https://github.com/compugraf-dsw/ZabbixApi</projectUrl>
     <tags>Zabbix,ZabbixApi</tags>
     <iconUrl>http://www.zabbix.com/favicon.ico</iconUrl>
   </metadata>
