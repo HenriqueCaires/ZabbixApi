@@ -486,9 +486,9 @@ namespace ZabbixApi.Entities
     /// <summary>
     /// Class to support tags while updating or inserting a HOST
     /// </summary>
-    public class Tag
+   /* public class Tag
     {
         public string tag { get; set; }
         public string value { get; set; }
-    }
+    }*/
 }
