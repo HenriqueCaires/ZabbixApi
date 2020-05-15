@@ -24,9 +24,7 @@ namespace ZabbixApi.Services
             @params.AddOrReplace("filter", filter);
 
             return @params;
-        }
-
-        
+        }   
     }
     public enum TrendInclude
     {
