@@ -16,23 +16,26 @@ namespace ZabbixApi.Entities
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
         public DateTime clock { get; set; }
-
         /// <summary>
         /// ID of the related item.
         /// </summary>
         [JsonProperty("itemid")]
         public override string Id { get; set; }
-
         /// <summary>
-        /// Nanoseconds when the value was received.
+        /// Number of values within this hour.
         /// </summary>
         public int num { get; set; }
-
         /// <summary>
-        /// Received value.
+        /// Hourly minimum value.
         /// </summary>
         public string value_min { get; set; }
+        /// <summary>
+        /// Hourly average value.
+        /// </summary>
         public string value_avg { get; set; }
+        /// <summary>
+        /// Hourly maximum value.
+        /// </summary>
         public string value_max { get; set; }
 
         #endregion

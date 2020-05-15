@@ -36,7 +36,6 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// ID of the related object.
         /// </summary>
-        /// 
         [JsonProperty("objectid")]
         public string _objectid { get; set; }
         /// <summary>
@@ -78,13 +77,10 @@ namespace ZabbixApi.Entities
         /// </summary>
         public int severity { get; set; }
         /// <summary>
-        /// Nanoseconds when the recovery event was created.
+        /// true - return only suppressed problems;
+        /// false - return problems in the normal state.                
         /// </summary>
         public string supressed { get; set; }
-        /// <summary>
-        /// Return problem's acknowledges in the acknowledges property.
-        /// </summary>
-
         #endregion
 
         #region Associations
