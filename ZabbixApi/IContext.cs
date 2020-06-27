@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using ZabbixApi.Entities;
 using ZabbixApi.Helper;
 using ZabbixApi.Services;
 
@@ -59,6 +60,8 @@ namespace ZabbixApi
         IUserGroupService UserGroups { get; }
         IGlobalMacroService GlobalMacros { get; }
         IHostMacroService HostMacros { get; }
+        ITrendService Trend { get; }
+        IProblemService Problem { get; }
         IUserService Users { get; }
         IValueMapService ValueMaps { get; }
     }
@@ -160,6 +163,8 @@ namespace ZabbixApi
             GlobalMacros = new GlobalMacroService(this);
             HostMacros = new HostMacroService(this);
             Users = new UserService(this);
+            Trend = new TrendService(this);
+            Problem = new ProblemService(this);
             ValueMaps = new ValueMapService(this);
         }
 
@@ -269,6 +274,7 @@ namespace ZabbixApi
             };
         }
 
+        public ITrendService Trend { get; private set; }
         public IActionService Actions { get; private set; }
         public IAlertService Alerts { get; private set; }
         public ApiInfoService ApiInfo { get; private set; }
@@ -309,6 +315,7 @@ namespace ZabbixApi
         public IGlobalMacroService GlobalMacros { get; private set; }
         public IHostMacroService HostMacros { get; private set; }
         public IUserService Users { get; private set; }
+        public IProblemService Problem { get; private set; }
         public IValueMapService ValueMaps { get; private set; }
 
         private class Request

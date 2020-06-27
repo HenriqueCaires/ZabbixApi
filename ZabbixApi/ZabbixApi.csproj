@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Zabbix</PackageId>
+    <PackageId>ZabbixCG</PackageId>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Authors>Henrique Caires</Authors>
+    <Authors>Henrique Caires/André Guergolet/Luan Santos</Authors>
     <PackageTags>Zabbix ZabbixApi</PackageTags>
     <PackageProjectUrl>https://github.com/HenriqueCaires/ZabbixApi</PackageProjectUrl>
     <PackageIconUrl>https://www.zabbix.com/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/HenriqueCaires/ZabbixApi</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
-	<VersionPrefix>4.0.7</VersionPrefix>
-	<VersionSuffix></VersionSuffix>
+	  <VersionPrefix>4.0.7</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

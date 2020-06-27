@@ -22,6 +22,11 @@ namespace ZabbixApi.Entities
         public override string Id { get; set; }
 
         /// <summary>
+        /// Host Description
+        /// </summary>
+        public string description { get; set; }
+
+        /// <summary>
         /// Technical name of the host.
         /// </summary>
         public string host { get; set; }
@@ -256,6 +261,10 @@ namespace ZabbixApi.Entities
         public IList<HostGroup> groups { get; set; }
 
         /// <summary>
+        /// Host Tags
+        /// </summary>
+        public IList<Tag> tags { get; set; }
+        /// <summary>
         /// Templates
         /// </summary>
         public IList<Template> parentTemplates
@@ -472,4 +481,14 @@ namespace ZabbixApi.Entities
 
         #endregion
     }
+
+
+    /// <summary>
+    /// Class to support tags while updating or inserting a HOST
+    /// </summary>
+   /* public class Tag
+    {
+        public string tag { get; set; }
+        public string value { get; set; }
+    }*/
 }

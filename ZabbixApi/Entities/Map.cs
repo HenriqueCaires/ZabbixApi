@@ -397,6 +397,12 @@ namespace ZabbixApi.Entities
 
         #endregion
     }
+    public partial class MapElementSE : EntityBase
+    {
+        [JsonProperty("hostid")]
+        public override string Id { get; set; }
+        public string groupid { get; set; }
+    }
 
     public partial class MapElement : EntityBase
     {
@@ -414,6 +420,8 @@ namespace ZabbixApi.Entities
         /// Required for host, host group, trigger and map type elements.
         /// </summary>
         public string elementid { get; set; }
+
+        public IList<MapElementSE> elements { get; set; }
 
         /// <summary>
         /// Type of map element. 
@@ -532,6 +540,8 @@ namespace ZabbixApi.Entities
         /// Default: 0.
         /// </summary>
         public int x { get; set; }
+
+        
 
         /// <summary>
         /// Y-coordinates of the element in pixels. 
