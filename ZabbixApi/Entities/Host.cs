@@ -326,6 +326,11 @@ namespace ZabbixApi.Entities
         [JsonConverter(typeof(SingleObjectConverter<HostInventory>))]
         public HostInventory inventory { get; set; }
 
+        
+        public IList<Tag> tags { get; set; }
+
+        public IList<HostMacro> macros { get; set; }
+
         #endregion
 
         #region ENUMS
