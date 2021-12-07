@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json.Converters;
 using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
@@ -137,8 +138,9 @@ namespace ZabbixApi.Entities
         /// Example: 
         /// { "User-Agent": "Zabbix" }
         /// </summary>
-        public IList<Dictionary<string, string>> headers { get; set; }
-
+        [JsonConverter(typeof(ArrayOrObjectConverter<IDictionary<string, string>>))]
+        public IDictionary<string, string> headers { get; set; }
+        
         /// <summary>
         /// Number of days to keep item's history data. 
         /// 

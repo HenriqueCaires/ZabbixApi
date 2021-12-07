@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ZabbixApi.Helper
 {
@@ -70,4 +71,39 @@ namespace ZabbixApi.Helper
             serializer.Serialize(writer, value);
         }
     }
+
+    internal class ArrayOrObjectConverter<T> : JsonConverter
+    {
+        public override bool CanWrite => false;
+
+        public override bool CanConvert(Type objectType)
+        {
+            return objectType == typeof(T);
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            if (reader.TokenType == JsonToken.StartObject)
+            {
+                var ret = serializer.Deserialize<T>(reader);
+                return ret;
+            }
+
+            if (reader.TokenType == JsonToken.StartArray)
+            {
+                var array = JArray.Load(reader);
+                if (!array.HasValues)
+                    return default(T);
+                return serializer.Deserialize(reader, objectType);
+            }
+
+            return default(T);
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
+    }
+
 }

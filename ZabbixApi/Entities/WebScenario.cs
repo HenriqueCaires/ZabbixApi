@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZabbixApi.Helper;
 
 namespace ZabbixApi.Entities
@@ -56,6 +53,11 @@ namespace ZabbixApi.Entities
         public string delay { get; set; }
 
         /// <summary>
+        /// HTTP headers that will be sent when performing a request. Scenario step headers will overwrite headers specified for the web scenario. 
+        /// </summary>
+        public IList<HttpField> headers { get; set; }
+
+        /// <summary>
         /// Password used for authentication. 
         /// 
         /// Required for web scenarios with basic HTTP or NTLM authentication.
@@ -78,7 +80,7 @@ namespace ZabbixApi.Entities
         /// (readonly) Time of the next web scenario execution.
         /// </summary>
         [JsonConverter(typeof(TimestampToDateTimeConverter))]
-        public DateTime nextcheck { get; set; }
+        public DateTime? nextcheck { get; }
 
         /// <summary>
         /// Number of times a web scenario will try to execute each step before failing. 
@@ -86,6 +88,21 @@ namespace ZabbixApi.Entities
         /// Default: 1.
         /// </summary>
         public int retries { get; set; }
+
+        /// <summary>
+        /// Name of the SSL certificate file used for client authentication (must be in PEM format).
+        /// </summary>
+        public string ssl_cert_file { get; set; }
+
+        /// <summary>
+        /// Name of the SSL private key file used for client authentication (must be in PEM format).
+        /// </summary>
+        public string ssl_key_file { get; set; }
+
+        /// <summary>
+        /// SSL private key password.
+        /// </summary>
+        public string ssl_key_password { get; set; }
 
         /// <summary>
         /// Whether the web scenario is enabled. 
@@ -104,7 +121,37 @@ namespace ZabbixApi.Entities
         /// <summary>
         /// Web scenario variables.
         /// </summary>
-        public string variables { get; set; }
+        public IList<HttpField> variables { get; set; }
+
+        /// <summary>
+        /// Whether to verify that the host name specified in the SSL certificate matches the one used in the scenario. 
+        /// 
+        /// 0 - (default) skip peer verification; 
+        /// 1 - verify peer.
+        /// </summary>
+        public Verify verify_host { get; set; }
+
+        /// <summary>
+        /// Whether to verify the SSL certificate of the web server. 
+        /// 
+        /// 0 - (default) skip peer verification; 
+        /// 1 - verify peer.
+        /// </summary>
+        public Verify verify_peer { get; set; }
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Host that the item belongs to as an array
+        /// </summary>
+        public IList<ScenarioStep> steps { get; set; }
+
+        
+        /// <summary>
+        /// Web scenario tags.
+        /// </summary>
+        public IList<Tag> tags { get; set; }
 
         #endregion
 
@@ -130,9 +177,11 @@ namespace ZabbixApi.Entities
         public WebScenario()
         {
             authentication = AuthenticationMethod.None;
-            delay = "60";
+            delay = "1m";
             retries = 1;
             status = Status.Enabled;
+            verify_host = Verify.DoNotValidate;
+            verify_peer = Verify.DoNotValidate;
         }
 
         #endregion
@@ -164,19 +213,38 @@ namespace ZabbixApi.Entities
         public string url { get; set; }
 
         /// <summary>
+        /// Whether to follow HTTP redirects. 
+        /// 
+        /// 0 - don't follow redirects; 
+        /// 1 - (default) follow redirects.
+        /// </summary>
+        public FollowRedirects follow_redirects { get; set; }
+
+        /// <summary>
         /// (readonly) ID of the web scenario that the step belongs to.
         /// </summary>
         public string httptestid { get; set; }
 
         /// <summary>
-        /// HTTP POST variables as a string.
+        /// HTTP POST variables as HTTP fields.
         /// </summary>
-        public string posts { get; set; }
+        public IList<HttpField> posts { get; set; }
 
         /// <summary>
         /// Text that must be present in the response.
         /// </summary>
         public string required { get; set; }
+
+        /// <summary>
+        /// HTTP agent item field. What part of response should be stored.
+        /// 
+        /// 0 - (default) Body.
+        /// 1 - Headers.
+        /// 2 - Both body and headers will be stored.
+        /// 
+        /// For request_method HEAD only 1 is allowed value.
+        /// </summary>
+        public RetrieveMode retrieve_mode { get; set; }
 
         /// <summary>
         /// Ranges of required HTTP status codes separated by commas.
@@ -188,12 +256,17 @@ namespace ZabbixApi.Entities
         /// 
         /// Default: 15.
         /// </summary>
-        public int timeout { get; set; }
+        public string timeout { get; set; }
 
         /// <summary>
         /// Scenario step variables.
         /// </summary>
-        public string variables { get; set; }
+        public IList<HttpField> variables { get; set; }
+
+        /// <summary>
+        /// Query fields - array of HTTP fields that will be added to URL when performing a request
+        /// </summary>
+        public IList<HttpField> query_fields { get; set; }
 
         #endregion
 
@@ -201,9 +274,29 @@ namespace ZabbixApi.Entities
 
         public ScenarioStep()
         {
-            timeout = 15;
+            follow_redirects = FollowRedirects.FollowRedirects;
+            retrieve_mode = RetrieveMode.Body;
+            timeout = "15s";
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// HTTP field
+    /// 
+    /// The HTTP field object defines a name and value that is used to specify variable, HTTP header, POST form field data of query field data.
+    /// </summary>
+    public class HttpField
+    {
+        /// <summary>
+        /// Name of header / variable / POST or GET field.
+        /// </summary>
+        public string name { get; set; }
+        
+        /// <summary>
+        /// Value of header / variable / POST or GET field.
+        /// </summary>
+        public string value { get; set; }
     }
 }
