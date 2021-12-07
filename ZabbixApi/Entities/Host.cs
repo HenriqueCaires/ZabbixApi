@@ -326,6 +326,11 @@ namespace ZabbixApi.Entities
         [JsonConverter(typeof(SingleObjectConverter<HostInventory>))]
         public HostInventory inventory { get; set; }
 
+        
+        public IList<Tag> tags { get; set; }
+
+        public IList<HostMacro> macros { get; set; }
+
         #endregion
 
         #region ENUMS
@@ -469,6 +474,19 @@ namespace ZabbixApi.Entities
         /// </summary>
         /// <returns></returns>
         public bool ShouldSerializeipmi_errors_from() => false;
+
+
+        public bool ShouldSerializesnmp_disable_until() => false;
+        public bool ShouldSerializesnmp_errors_from() => false;
+        public bool ShouldSerializejmx_available() => false; 
+        public bool ShouldSerializejmx_disable_until() => false;
+        public bool ShouldSerializejmx_error() => false;
+        public bool ShouldSerializejmx_errors_from() => false;
+        public bool ShouldSerializemaintenance_from() => false;
+        public bool ShouldSerializemaintenance_status() => false;
+        public bool ShouldSerializemaintenance_type() => false;
+        public bool ShouldSerializemaintenanceid() => false;
+        public bool ShouldSerializesnmp_available() => false;
 
         #endregion
     }

@@ -254,12 +254,6 @@ namespace ZabbixApi.Entities
         #endregion
     }
 
-    public class Tag
-    {
-        public string tag { get; set; }
-        public string value { get; set; }
-    }
-
     public class SuppressionData
     {
         public string maintenanceid { get; set; }

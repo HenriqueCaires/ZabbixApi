@@ -32,6 +32,11 @@ namespace ZabbixApi.Entities
 
     public partial class HostMacro : EntityBase
     {
+        public HostMacro()
+        {
+            @type = MacroType.Text;
+        }
+
         #region Properties
 
         /// <summary>
@@ -55,6 +60,15 @@ namespace ZabbixApi.Entities
         /// </summary>
         public string value { get; set; }
 
+        [JsonProperty("type")]
+        public MacroType @type { get; set; }
+
         #endregion
+
+        public enum MacroType
+        {
+            Text = 0,
+            Secret = 1,
+        }
     }
 }

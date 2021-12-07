@@ -83,6 +83,8 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<Item> items { get; set; }
 
+        public InterfaceDetails details { get; set; }
+
         /// <summary>
         /// Host that uses the interface as an array
         /// </summary>
@@ -99,6 +101,83 @@ namespace ZabbixApi.Entities
             IPMI = 3,
             JMX = 4
         }
+
+        #endregion
+
+        #region ShouldSerialize
+        /// <summary>
+        /// As propriedades Readonly não deverá Serializar
+        /// </summary>
+        /// <returns></returns>
+        public bool ShouldSerializedetails() => type == InterfaceType.SNMP;
+
+        #endregion 
+    }
+
+    public class InterfaceDetails
+    {
+        public InterfaceDetails()
+        {
+            version = SNMPInterfaceVersion.SNMPv2c;
+            bulk = true;
+            securitylevel = SNMPv3SecurityLevel.noAuthNoPriv;
+            authprotocol = SNMPv3AuthProtocol.MD5;
+            privprotocol = SNMPv3PrivProtocol.DES;
+        }
+
+        public SNMPInterfaceVersion version { get; set; }
+        [JsonConverter(typeof(IntToBoolConverter))]
+        public bool bulk { get; set; }
+        public string community { get; set; }
+        public string securityname { get; set; }
+        public SNMPv3SecurityLevel securitylevel { get; set; }
+
+        public string authpassphrase { get; set; }
+        public string privpassphrase { get; set; }
+        public SNMPv3AuthProtocol authprotocol { get; set; }
+        public SNMPv3PrivProtocol privprotocol { get; set; }
+        public string contextname { get; set; }
+
+        #region ShouldSerialize
+        public bool ShouldSerializecommunity() => version != SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializesecurityname() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializesecuritylevel() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializeauthpassphrase() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializeprivpassphrase() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializeauthprotocol() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializeprivprotocol() => version == SNMPInterfaceVersion.SNMPv3;
+        public bool ShouldSerializecontextname() => version == SNMPInterfaceVersion.SNMPv3;
+
+        #endregion 
+
+        #region ENUMS
+
+        public enum SNMPInterfaceVersion
+        {
+            SNMPv1 = 1,
+            SNMPv2c = 2,
+            SNMPv3 = 3,
+        }
+
+        public enum SNMPv3SecurityLevel
+        {
+            noAuthNoPriv = 0,
+            authNoPriv = 1,
+            authPriv = 2,
+        }
+
+        public enum SNMPv3AuthProtocol
+        {
+            MD5 = 0,
+            SHA = 1,
+        }
+
+        public enum SNMPv3PrivProtocol
+        {
+            DES = 0,
+            AES = 1,
+        }
+
 
         #endregion
     }
