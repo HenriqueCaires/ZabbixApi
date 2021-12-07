@@ -147,6 +147,12 @@ namespace ZabbixApi.Entities
         /// </summary>
         public IList<ScenarioStep> steps { get; set; }
 
+        
+        /// <summary>
+        /// Web scenario tags.
+        /// </summary>
+        public IList<Tag> tags { get; set; }
+
         #endregion
 
         #region ENUMS
