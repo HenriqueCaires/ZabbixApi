@@ -409,13 +409,6 @@ namespace ZabbixApi.Entities
         public override string Id { get; set; }
 
         /// <summary>
-        /// ID of the object that the map element represents. 
-        /// 
-        /// Required for host, host group, trigger and map type elements.
-        /// </summary>
-        public string elementid { get; set; }
-
-        /// <summary>
         /// Type of map element. 
         /// 
         /// Possible values: 
@@ -539,6 +532,17 @@ namespace ZabbixApi.Entities
         /// Default: 0.
         /// </summary>
         public int y { get; set; }
+
+        #endregion
+
+        #region Associations
+
+        /// <summary>
+        /// Element data object. 
+        /// 
+        /// Required for host, host group, trigger and map type elements.
+        /// </summary>
+        public IList<MapElementElement> elements { get; set; }
 
         #endregion
 
@@ -812,6 +816,37 @@ namespace ZabbixApi.Entities
         {
             elementtype = 0;
         }
+
+        #endregion
+    }
+
+    public partial class MapElementElement
+    {
+        #region Properties
+
+        /// <summary>
+        /// ID of the Host.
+        /// </summary>
+        [JsonProperty("hostid")]
+        public string HostId { get; set; }
+
+        /// <summary>
+        /// ID of the HostGroup.
+        /// </summary>
+        [JsonProperty("groupid")]
+        public string HostGroupId { get; set; }
+
+        /// <summary>
+        /// ID of the Map.
+        /// </summary>
+        [JsonProperty("sysmapid")]
+        public string MapId { get; set; }
+
+        /// <summary>
+        /// ID of the Trigger.
+        /// </summary>
+        [JsonProperty("triggerid")]
+        public string TriggerId { get; set; }
 
         #endregion
     }
